@@ -42,13 +42,12 @@ public class User implements UserDetails {
     private String city;
     @NotBlank
     private String address;
-
     private String postCode;
     @NotBlank
     private String phone;
-
     private String role;
-
+    private boolean active;
+    private String activationCode;
     @OneToMany
     @JsonIgnore
     private List<Comment> comments;
@@ -80,6 +79,10 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive();
+    }
+
+    public boolean isActive(){
+        return active;
     }
 }

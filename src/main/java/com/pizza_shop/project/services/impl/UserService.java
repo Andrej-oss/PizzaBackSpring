@@ -5,15 +5,17 @@ import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.exceptions.EmailException;
 import com.pizza_shop.project.exceptions.UserNameException;
 import com.pizza_shop.project.services.IUserService;
-import com.pizza_shop.project.services.JwtService;
+import com.pizza_shop.project.services.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService implements IUserService {
@@ -23,6 +25,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MailSenderService mailSenderService;
 
     @Override
     public User getUser(int id) {
@@ -48,7 +53,18 @@ public class UserService implements IUserService {
             if (user.getUsername().equals("tomsawyer")){
                 user.setRole("ROLE_ADMIN");
             }
+            user.setActive(true);
+            user.setActivationCode(UUID.randomUUID().toString());
             this.userDao.save(user);
+            if (!StringUtils.isEmpty(user.getEmail())){
+                String message = String.format(
+                        "Hello, %s! \n" +
+                        "Welcome to Pizza Shop Please, visit this" +
+                                " link to finished registration http://localhost:8080/activate/%s",
+                        user.getUsername(),
+                        user.getActivationCode());
+                mailSenderService.sendMail(user.getEmail(), "Activation Code", message);
+            }
         }
          if(usersByUsername != null){
            throw  new UserNameException("Login occupied already");
@@ -72,5 +88,16 @@ public class UserService implements IUserService {
     @Override
     public User getUserByUserName(String name) {
         return userDao.findUsersByUsername(name);
+    }
+
+    @Override
+    public boolean activateUser(String activateCode) {
+        final User user = userDao.getUserByActivateCode(activateCode);
+        if (user == null){
+            return false;
+        }
+        user.setActivationCode(null);
+        userDao.save(user);
+        return true;
     }
 }

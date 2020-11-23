@@ -19,4 +19,6 @@ public interface IUserService extends UserDetailsService {
     UserDetails loadUserByUsername(String s);
 
     User getUserByUserName(String name);
+
+    boolean activateUser(String activateCode);
 }

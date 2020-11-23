@@ -54,6 +54,17 @@ public class UserController {
       log.info("Handling /get User by name = " + name);
       return userService.getUserByUserName(name);
     }
+    @GetMapping("/activate/{activateCode}")
+    public String activateUser(@PathVariable String activateCode){
+    boolean isActivate = userService.activateUser(activateCode);
+      if (isActivate){
+        log.info("User activated ");
+      }
+      else {
+        log.info("Activated code is not found");
+      }
+    return "login";
+    }
     @DeleteMapping("/user/{id}")
     public List<User> deleteUser(@PathVariable int id){
       log.info("Handling delete User with id = " + id);
