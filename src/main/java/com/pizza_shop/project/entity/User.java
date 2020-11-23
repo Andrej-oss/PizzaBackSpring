@@ -30,8 +30,10 @@ public class User implements UserDetails {
     private int id;
     @NotBlank
     private String username;
+
     @NotBlank
     private String password;
+
     private String name;
     private String lastName;
     @NotBlank

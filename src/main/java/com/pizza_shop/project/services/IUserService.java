@@ -13,8 +13,10 @@ public interface IUserService extends UserDetailsService {
     List<User> getAllUsers();
     User updateUser(int id);
     List<User> createUser(User user);
-    void deleteUser(int id);
+    List<User> deleteUser(int id);
 
     @Override
     UserDetails loadUserByUsername(String s);
+
+    User getUserByUserName(String name);
 }

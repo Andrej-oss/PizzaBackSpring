@@ -30,6 +30,10 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
+    @GetMapping("/user")
+    public List<User> getAllUsers(){
+      return userService.getAllUsers();
+    }
     @PostMapping("/user")
     public List<User> saveUser(@RequestBody User user){
         log.info("Handling User /save with requestBody" + user);
@@ -42,7 +46,17 @@ public class UserController {
               authRequest.getPassword()));
       log.info("Handling AuthRequest in generateJwt with requestBody" + authRequest);
         final UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
-        return new AuthenticationResponse(jwtService.generateToken(authRequest.getUsername()), userDetails.getAuthorities().toString());
+        return new AuthenticationResponse(jwtService.generateToken(authRequest.getUsername()),
+                userDetails.getAuthorities().toString(), userDetails.getUsername());
     }
-
+    @GetMapping("/user/authenticate/{name}")
+    public User getUserByName(@PathVariable String name){
+      log.info("Handling /get User by name = " + name);
+      return userService.getUserByUserName(name);
+    }
+    @DeleteMapping("/user/{id}")
+    public List<User> deleteUser(@PathVariable int id){
+      log.info("Handling delete User with id = " + id);
+      return userService.deleteUser(id);
+    }
 }

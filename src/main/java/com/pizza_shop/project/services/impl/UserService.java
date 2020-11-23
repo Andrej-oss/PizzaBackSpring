@@ -20,6 +20,7 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserDao userDao;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -59,12 +60,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteUser(int id) {
+    public List<User> deleteUser(int id) {
         this.userDao.deleteById(id);
+        return this.userDao.findAll();
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userDao.findByUserName(s);
+    }
+    @Override
+    public User getUserByUserName(String name) {
+        return userDao.findUsersByUsername(name);
     }
 }
