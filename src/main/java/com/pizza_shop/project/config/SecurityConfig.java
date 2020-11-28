@@ -45,8 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/ingredient").hasRole("ADMIN")
-                .antMatchers("/user").anonymous()
-                .antMatchers("/user/**").anonymous()
+                .antMatchers(HttpMethod.POST, "/user").anonymous()
+                .antMatchers(HttpMethod.GET, "/user").authenticated()
+                .antMatchers("/user/**").permitAll()
 //                .antMatchers(HttpMethod.GET,"/user/authenticate/**").hasRole("ADMIN")
                 .antMatchers("/pizza").anonymous()
                 .antMatchers("/size/**").anonymous()

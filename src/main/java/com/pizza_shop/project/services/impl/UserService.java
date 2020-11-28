@@ -8,7 +8,6 @@ import com.pizza_shop.project.services.IUserService;
 import com.pizza_shop.project.services.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,7 +52,7 @@ public class UserService implements IUserService {
             if (user.getUsername().equals("tomsawyer")){
                 user.setRole("ROLE_ADMIN");
             }
-            user.setActive(true);
+            user.setActive(false);
             user.setActivationCode(UUID.randomUUID().toString());
             this.userDao.save(user);
             if (!StringUtils.isEmpty(user.getEmail())){
@@ -97,6 +96,7 @@ public class UserService implements IUserService {
             return false;
         }
         user.setActivationCode(null);
+        user.setActive(true);
         userDao.save(user);
         return true;
     }

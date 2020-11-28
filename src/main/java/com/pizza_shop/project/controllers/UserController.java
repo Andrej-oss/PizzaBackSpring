@@ -3,6 +3,7 @@ package com.pizza_shop.project.controllers;
 import com.pizza_shop.project.dto.AuthRequest;
 import com.pizza_shop.project.dto.AuthenticationResponse;
 import com.pizza_shop.project.entity.User;
+import com.pizza_shop.project.exceptions.ActivationByEmailException;
 import com.pizza_shop.project.services.IUserService;
 import com.pizza_shop.project.services.JwtService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,9 @@ public class UserController {
               authRequest.getPassword()));
       log.info("Handling AuthRequest in generateJwt with requestBody" + authRequest);
         final UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
+        if (!userDetails.isEnabled()){
+          new ActivationByEmailException("Your account is not activated");
+        }
         return new AuthenticationResponse(jwtService.generateToken(authRequest.getUsername()),
                 userDetails.getAuthorities().toString(), userDetails.getUsername());
     }

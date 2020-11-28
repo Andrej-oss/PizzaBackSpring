@@ -50,7 +50,16 @@ public class User implements UserDetails {
     private String activationCode;
     @OneToMany
     @JsonIgnore
+    @JoinColumn(name = "user_id")
     private List<Comment> comments;
+    @OneToMany
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+    private List<Basket> basketList;
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+    private Avatar avatar;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -43,4 +43,5 @@ public class Pizza {
     @JsonIgnore
     @JoinColumn(name = "pizza_id")
     private List<Comment> comments;
+
 }
