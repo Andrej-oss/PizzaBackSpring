@@ -35,4 +35,12 @@ public class SizeController {
     public byte[] getImagePizzaBySize(@PathVariable String path){
         return sizePizzaService.getSizeImageByPath(path);
     }
+    @GetMapping(value = "/size/image/{path}/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getImageByName(@PathVariable String path, @PathVariable String name){
+        return sizePizzaService.getSizeImageByNameType(path, name);
+    }
+    @GetMapping("/size/{pizzaId}/{name}")
+    public Size getPizzaSizes(@PathVariable int pizzaId, @PathVariable String name){
+        return sizePizzaService.getSizesByPizzaId(pizzaId, name);
+    }
 }

@@ -11,14 +11,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Basket {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     private int price;
 
-    private String ingredients;
+    private String size;
 
     private int pizzaId;
     @ManyToOne

@@ -14,4 +14,8 @@ public interface ISizePizzaService {
     void deleteSize(int id);
 
     byte[] getSizeImageByPath(String path);
+
+    byte[] getSizeImageByNameType(String name, String s);
+
+    Size getSizesByPizzaId(int pizzaId, String name);
 }

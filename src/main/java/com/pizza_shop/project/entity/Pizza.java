@@ -27,6 +27,7 @@ public class Pizza {
     @Column(columnDefinition = "TEXT")
     private String description;
     @Lob
+    @JsonIgnore
     private byte[] data;
 
     private int price;

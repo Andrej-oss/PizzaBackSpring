@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,7 +54,7 @@ public class User implements UserDetails {
     @OneToMany
     @JsonIgnore
     @JoinColumn(name = "user_id")
-    private List<Basket> basketList;
+    private List<Cart> cartList;
     @OneToOne
     @JsonIgnore
     @JoinColumn(name = "user_id")

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -88,5 +87,16 @@ public class SizeServiceService implements ISizePizzaService {
     public byte[] getSizeImageByPath(String path) {
         final Size sizeByPath = sizeDao.getImageByPath(path);
         return sizeByPath.getData();
+    }
+
+    @Override
+    public byte[] getSizeImageByNameType(String path, String name) {
+        final Size imageByPathAndName = sizeDao.getImageByPathAndName(path, name);
+        return imageByPathAndName.getData();
+    }
+
+    @Override
+    public Size getSizesByPizzaId(int pizzaId, String name) {
+        return sizeDao.getSizeByPizzaIdAndName(pizzaId, name);
     }
 }
