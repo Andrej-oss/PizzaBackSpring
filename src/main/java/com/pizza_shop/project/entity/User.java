@@ -2,15 +2,12 @@ package com.pizza_shop.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.ToString.Include;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,8 +17,10 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
+@ToString(onlyExplicitlyIncluded = true)
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class User implements UserDetails {
     @Id
@@ -51,6 +50,7 @@ public class User implements UserDetails {
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private List<Comment> comments;
+    @ToString.Exclude
     @OneToMany
     @JsonIgnore
     @JoinColumn(name = "user_id")
@@ -59,6 +59,10 @@ public class User implements UserDetails {
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private Avatar avatar;
+    @OneToMany
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+    private List<Purchase> purchases;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -93,4 +97,5 @@ public class User implements UserDetails {
     public boolean isActive(){
         return active;
     }
+
 }

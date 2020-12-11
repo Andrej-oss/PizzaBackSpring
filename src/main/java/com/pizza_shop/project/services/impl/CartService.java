@@ -7,7 +7,6 @@ import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.services.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -26,7 +25,7 @@ public class CartService implements ICartService {
 
     @Override
     public Cart getOneCartElement(int id) {
-        return null;
+        return cartDao.getOne(id);
     }
 
     @Override
@@ -46,10 +45,32 @@ public class CartService implements ICartService {
 
     @Override
     public void deleteCartElement(int id) {
+        final Cart cart = cartDao.getOne(id);
+        cartDao.delete(cart);
     }
 
     @Override
     public List<Cart> getAllPizzasByUserId(int userId) {
         return cartDao.findAllCartsByUserId(userId);
+    }
+
+    @Override
+    public void addPizzaInCart(int cartId, int pricePizza) {
+         Cart cartElement = cartDao.getOne(cartId);
+         int amount = cartElement.getAmount();
+         int price = cartElement.getPrice();
+        cartElement.setAmount(amount + 1);
+        cartElement.setPrice(price + pricePizza);
+        cartDao.save(cartElement);
+    }
+
+    @Override
+    public void removePizzaInCart(int cartId, int pricePizza) {
+        final Cart cart = cartDao.getOne(cartId);
+         int amount = cart.getAmount();
+         int price = cart.getPrice();
+         cart.setPrice(price - pricePizza);
+         cart.setAmount(amount - 1);
+         cartDao.save(cart);
     }
 }

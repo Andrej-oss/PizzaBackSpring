@@ -26,6 +26,19 @@ public class CartController {
         log.info("Handling /post in createCart with body: " + cart +  "for user_id" + userId);
         return cartService.createCartElement(cart, userId);
     }
+    @PostMapping("/cart/increment/{cartId}")
+    public void addAmountPizza(@PathVariable int cartId, @RequestBody int pricePizza){
+        cartService.addPizzaInCart(cartId, pricePizza);
+    }
+    @PostMapping("/cart/decrement/{cartId}")
+    public void decAmountPizza(@PathVariable int cartId, @RequestBody int pricePizza){
+        cartService.removePizzaInCart(cartId, pricePizza);
+    }
+    @DeleteMapping("/cart/{id}")
+    public boolean deleteCart(@PathVariable int id){
+        cartService.deleteCartElement(id);
+        return true;
+    }
     @GetMapping("/cart")
     public List<Cart> getAllBasket(){
         log.info("Handling /get all cart elements");
