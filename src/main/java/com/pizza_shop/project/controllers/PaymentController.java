@@ -1,6 +1,7 @@
 package com.pizza_shop.project.controllers;
 
 import com.pizza_shop.project.dto.PaymentIntentDto;
+import com.pizza_shop.project.entity.Cart;
 import com.pizza_shop.project.entity.Purchase;
 import com.pizza_shop.project.services.IPaymentService;
 import com.stripe.exception.StripeException;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -41,6 +44,15 @@ public class PaymentController {
         log.info("Handling /post confirm by id " + id);
         final String payment = paymentIntent.toJson();
         return new ResponseEntity<String>(payment, HttpStatus.OK);
+    }
+    @PostMapping("/stripe/confirm/all_cart/{id}/{userId}")
+    public ResponseEntity<String> confirmAllCart(@PathVariable String id,
+                                                 @PathVariable int userId,
+                                                 @RequestBody List<Cart> carts) throws StripeException {
+        log.info("Handling /post confirm all cart by key id" + id);
+        final PaymentIntent paymentIntent = paymentService.confirmAllCart(id, carts, userId);
+        final String intent = paymentIntent.toJson();
+        return new ResponseEntity<String>(intent, HttpStatus.OK);
     }
     @PostMapping("/stripe/cancel/{id}")
     public ResponseEntity<String> cancelPayment(@PathVariable String id) throws StripeException{
