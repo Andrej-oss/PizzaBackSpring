@@ -1,5 +1,6 @@
 package com.pizza_shop.project.services.impl;
 
+import com.pizza_shop.project.dao.CartDao;
 import com.pizza_shop.project.dao.PurchaseDao;
 import com.pizza_shop.project.dao.UserDao;
 import com.pizza_shop.project.dto.PaymentIntentDto;
@@ -27,6 +28,8 @@ public class PaymentService implements IPaymentService {
     private UserDao userDao;
     @Autowired
     private PurchaseDao purchaseDao;
+    @Autowired
+    private CartDao cartDao;
 
     @Override
     public PaymentIntent paymentIntent(PaymentIntentDto paymentIntentDto) throws StripeException {
@@ -77,6 +80,7 @@ public class PaymentService implements IPaymentService {
             purchase.setUser(user);
             purchase.setAmount(cart.getAmount());
             purchaseDao.save(purchase);
+            cartDao.delete(cart);
         }
         params.put("payment_method", "pm_card_visa");
         paymentIntent.confirm(params);
