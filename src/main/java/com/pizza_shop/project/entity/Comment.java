@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -22,8 +23,9 @@ public class Comment {
     private String tittle;
     @NotBlank
     private String body;
-
-    private int voice;
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<Voice> voice;
 
     @ManyToOne
     @JsonIgnore

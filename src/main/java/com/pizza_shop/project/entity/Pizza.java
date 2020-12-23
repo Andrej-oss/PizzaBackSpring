@@ -32,8 +32,7 @@ public class Pizza {
 
     private int price;
     private String ingredients;
-    @OneToMany
-    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "pizza_id")
     private List<Rating> rating;
     @OneToMany

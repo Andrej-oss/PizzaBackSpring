@@ -6,24 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Rating {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Voice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Positive
-    private int value;
     @ManyToOne
     @JsonIgnore
-    private Pizza pizza;
+    private Comment comment;
 
-    private int userId;
+    private int voice;
+
+    private  int userId;
+
 }
-

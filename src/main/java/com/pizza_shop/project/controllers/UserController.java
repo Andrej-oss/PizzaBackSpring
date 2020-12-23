@@ -8,6 +8,7 @@ import com.pizza_shop.project.services.IUserService;
 import com.pizza_shop.project.services.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +37,7 @@ public class UserController {
       return userService.getAllUsers();
     }
     @PostMapping("/user")
+    @ResponseStatus(HttpStatus.CREATED)
     public List<User> saveUser(@RequestBody User user){
         log.info("Handling User /save with requestBody" + user);
        userService.createUser(user);
