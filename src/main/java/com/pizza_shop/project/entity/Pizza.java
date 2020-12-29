@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Entity
@@ -29,9 +30,11 @@ public class Pizza {
     @Lob
     @JsonIgnore
     private byte[] data;
-
+    @Positive
     private int price;
     private String ingredients;
+    @Positive
+    private int ordersCount;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "pizza_id")
     private List<Rating> rating;

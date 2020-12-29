@@ -1,21 +1,25 @@
 package com.pizza_shop.project.services.impl;
 
 import com.pizza_shop.project.dao.CartDao;
+import com.pizza_shop.project.dao.PizzaDao;
 import com.pizza_shop.project.dao.PurchaseDao;
 import com.pizza_shop.project.dao.UserDao;
 import com.pizza_shop.project.dto.PaymentIntentDto;
 import com.pizza_shop.project.entity.Cart;
+import com.pizza_shop.project.entity.Pizza;
 import com.pizza_shop.project.entity.Purchase;
 import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.services.IPaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +34,8 @@ public class PaymentService implements IPaymentService {
     private PurchaseDao purchaseDao;
     @Autowired
     private CartDao cartDao;
+    @Autowired
+    private PizzaDao pizzaDao;
 
     @Override
     public PaymentIntent paymentIntent(PaymentIntentDto paymentIntentDto) throws StripeException {
@@ -49,12 +55,19 @@ public class PaymentService implements IPaymentService {
         Stripe.apiKey = secret;
         final PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
         final User user = userDao.getOne(userId);
+        final Pizza pizza = pizzaDao.getOne(purchase.getPizzaId());
         final HashMap<String, Object> params = new HashMap<>();
-        params.put("payment_method", "pm_card_visa");
-        paymentIntent.confirm(params);
-        purchase.setUser(user);
-        purchaseDao.save(purchase);
-        return paymentIntent;
+        if (user != null && pizza != null && paymentIntent != null) {
+            params.put("payment_method", "pm_card_visa");
+            paymentIntent.confirm(params);
+            purchase.setUser(user);
+            pizza.setOrdersCount(pizza.getOrdersCount() + 1);
+            final Instant now = Instant.now();
+            purchase.setDate(now.getMillis());
+            purchaseDao.save(purchase);
+            return paymentIntent;
+        }
+        return paymentIntent.cancel();
     }
 
     @Override
