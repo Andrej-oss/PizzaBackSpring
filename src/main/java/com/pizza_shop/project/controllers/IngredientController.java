@@ -4,6 +4,7 @@ import com.pizza_shop.project.entity.Ingredient;
 import com.pizza_shop.project.services.IIngredientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class IngredientController {
         this.ingredientService.createIngredient(ingredient, image);
         return this.ingredientService.getIngredient(ingredient.getId());
     }
+    @PutMapping(value = "/ingredient/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public List<Ingredient> updateIngredient(@PathVariable int id, Ingredient ingredient, MultipartFile file){
+        log.info("handling updating ingredient by id " + id + "with ingredient " + ingredient);
+        return ingredientService.updateIngredient(id, ingredient, file);
+    }
     @GetMapping(value = "/ingredient/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImage(@PathVariable String path){
         log.info("Handling getting image from path" + path);
@@ -40,5 +46,10 @@ public class IngredientController {
     public List<Ingredient> getAllIngredients(){
         log.info("Handling getting all ingredients");
         return this.ingredientService.getAllIngredients();
+    }
+    @DeleteMapping("/ingredient/{id}")
+    public List<Ingredient> deleteIngredient(@PathVariable int id){
+        log.info("Handling deleting ingredient with id: " + id);
+        return ingredientService.deleteIngredient(id);
     }
 }

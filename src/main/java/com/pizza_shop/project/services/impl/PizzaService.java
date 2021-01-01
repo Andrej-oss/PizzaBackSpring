@@ -57,8 +57,29 @@ public class PizzaService implements IPizzaService {
     }
 
     @Override
-    public Pizza updatePizza(int id) {
-        return null;
+    public List<Pizza> updatePizza(int id, Pizza pizza, MultipartFile file) {
+        final Pizza onePizza = pizzaDao.getOne(id);
+        if (onePizza != null) {
+            onePizza.setIngredients(pizza.getIngredients());
+            onePizza.setNewPizza(pizza.isNewPizza());
+            onePizza.setDescription(pizza.getDescription());
+            onePizza.setName(pizza.getName());
+            onePizza.setPrice(pizza.getPrice());
+            if (file != null){
+                final String name =  pizza.getName();
+                final String fileExtension = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().indexOf("."));
+                final Path path = Paths.get(name + fileExtension).normalize();
+                onePizza.setPath(path.toString());
+                try {
+                    pizza.setData(file.getBytes());
+                    Files.copy(file.getInputStream(), rootFolder.resolve(path));
+                } catch (IOException e) {
+                    log.warn("Unable to copy file " + e.getMessage());
+                }
+            }
+            pizzaDao.flush();
+        }
+        return pizzaDao.findAll();
     }
 
     @Override
@@ -72,8 +93,10 @@ public class PizzaService implements IPizzaService {
     }
 
     @Override
-    public void deletePizza(int id) {
-
+    public List<Pizza> deletePizza(int id) {
+        final Pizza pizza = pizzaDao.getOne(id);
+        pizzaDao.delete(pizza);
+        return pizzaDao.findAll();
     }
 
     @Override

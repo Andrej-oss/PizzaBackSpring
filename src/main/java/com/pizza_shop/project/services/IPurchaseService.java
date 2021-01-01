@@ -1,13 +1,17 @@
 package com.pizza_shop.project.services;
 
 import com.pizza_shop.project.entity.Purchase;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
 public interface IPurchaseService {
-    boolean createPurchase(Purchase purchase);
+    List<Purchase> createPurchase(Purchase purchase);
     Purchase updatePurchase(int id);
-    List<Purchase> getAllPurchases();
+    Page<Purchase> getAllPurchases(PageRequest pageRequest);
     Purchase getPurchase(int id);
-    void deletePurchase(int id);
+    boolean deletePurchase(int id);
+
+    List<Purchase> getAllPurchasesByUserId(int id);
 }

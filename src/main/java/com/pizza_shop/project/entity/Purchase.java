@@ -3,9 +3,11 @@ package com.pizza_shop.project.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.joda.time.Instant;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -30,4 +32,6 @@ public class Purchase {
     private User user;
 
     private int pizzaId;
+
+    private long date;
 }

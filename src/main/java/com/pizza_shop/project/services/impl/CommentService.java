@@ -7,12 +7,10 @@ import com.pizza_shop.project.dao.VoiceDao;
 import com.pizza_shop.project.entity.Comment;
 import com.pizza_shop.project.entity.Pizza;
 import com.pizza_shop.project.entity.User;
-import com.pizza_shop.project.entity.Voice;
 import com.pizza_shop.project.services.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,10 +58,10 @@ public class CommentService implements ICommentService {
         if (commentFind != null) {
             commentFind.setTittle(comment.getTittle());
             commentFind.setBody(comment.getBody());
-
             commentDao.flush();
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

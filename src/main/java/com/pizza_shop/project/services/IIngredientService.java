@@ -9,8 +9,8 @@ import java.util.List;
 public interface IIngredientService {
     Ingredient createIngredient(Ingredient ingredient, MultipartFile image);
     List<Ingredient> getAllIngredients();
-    Ingredient updateIngredient(Ingredient ingredient);
-    void deleteIngredient(int id);
+    List<Ingredient> updateIngredient(int id, Ingredient ingredient, MultipartFile file);
+    List<Ingredient> deleteIngredient(int id);
     Ingredient getIngredient(int id);
 
     byte[] getImageByPath(String path);

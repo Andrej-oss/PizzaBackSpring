@@ -10,12 +10,14 @@ public interface ISizePizzaService {
     List<Size> getAllSizes();
     Size getSize(int id);
     List<Size> createSize(Size size, int id, MultipartFile file);
-    Size upDateSize(int id);
-    void deleteSize(int id);
+    List<Size> upDateSize(int id, Size size, MultipartFile image);
+    List<Size> deleteSize(int id);
 
     byte[] getSizeImageByPath(String path);
 
     byte[] getSizeImageByNameType(String name, String s);
 
-    Size getSizesByPizzaId(int pizzaId, String name);
+    Size getSizeByPizzaId(int pizzaId, String name);
+
+    List<Size> getAllSizesByPizzaId(int pizzaId);
 }

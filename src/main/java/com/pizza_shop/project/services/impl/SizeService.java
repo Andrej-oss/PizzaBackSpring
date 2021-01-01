@@ -21,7 +21,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-public class SizeServiceService implements ISizePizzaService {
+public class SizeService implements ISizePizzaService {
 
     @Autowired
     private SizeDao sizeDao;
@@ -51,7 +51,7 @@ public class SizeServiceService implements ISizePizzaService {
 
     @Override
     public Size getSize(int id) {
-        return null;
+        return sizeDao.getOne(id);
     }
 
     @Override
@@ -75,13 +75,34 @@ public class SizeServiceService implements ISizePizzaService {
     }
 
     @Override
-    public Size upDateSize(int id) {
-        return null;
+    public List<Size> upDateSize(int id, Size size, MultipartFile image) {
+        final Size sizeFind = sizeDao.getOne(id);
+        if (sizeFind != null){
+            sizeFind.setPrice(size.getPrice());
+            sizeFind.setDiameter(size.getDiameter());
+            sizeFind.setWeight(size.getWeight());
+            sizeFind.setName(size.getName());
+            if (image != null){
+                String name = size.getName();
+                final String extension = Objects.requireNonNull(image.getOriginalFilename()).substring(image.getOriginalFilename().indexOf("."));
+                final Path path = Paths.get(name + extension).normalize();
+                try {
+                    Files.copy(image.getInputStream(), rootFolder.resolve(path));
+                    sizeFind.setData(image.getBytes());
+                } catch (IOException e) {
+                    log.warn("Unable to copy image file " + e.getMessage());
+                }
+            }
+        }
+        sizeDao.flush();
+        return sizeDao.findAll();
     }
 
     @Override
-    public void deleteSize(int id) {
-
+    public List<Size> deleteSize(int id) {
+        final Size size = sizeDao.getOne(id);
+        sizeDao.delete(size);
+        return sizeDao.findAll();
     }
     @Override
     public byte[] getSizeImageByPath(String path) {
@@ -96,7 +117,12 @@ public class SizeServiceService implements ISizePizzaService {
     }
 
     @Override
-    public Size getSizesByPizzaId(int pizzaId, String name) {
+    public Size getSizeByPizzaId(int pizzaId, String name) {
         return sizeDao.getSizeByPizzaIdAndName(pizzaId, name);
+    }
+
+    @Override
+    public List<Size> getAllSizesByPizzaId(int pizzaId) {
+        return sizeDao.getAllSizesByPizzaId(pizzaId);
     }
 }

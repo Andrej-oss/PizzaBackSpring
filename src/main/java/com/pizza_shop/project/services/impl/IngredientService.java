@@ -63,13 +63,33 @@ public class IngredientService implements IIngredientService {
     }
 
     @Override
-    public Ingredient updateIngredient(Ingredient ingredient) {
-        return null;
+    public List<Ingredient> updateIngredient(int id, Ingredient ingredient, MultipartFile file) {
+        final Ingredient ingredientFind = ingredientDao.getOne(id);
+        if (ingredientFind != null){
+            ingredientFind.setName(ingredient.getName());
+            ingredientFind.setPrice(ingredient.getPrice());
+            if (file != null){
+                String name = ingredient.getName();
+                String extension = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().indexOf("."));
+                Path pathFile = Paths.get(name + extension).normalize();
+                try {
+                     ingredientFind.setData(file.getBytes());
+                     Files.copy(file.getInputStream(), rootFolder.resolve(pathFile));
+                } catch (IOException e) {
+                    log.warn("Enable to create file" + e.getMessage());
+                }
+                ingredientFind.setPath(pathFile.toString());
+            }
+            ingredientDao.flush();
+        }
+        return ingredientDao.findAll();
     }
 
     @Override
-    public void deleteIngredient(int id) {
-
+    public List<Ingredient> deleteIngredient(int id) {
+        final Ingredient ingredient = ingredientDao.getOne(id);
+        ingredientDao.delete(ingredient);
+        return ingredientDao.findAll();
     }
 
     @Override

@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IPizzaService {
     Pizza createPizza(Pizza pizza, MultipartFile file);
-    Pizza updatePizza(int id);
+    List<Pizza> updatePizza(int id, Pizza pizza, MultipartFile file);
     List<Pizza> getAllPizzas();
-    void deletePizza(int id);
+    List<Pizza> deletePizza(int id);
     Pizza getPizza(int id);
 
     byte[] getPizzaImage(String path);

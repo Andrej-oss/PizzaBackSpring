@@ -4,6 +4,8 @@ import com.pizza_shop.project.dao.PurchaseDao;
 import com.pizza_shop.project.entity.Purchase;
 import com.pizza_shop.project.services.IPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,9 @@ public class PurchaseService implements IPurchaseService {
     private PurchaseDao purchaseDao;
 
     @Override
-    public boolean createPurchase(Purchase purchase) {
+    public List<Purchase> createPurchase(Purchase purchase) {
         purchaseDao.save(purchase);
-        return true;
+        return this.getAllPurchasesByUserId(purchase.getId());
     }
 
     @Override
@@ -26,8 +28,8 @@ public class PurchaseService implements IPurchaseService {
     }
 
     @Override
-    public List<Purchase> getAllPurchases() {
-        return purchaseDao.findAll();
+    public Page<Purchase> getAllPurchases(PageRequest pageRequest) {
+        return purchaseDao.findAll(pageRequest);
     }
 
     @Override
@@ -36,7 +38,16 @@ public class PurchaseService implements IPurchaseService {
     }
 
     @Override
-    public void deletePurchase(int id) {
-
+    public boolean deletePurchase(int id) {
+        final Purchase purchase = purchaseDao.getOne(id);
+        if (purchase == null){
+            return false;
+        }
+        purchaseDao.delete(purchase);
+        return true;
     }
+
+    @Override
+    public List<Purchase> getAllPurchasesByUserId(int id) {
+        return purchaseDao.getAllPurchasesByUserId(id);    }
 }

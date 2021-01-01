@@ -42,6 +42,15 @@ public class PizzaController {
         log.info("Handling getting all pizzas");
         return pizzaService.getAllPizzas();
     }
-
-
+    @DeleteMapping("/pizza/{id}")
+    public List<Pizza> deletePizza(@PathVariable int id){
+        log.info("Handling deleting pizza with id = " + id);
+        return pizzaService.deletePizza(id);
+    }
+    @PutMapping(value = "/pizza/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public List<Pizza> upDatePizza(@PathVariable int id, @Valid Pizza pizza, MultipartFile file){
+        log.info("Handling updating pizza with id: " + id);
+        return pizzaService.updatePizza(id, pizza, file);
+    }
 }

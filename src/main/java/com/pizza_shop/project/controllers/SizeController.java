@@ -31,16 +31,32 @@ public class SizeController {
         log.info("Handling post PizzaSize with data " + size + file.getOriginalFilename());
         return this.sizePizzaService.createSize(size, pizzaId, file);
     }
+    @PutMapping(value = "/size/{sizeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public List<Size> updateSizePizza(@PathVariable int sizeId,Size size, MultipartFile image){
+        return sizePizzaService.upDateSize(sizeId, size, image);
+    }
     @GetMapping(value = "/size/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImagePizzaBySize(@PathVariable String path){
+        log.info("Handling getting image pizza size by path " + path);
         return sizePizzaService.getSizeImageByPath(path);
     }
     @GetMapping(value = "/size/image/{path}/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImageByName(@PathVariable String path, @PathVariable String name){
+        log.info("Handling getting image size pizza by name " + name);
         return sizePizzaService.getSizeImageByNameType(path, name);
     }
     @GetMapping("/size/{pizzaId}/{name}")
     public Size getPizzaSizes(@PathVariable int pizzaId, @PathVariable String name){
-        return sizePizzaService.getSizesByPizzaId(pizzaId, name);
+        return sizePizzaService.getSizeByPizzaId(pizzaId, name);
+    }
+    @GetMapping("/size/{pizzaId}")
+    public List<Size> getPizzaSizesByPizzaId(@PathVariable int pizzaId){
+        log.info("Handling getting all sizes by pizza id " + pizzaId);
+        return sizePizzaService.getAllSizesByPizzaId(pizzaId);
+    }
+    @DeleteMapping("/size/{id}")
+    public List<Size> deletePizzaSize(@PathVariable int id){
+        log.info("Handling deleting size by pizza id " + id);
+        return sizePizzaService.deleteSize(id);
     }
 }

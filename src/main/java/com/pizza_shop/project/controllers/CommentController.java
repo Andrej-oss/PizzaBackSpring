@@ -29,8 +29,6 @@ public class CommentController {
     @PutMapping("/comment/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public boolean updateComment(@PathVariable int id,
-//                                 @PathVariable int pizzaId,
-//                                 @PathVariable int userId,
                                  @RequestBody Comment comment){
        return commentService.updateComment(id, comment);
     }
