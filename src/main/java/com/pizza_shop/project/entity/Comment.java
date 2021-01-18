@@ -23,6 +23,9 @@ public class Comment {
     private String tittle;
     @NotBlank
     private String body;
+
+    private  long date;
+
     @OneToMany
     @JoinColumn(name = "comment_id")
     private List<Voice> voice;

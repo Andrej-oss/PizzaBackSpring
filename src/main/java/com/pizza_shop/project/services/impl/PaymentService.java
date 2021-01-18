@@ -85,12 +85,17 @@ public class PaymentService implements IPaymentService {
         final User user = userDao.getOne(userId);
         final HashMap<String, Object> params = new HashMap<>();
         for (Cart cart : carts) {
+            final Pizza pizza = pizzaDao.getOne(cart.getPizzaId());
+            if (pizza != null){
+                pizza.setOrdersCount(pizza.getOrdersCount() + cart.getAmount());
+            }
             Purchase purchase = new Purchase();
             purchase.setPizzaId(cart.getPizzaId());
             purchase.setPrice(cart.getPrice());
             purchase.setDescription(cart.getDescription());
             purchase.setName(cart.getSize());
             purchase.setUser(user);
+            purchase.setDate(System.currentTimeMillis());
             purchase.setAmount(cart.getAmount());
             purchaseDao.save(purchase);
             cartDao.delete(cart);

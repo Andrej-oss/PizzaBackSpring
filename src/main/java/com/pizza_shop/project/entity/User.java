@@ -30,6 +30,7 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank
+    @JsonIgnore
     private String password;
 
     private String name;
@@ -56,7 +57,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "user_id")
     private List<Cart> cartList;
     @OneToOne
-    @JsonIgnore
     @JoinColumn(name = "user_id")
     private Avatar avatar;
     @OneToMany

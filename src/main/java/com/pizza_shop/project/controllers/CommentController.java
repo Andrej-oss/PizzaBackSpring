@@ -36,6 +36,10 @@ public class CommentController {
     public List<Comment> getCommentsByPizzaId(@PathVariable int pizzaId){
         return commentService.getCommentsPizzaId(pizzaId);
     }
+    @GetMapping("/comment/user/{userName}")
+    public List<Comment> getCommentsByUserName(@PathVariable String userName){
+        return commentService.getUserCommentsByUserName(userName);
+    }
     @DeleteMapping("/comment/{id}")
     public void deleteComment(@PathVariable int id){
         commentService.deleteComment(id);

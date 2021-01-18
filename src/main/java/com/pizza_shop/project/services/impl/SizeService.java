@@ -79,9 +79,7 @@ public class SizeService implements ISizePizzaService {
         final Size sizeFind = sizeDao.getOne(id);
         if (sizeFind != null){
             sizeFind.setPrice(size.getPrice());
-            sizeFind.setDiameter(size.getDiameter());
             sizeFind.setWeight(size.getWeight());
-            sizeFind.setName(size.getName());
             if (image != null){
                 String name = size.getName();
                 final String extension = Objects.requireNonNull(image.getOriginalFilename()).substring(image.getOriginalFilename().indexOf("."));

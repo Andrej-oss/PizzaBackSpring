@@ -35,6 +35,7 @@ public class CommentService implements ICommentService {
         if (user != null && pizza != null) {
             comment.setAuthor(user.getName());
             comment.setUser(user);
+            comment.setDate(System.currentTimeMillis());
             comment.setPizza(pizza);
             commentDao.save(comment);
             return commentDao.getAllCommentsByPizzaId(pizzaId);
@@ -71,10 +72,14 @@ public class CommentService implements ICommentService {
             commentDao.delete(comment);
         }
     }
-
     @Override
     public List<Comment> getCommentsPizzaId(int pizzaId) {
         return commentDao.getAllCommentsByPizzaId(pizzaId);
+    }
+
+    @Override
+    public List<Comment> getUserCommentsByUserName(String userName) {
+        return commentDao.getAllCommentsByAuthor(userName);
     }
 }
 

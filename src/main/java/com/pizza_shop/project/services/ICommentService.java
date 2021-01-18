@@ -13,4 +13,6 @@ public interface ICommentService {
     void deleteComment(int id);
 
     List<Comment> getCommentsPizzaId(int pizzaId);
+
+    List<Comment> getUserCommentsByUserName(String userName);
 }

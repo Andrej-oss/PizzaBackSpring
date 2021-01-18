@@ -1,6 +1,7 @@
 package com.pizza_shop.project.services.impl;
 
 import com.pizza_shop.project.dao.PurchaseDao;
+import com.pizza_shop.project.dto.PurchasePageDto;
 import com.pizza_shop.project.entity.Purchase;
 import com.pizza_shop.project.services.IPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,9 @@ public class PurchaseService implements IPurchaseService {
     }
 
     @Override
-    public Page<Purchase> getAllPurchases(PageRequest pageRequest) {
-        return purchaseDao.findAll(pageRequest);
+    public PurchasePageDto getAllPurchases(PageRequest pageRequest) {
+        final Page<Purchase> all = purchaseDao.findAll(pageRequest);
+        return new PurchasePageDto(all.getContent(), all.getTotalElements(), all.getSize(), all.getTotalPages(), all.getNumber());
     }
 
     @Override

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @NoArgsConstructor
@@ -17,8 +18,8 @@ public class Avatar {
     private int id;
 
     private String path;
-
     @Lob
+    @JsonIgnore
     private byte[] data;
     @OneToOne
     @JsonIgnore
