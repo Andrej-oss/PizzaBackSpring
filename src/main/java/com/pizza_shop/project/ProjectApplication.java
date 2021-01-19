@@ -1,9 +1,6 @@
 package com.pizza_shop.project;
 
-import com.pizza_shop.project.config.StorageConfig;
-import com.pizza_shop.project.config.StoragePizzaConfig;
-import com.pizza_shop.project.config.StoragePizzaSizeConfig;
-import com.pizza_shop.project.config.StorageUserConfig;
+import com.pizza_shop.project.config.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,7 +8,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 @EnableConfigurationProperties({StorageConfig.class,
         StoragePizzaConfig.class,
-        StoragePizzaSizeConfig.class, StorageUserConfig.class})
+        StoragePizzaSizeConfig.class,
+        StorageUserConfig.class, StoragePromoConfig.class})
 public class ProjectApplication {
 
     public static void main(String[] args) {
