@@ -1,14 +1,8 @@
 package com.pizza_shop.project.services.impl;
 
-import com.pizza_shop.project.dao.CartDao;
-import com.pizza_shop.project.dao.PizzaDao;
-import com.pizza_shop.project.dao.PurchaseDao;
-import com.pizza_shop.project.dao.UserDao;
+import com.pizza_shop.project.dao.*;
 import com.pizza_shop.project.dto.PaymentIntentDto;
-import com.pizza_shop.project.entity.Cart;
-import com.pizza_shop.project.entity.Pizza;
-import com.pizza_shop.project.entity.Purchase;
-import com.pizza_shop.project.entity.User;
+import com.pizza_shop.project.entity.*;
 import com.pizza_shop.project.services.IPaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -36,6 +30,8 @@ public class PaymentService implements IPaymentService {
     private CartDao cartDao;
     @Autowired
     private PizzaDao pizzaDao;
+    @Autowired
+    private DrinkDao drinkDao;
 
     @Override
     public PaymentIntent paymentIntent(PaymentIntentDto paymentIntentDto) throws StripeException {
@@ -54,15 +50,28 @@ public class PaymentService implements IPaymentService {
     public PaymentIntent confirm(String id, int userId, Purchase purchase) throws StripeException{
         Stripe.apiKey = secret;
         final PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
+        Pizza pizza = null;
+        Drink drink = null;
         final User user = userDao.getOne(userId);
-        final Pizza pizza = pizzaDao.getOne(purchase.getPizzaId());
+        if (purchase.getPizzaId() != 0){
+            pizza = pizzaDao.getOne(purchase.getPizzaId());
+        }
+        else if (purchase.getDrinkId() != 0 ){
+            drink = drinkDao.getOne(purchase.getDrinkId());
+        }
         final HashMap<String, Object> params = new HashMap<>();
-        if (user != null && pizza != null && paymentIntent != null) {
+        if (user != null  && paymentIntent != null) {
             params.put("payment_method", "pm_card_visa");
             paymentIntent.confirm(params);
             purchase.setUser(user);
-            pizza.setOrdersCount(pizza.getOrdersCount() + 1);
+            if (pizza != null){
+                pizza.setOrdersCount((pizza.getOrdersCount() | 0)+ 1);
+            }
+            else if (drink != null){
+                drink.setOrdersCount((drink.getOrdersCount() | 0) + 1);
+            }
             final Instant now = Instant.now();
+            purchase.setAmount((purchase.getAmount() | 0)+ 1);
             purchase.setDate(now.getMillis());
             purchaseDao.save(purchase);
             return paymentIntent;
@@ -85,12 +94,23 @@ public class PaymentService implements IPaymentService {
         final User user = userDao.getOne(userId);
         final HashMap<String, Object> params = new HashMap<>();
         for (Cart cart : carts) {
-            final Pizza pizza = pizzaDao.getOne(cart.getPizzaId());
+            Purchase purchase = new Purchase();
+            Pizza pizza = null;
+            Drink drink = null;
+            if (cart.getPizzaId() != 0){
+                pizza = pizzaDao.getOne(cart.getPizzaId());
+            }
+            else if (cart.getDrinkId() != 0 ){
+                drink = drinkDao.getOne(cart.getDrinkId());
+            }
             if (pizza != null){
+                purchase.setPizzaId(cart.getPizzaId());
                 pizza.setOrdersCount(pizza.getOrdersCount() + cart.getAmount());
             }
-            Purchase purchase = new Purchase();
-            purchase.setPizzaId(cart.getPizzaId());
+            else if (drink != null){
+                drink.setOrdersCount(drink.getOrdersCount() + cart.getAmount());
+                purchase.setDrinkId(cart.getDrinkId());
+            }
             purchase.setPrice(cart.getPrice());
             purchase.setDescription(cart.getDescription());
             purchase.setName(cart.getSize());

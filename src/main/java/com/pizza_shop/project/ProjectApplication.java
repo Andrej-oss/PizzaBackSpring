@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties({StorageConfig.class,
         StoragePizzaConfig.class,
         StoragePizzaSizeConfig.class,
+        StorageDrinkConfig.class,
         StorageUserConfig.class, StoragePromoConfig.class})
 public class ProjectApplication {
 
