@@ -14,7 +14,7 @@ public interface ICartService {
 
     List<Cart> getAllPizzasByUserId(int userId);
 
-    void addPizzaInCart(int cartId, int price);
+    void addElementInCart(int cartId, int price);
 
     void removePizzaInCart(int cartId, int pricePizza);
 }

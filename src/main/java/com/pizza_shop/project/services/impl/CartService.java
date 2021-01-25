@@ -55,7 +55,7 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public void addPizzaInCart(int cartId, int pricePizza) {
+    public void addElementInCart(int cartId, int pricePizza) {
          Cart cartElement = cartDao.getOne(cartId);
          int amount = cartElement.getAmount();
          int price = cartElement.getPrice();

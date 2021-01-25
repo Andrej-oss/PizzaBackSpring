@@ -28,7 +28,7 @@ public class CartController {
     }
     @PostMapping("/cart/increment/{cartId}")
     public void addAmountPizza(@PathVariable int cartId, @RequestBody int pricePizza){
-        cartService.addPizzaInCart(cartId, pricePizza);
+        cartService.addElementInCart(cartId, pricePizza);
     }
     @PostMapping("/cart/decrement/{cartId}")
     public void decAmountPizza(@PathVariable int cartId, @RequestBody int pricePizza){

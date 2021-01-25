@@ -10,7 +10,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
         StoragePizzaConfig.class,
         StoragePizzaSizeConfig.class,
         StorageDrinkConfig.class,
-        StorageUserConfig.class, StoragePromoConfig.class})
+        StorageUserConfig.class,
+        StoragePromoConfig.class,
+        StorageSnackConfig.class})
 public class ProjectApplication {
 
     public static void main(String[] args) {

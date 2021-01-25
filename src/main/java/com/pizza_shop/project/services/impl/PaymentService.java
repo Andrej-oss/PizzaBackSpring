@@ -32,6 +32,8 @@ public class PaymentService implements IPaymentService {
     private PizzaDao pizzaDao;
     @Autowired
     private DrinkDao drinkDao;
+    @Autowired
+    private SnackDao snackDao;
 
     @Override
     public PaymentIntent paymentIntent(PaymentIntentDto paymentIntentDto) throws StripeException {
@@ -52,12 +54,16 @@ public class PaymentService implements IPaymentService {
         final PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
         Pizza pizza = null;
         Drink drink = null;
+        Snack snack = null;
         final User user = userDao.getOne(userId);
         if (purchase.getPizzaId() != 0){
             pizza = pizzaDao.getOne(purchase.getPizzaId());
         }
         else if (purchase.getDrinkId() != 0 ){
             drink = drinkDao.getOne(purchase.getDrinkId());
+        }
+        else if (purchase.getSnackId() != 0){
+            snack = snackDao.getOne(purchase.getSnackId());
         }
         final HashMap<String, Object> params = new HashMap<>();
         if (user != null  && paymentIntent != null) {
@@ -69,6 +75,9 @@ public class PaymentService implements IPaymentService {
             }
             else if (drink != null){
                 drink.setOrdersCount((drink.getOrdersCount() | 0) + 1);
+            }
+            else if (snack != null){
+                snack.setOrdersCount((snack.getOrdersCount() | 0) + 1);
             }
             final Instant now = Instant.now();
             purchase.setAmount((purchase.getAmount() | 0)+ 1);
@@ -97,11 +106,15 @@ public class PaymentService implements IPaymentService {
             Purchase purchase = new Purchase();
             Pizza pizza = null;
             Drink drink = null;
+            Snack snack = null;
             if (cart.getPizzaId() != 0){
                 pizza = pizzaDao.getOne(cart.getPizzaId());
             }
             else if (cart.getDrinkId() != 0 ){
                 drink = drinkDao.getOne(cart.getDrinkId());
+            }
+            else if (cart.getSnackId() != 0){
+                snack = snackDao.getOne(cart.getSnackId());
             }
             if (pizza != null){
                 purchase.setPizzaId(cart.getPizzaId());
@@ -110,6 +123,10 @@ public class PaymentService implements IPaymentService {
             else if (drink != null){
                 drink.setOrdersCount(drink.getOrdersCount() + cart.getAmount());
                 purchase.setDrinkId(cart.getDrinkId());
+            }
+            else if (snack != null){
+                snack.setOrdersCount(snack.getOrdersCount() + cart.getAmount());
+                purchase.setSnackId(cart.getSnackId());
             }
             purchase.setPrice(cart.getPrice());
             purchase.setDescription(cart.getDescription());

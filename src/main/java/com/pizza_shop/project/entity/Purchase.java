@@ -35,5 +35,7 @@ public class Purchase {
 
     private int drinkId;
 
+    private int snackId;
+
     private long date;
 }

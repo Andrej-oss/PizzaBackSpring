@@ -2,41 +2,38 @@ package com.pizza_shop.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
-
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
-public class Cart {
+public class Snack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank
+    private String name;
     @Column(columnDefinition = "TEXT")
+    @NotBlank
     private String description;
     @Positive
     private int price;
-
-    private String size;
-
-    @Positive
-    private int amount;
-    @Positive
-    private Double volume;
-
-    private int pizzaId;
-
-    private int drinkId;
-
-    private int snackId;
-
-    @ToString.Exclude
-    @ManyToOne
+    @NotBlank
+    private String volume;
+    @Lob
     @JsonIgnore
-    private User user;
+    private byte[] data;
+    @NotBlank
+    private String path;
+
+    private int ordersCount;
+
 }
