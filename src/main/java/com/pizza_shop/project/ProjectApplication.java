@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
         StorageDrinkConfig.class,
         StorageUserConfig.class,
         StoragePromoConfig.class,
+        StorageDessertConfig.class,
         StorageSnackConfig.class})
 public class ProjectApplication {
 

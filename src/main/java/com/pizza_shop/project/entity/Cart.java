@@ -35,6 +35,9 @@ public class Cart {
 
     private int snackId;
 
+    private int dessertId;
+
+
     @ToString.Exclude
     @ManyToOne
     @JsonIgnore
