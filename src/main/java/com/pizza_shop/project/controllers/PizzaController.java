@@ -1,9 +1,12 @@
 package com.pizza_shop.project.controllers;
 
+import com.pizza_shop.project.dto.PizzaDto;
 import com.pizza_shop.project.entity.Pizza;
 import com.pizza_shop.project.services.IPizzaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +45,21 @@ public class PizzaController {
         log.info("Handling getting all pizzas");
         return pizzaService.getAllPizzas();
     }
+    @GetMapping("/pizza/sort")
+    public PizzaDto getSortedPizzas(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "9") int size,
+                                    @RequestParam String type,
+                                    @RequestParam String sort){
+        log.info("Handling all pizzas in /Get with sorting by " + size + " and page " + page  + " and type " + type + " and sort " + sort);
+        PageRequest pageRequest = null;
+            if (type.equals("desc")){
+                pageRequest = PageRequest.of(page, size,Sort.by(sort).descending());
+        }
+            else if (type.equals("asc")){
+                pageRequest = PageRequest.of(page, size, Sort.by(sort).ascending());
+            }
+            return pizzaService.getSortedPizzas(pageRequest);
+    }
     @DeleteMapping("/pizza/{id}")
     public List<Pizza> deletePizza(@PathVariable int id){
         log.info("Handling deleting pizza with id = " + id);
@@ -49,8 +67,8 @@ public class PizzaController {
     }
     @PutMapping(value = "/pizza/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public List<Pizza> upDatePizza(@PathVariable int id, @Valid Pizza pizza, MultipartFile file){
+    public List<Pizza> upDatePizza(@PathVariable int id, @Valid Pizza pizza, MultipartFile image){
         log.info("Handling updating pizza with id: " + id);
-        return pizzaService.updatePizza(id, pizza, file);
+        return pizzaService.updatePizza(id, pizza, image);
     }
 }

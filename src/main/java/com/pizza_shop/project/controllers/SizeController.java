@@ -32,8 +32,8 @@ public class SizeController {
         return this.sizePizzaService.createSize(size, pizzaId, file);
     }
     @PutMapping(value = "/size/{sizeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public List<Size> updateSizePizza(@PathVariable int sizeId,Size size, MultipartFile image){
-        return sizePizzaService.upDateSize(sizeId, size, image);
+    public List<Size> updateSizePizza(@PathVariable int sizeId,Size size, MultipartFile file){
+        return sizePizzaService.upDateSize(sizeId, size, file);
     }
     @GetMapping(value = "/size/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImagePizzaBySize(@PathVariable String path){

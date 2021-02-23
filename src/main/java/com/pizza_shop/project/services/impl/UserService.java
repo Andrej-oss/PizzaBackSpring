@@ -1,8 +1,10 @@
 package com.pizza_shop.project.services.impl;
 
 import com.pizza_shop.project.dao.UserDao;
+import com.pizza_shop.project.dto.PasswordUserDto;
 import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.exceptions.EmailException;
+import com.pizza_shop.project.exceptions.NotExistEmailException;
 import com.pizza_shop.project.exceptions.UserNameException;
 import com.pizza_shop.project.services.IUserService;
 import com.pizza_shop.project.services.MailSenderService;
@@ -90,14 +92,55 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean activateUser(String activateCode) {
-        final User user = userDao.getUserByActivateCode(activateCode);
+    public User activateUser(String activateCode) {
+        final User user = userDao.getUserByActivationCode(activateCode);
         if (user == null){
-            return false;
+            return null;
         }
         user.setActivationCode(null);
         user.setActive(true);
         userDao.save(user);
-        return true;
+        return user;
+    }
+
+    @Override
+    public String sendPasswordUserByEmail(String email) {
+        final User user = getUserByEmail(email);
+        if (user != null){
+            user.setActive(false);
+            user.setActivationCode(UUID.randomUUID().toString());
+            userDao.save(user);
+            String message = String.format("Hello, %s!\n" +
+                    "Link to changing your password http://localhost:8080/email/activate/%s\n" +
+                    "And login is %s.", user.getName(), user.getActivationCode(), user.getUsername());
+            mailSenderService.sendMail(user.getEmail(), "Forgotten Password", message);
+        }
+        if (user == null) throw new NotExistEmailException("Rewrite your email");
+        assert user != null;
+        return user.getEmail();
+    }
+
+    @Override
+    public void changePassword(PasswordUserDto passwordUserDto) {
+        if(passwordUserDto != null){
+            final User user = getUserByUserName(passwordUserDto.getUserName());
+            if (user != null && user.getActivationCode() != null){
+                user.setActivationCode(null);
+                user.setActive(true);
+                user.setPassword(passwordEncoder.encode(passwordUserDto.getPassword()));
+                userDao.saveAndFlush(user);
+            }
+        }
+
+    }
+
+    @Override
+    public User getUserByActivationCode(String activationCode) {
+        return userDao.getUserByActivationCode(activationCode);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
     }
 }

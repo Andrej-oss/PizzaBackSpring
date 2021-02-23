@@ -1,5 +1,6 @@
 package com.pizza_shop.project.services;
 
+import com.pizza_shop.project.dto.PasswordUserDto;
 import com.pizza_shop.project.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,5 +21,13 @@ public interface IUserService extends UserDetailsService {
 
     User getUserByUserName(String name);
 
-    boolean activateUser(String activateCode);
+    User activateUser(String activateCode);
+
+    String sendPasswordUserByEmail(String email);
+
+    User getUserByEmail(String email);
+
+    void changePassword(PasswordUserDto passwordUserDto);
+
+    User getUserByActivationCode(String activationCode);
 }

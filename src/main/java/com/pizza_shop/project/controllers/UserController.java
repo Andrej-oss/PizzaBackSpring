@@ -60,16 +60,22 @@ public class UserController {
       log.info("Handling /get User by name = " + name);
       return userService.getUserByUserName(name);
     }
+    @GetMapping("/user/remind/{email}")
+    public String sendPasswordByEmail(@PathVariable String email){
+      log.info("Handling /get forgotten password by email = " + email);
+      return userService.sendPasswordUserByEmail(email);
+    }
     @GetMapping("/activate/{activateCode}")
     public String activateUser(@PathVariable String activateCode){
-    boolean isActivate = userService.activateUser(activateCode);
+      final User user = userService.activateUser(activateCode);
+      boolean isActivate = user != null;
       if (isActivate){
         log.info("User activated ");
       }
       else {
         log.info("Activated code is not found");
       }
-    return "login";
+    return "Your account is activated.";
     }
     @DeleteMapping("/user/{id}")
     public List<User> deleteUser(@PathVariable int id){

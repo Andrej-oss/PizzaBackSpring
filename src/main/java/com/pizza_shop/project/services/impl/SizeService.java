@@ -38,7 +38,9 @@ public class SizeService implements ISizePizzaService {
     public void init() {
         rootFolder = Paths.get(storagePizzaSizeConfig.getLocation()).toAbsolutePath().normalize();
         try {
-            Files.createDirectory(rootFolder);
+            if (!Files.isDirectory(rootFolder)) {
+                Files.createDirectories(rootFolder);
+            }
         } catch (IOException e) {
             log.warn("Enable to create directory " + e.getMessage());
         }
@@ -85,15 +87,16 @@ public class SizeService implements ISizePizzaService {
                 final String extension = Objects.requireNonNull(image.getOriginalFilename()).substring(image.getOriginalFilename().indexOf("."));
                 final Path path = Paths.get(name + extension).normalize();
                 try {
+                    Files.deleteIfExists(rootFolder.resolve(path));
                     Files.copy(image.getInputStream(), rootFolder.resolve(path));
                     sizeFind.setData(image.getBytes());
                 } catch (IOException e) {
                     log.warn("Unable to copy image file " + e.getMessage());
                 }
+                sizeDao.saveAndFlush(size);
             }
         }
-        sizeDao.flush();
-        return sizeDao.findAll();
+        return getAllSizesByPizzaId(sizeDao.getOne(id).getPizza().getId());
     }
 
     @Override

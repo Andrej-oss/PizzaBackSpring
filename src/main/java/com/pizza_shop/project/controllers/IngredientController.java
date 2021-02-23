@@ -27,10 +27,9 @@ public class IngredientController {
     }
     @PostMapping(value = "/ingredient", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Ingredient saveIngredient(@ModelAttribute @Valid Ingredient ingredient, MultipartFile image){
+    public List<Ingredient> saveIngredient(@ModelAttribute @Valid Ingredient ingredient, MultipartFile image){
         log.info("handling Post /ingredient from with object" + ingredient);
-        this.ingredientService.createIngredient(ingredient, image);
-        return this.ingredientService.getIngredient(ingredient.getId());
+        return this.ingredientService.createIngredient(ingredient, image);
     }
     @PutMapping(value = "/ingredient/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Ingredient> updateIngredient(@PathVariable int id, Ingredient ingredient, MultipartFile file){

@@ -41,7 +41,7 @@ public class IngredientService implements IIngredientService {
     }
 
     @Override
-    public Ingredient createIngredient(Ingredient ingredient, MultipartFile image) {
+    public List<Ingredient> createIngredient(Ingredient ingredient, MultipartFile image) {
         final String name = ingredient.getName();
         String extension = Objects.requireNonNull(image.getOriginalFilename())
                 .substring(image.getOriginalFilename().indexOf('.'));
@@ -54,7 +54,7 @@ public class IngredientService implements IIngredientService {
         }
         ingredient.setPath(imagePath.toString());
         this.ingredientDao.save(ingredient);
-        return this.ingredientDao.getOne(ingredient.getId());
+        return this.ingredientDao.findAll();
     }
 
     @Override

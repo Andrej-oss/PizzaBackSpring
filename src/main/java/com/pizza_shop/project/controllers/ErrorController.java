@@ -3,6 +3,7 @@ package com.pizza_shop.project.controllers;
 import com.pizza_shop.project.dto.ErrorResponse;
 import com.pizza_shop.project.exceptions.ActivationByEmailException;
 import com.pizza_shop.project.exceptions.EmailException;
+import com.pizza_shop.project.exceptions.NotExistEmailException;
 import com.pizza_shop.project.exceptions.UserNameException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,10 @@ public class ErrorController {
         log.warn("Handling ActivationByEmailException" + e.getMessage());
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),e.getMessage(), "Please check your email and activate your account" );
     }
-
+    @ExceptionHandler(value = NotExistEmailException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleNotExistEmailException(NotExistEmailException e){
+        log.warn("Handling NotExistEmailException" + e.getMessage());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage(), "Wrong Email address or doesn't exist");
+    }
 }

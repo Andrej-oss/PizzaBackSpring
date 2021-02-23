@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IIngredientService {
-    Ingredient createIngredient(Ingredient ingredient, MultipartFile image);
+    List<Ingredient> createIngredient(Ingredient ingredient, MultipartFile image);
     List<Ingredient> getAllIngredients();
     List<Ingredient> updateIngredient(int id, Ingredient ingredient, MultipartFile file);
     List<Ingredient> deleteIngredient(int id);
