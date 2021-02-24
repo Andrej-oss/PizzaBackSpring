@@ -124,7 +124,8 @@ public class UserService implements IUserService {
     public void changePassword(PasswordUserDto passwordUserDto) {
         if(passwordUserDto != null){
             final User user = getUserByUserName(passwordUserDto.getUserName());
-            if (user != null && user.getActivationCode() != null){
+            if (user != null && user.getActivationCode() != null
+            ){
                 user.setActivationCode(null);
                 user.setActive(true);
                 user.setPassword(passwordEncoder.encode(passwordUserDto.getPassword()));
