@@ -13,7 +13,7 @@ public interface IUserService extends UserDetailsService {
     User getUser(int id);
     List<User> getAllUsers();
     User updateUser(int id);
-    List<User> createUser(User user);
+    User createUser(User user);
     List<User> deleteUser(int id);
 
     @Override
@@ -21,7 +21,7 @@ public interface IUserService extends UserDetailsService {
 
     User getUserByUserName(String name);
 
-    User activateUser(String activateCode);
+    boolean activateUser(String activateCode);
 
     String sendPasswordUserByEmail(String email);
 

@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,12 +37,12 @@ public class UserController {
     public List<User> getAllUsers(){
       return userService.getAllUsers();
     }
+
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<User> saveUser(@RequestBody User user){
+    public User saveUser(@RequestBody @Valid User user){
         log.info("Handling User /save with requestBody" + user);
-       userService.createUser(user);
-        return userService.getAllUsers();
+       return userService.createUser(user);
     }
     @PostMapping("/user/authenticate")
     public AuthenticationResponse generateJwt(@RequestBody AuthRequest authRequest){
@@ -67,8 +68,7 @@ public class UserController {
     }
     @GetMapping("/activate/{activateCode}")
     public String activateUser(@PathVariable String activateCode){
-      final User user = userService.activateUser(activateCode);
-      boolean isActivate = user != null;
+      boolean isActivate = userService.activateUser(activateCode);
       if (isActivate){
         log.info("User activated ");
       }

@@ -46,7 +46,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> createUser(User user) {
+    public User createUser(User user) {
         final User usersByEmail = this.userDao.findUsersByEmail(user.getEmail());
         final User usersByUsername = this.userDao.findUsersByUsername(user.getUsername());
         if (usersByEmail == null && usersByUsername == null){
@@ -73,7 +73,7 @@ public class UserService implements IUserService {
          if (usersByEmail != null){
              throw new EmailException("This email occupied already");
         }
-        return this.userDao.findAll();
+        return userDao.getOne(user.getId());
     }
 
     @Override
@@ -92,15 +92,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User activateUser(String activateCode) {
+    public boolean activateUser(String activateCode) {
         final User user = userDao.getUserByActivationCode(activateCode);
         if (user == null){
-            return null;
+            return false;
         }
         user.setActivationCode(null);
         user.setActive(true);
         userDao.save(user);
-        return user;
+        return true;
     }
 
     @Override

@@ -102,8 +102,9 @@ public class SizeService implements ISizePizzaService {
     @Override
     public List<Size> deleteSize(int id) {
         final Size size = sizeDao.getOne(id);
+        final int pizzaId = size.getPizza().getId();
         sizeDao.delete(size);
-        return sizeDao.findAll();
+        return getAllSizesByPizzaId(pizzaId);
     }
     @Override
     public byte[] getSizeImageByPath(String path) {

@@ -32,8 +32,9 @@ public class User implements UserDetails {
     @NotBlank
     @JsonIgnore
     private String password;
-
+    @NotBlank
     private String name;
+    @NotBlank
     private String lastName;
     @NotBlank
     private String email;
@@ -41,6 +42,7 @@ public class User implements UserDetails {
     private String city;
     @NotBlank
     private String address;
+    @NotBlank
     private String postCode;
     @NotBlank
     private String phone;
