@@ -30,7 +30,6 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank
-    @JsonIgnore
     private String password;
     @NotBlank
     private String name;

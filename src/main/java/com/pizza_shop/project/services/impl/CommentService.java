@@ -38,9 +38,9 @@ public class CommentService implements ICommentService {
             comment.setDate(System.currentTimeMillis());
             comment.setPizza(pizza);
             commentDao.save(comment);
-            return commentDao.getAllCommentsByPizzaId(pizzaId);
+           // return commentDao.getAllCommentsByPizzaId(pizzaId);
         }
-        return null;
+        return commentDao.getAllCommentsByPizzaId(pizzaId);
     }
 
     @Override

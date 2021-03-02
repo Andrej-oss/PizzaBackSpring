@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -23,7 +24,7 @@ public class CommentController {
     }
     @PostMapping("/comment/{userId}/{pizzaId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Comment> saveComment(@PathVariable int userId, @PathVariable int pizzaId, @RequestBody Comment comment){
+    public List<Comment> saveComment(@PathVariable int userId, @PathVariable int pizzaId, @RequestBody @Valid Comment comment){
          return commentService.saveComment(userId, pizzaId, comment);
     }
     @PutMapping("/comment/{id}")

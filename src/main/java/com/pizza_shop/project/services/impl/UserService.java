@@ -41,19 +41,20 @@ public class UserService implements IUserService {
     }
 
     @Override
+    //TODO logic update user
     public User updateUser(int id) {
         return null;
     }
 
     @Override
     public User createUser(User user) {
-        final User usersByEmail = this.userDao.findUsersByEmail(user.getEmail());
+        final User usersByEmail = this.userDao.findUserByEmail(user.getEmail());
         final User usersByUsername = this.userDao.findUsersByUsername(user.getUsername());
         if (usersByEmail == null && usersByUsername == null){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            if (user.getUsername().equals("tomsawyer")){
-                user.setRole("ROLE_ADMIN");
-            }
+//            if (user.getUsername().equals("tomsawyer")){
+//                user.setRole("ROLE_ADMIN");
+//            }
             user.setActive(false);
             user.setActivationCode(UUID.randomUUID().toString());
             this.userDao.save(user);

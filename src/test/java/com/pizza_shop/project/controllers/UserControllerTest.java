@@ -2,16 +2,12 @@ package com.pizza_shop.project.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizza_shop.project.config.SecurityConfig;
-import com.pizza_shop.project.dto.AuthRequest;
-import com.pizza_shop.project.dto.AuthenticationResponse;
 import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.provider.Arguments;
-import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +26,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.argThat;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
@@ -108,37 +106,37 @@ public class UserControllerTest {
 //                    .
 //        }
     @Test
-   //@WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithAnonymousUser
     public void givenValidUserWhenInsertNewUserReturnAllUsers() throws Exception{
-       User newUser =  new User(3, "Bob", "8fdgd79dfgdsadad", "Bill", "East", "east@gmail.com", "LA", "Madison", "212313123", "3879713",
+        User newUser =  new User(3, "Bob", "8fdgd79dfgdsadad", "Bill", "East", "east@gmail.com", "LA", "Madison", "212313123", "3879713",
                 "ROLE_USER", false, null, null, null, null, null);
         users.add(newUser);
-        Mockito.when(userService.createUser(newUser)).thenReturn(newUser);
-       mockMvc.perform(MockMvcRequestBuilders.post("/user")
-               .contentType(MediaType.APPLICATION_JSON)
-               .content("{\n" +
-                       "\"id\": 3,\n" +
-                       "    \"username\": \"Bob\",\n" +
+        Mockito.when(userService.createUser(argThat(arg -> "Bob".equals(arg.getUsername())))).thenReturn(newUser);
+        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "\"id\": 3,\n" +
+                        "    \"username\": \"Bob\",\n" +
                        "    \"password\": \"8fdgd79dfgdsadad\",\n" +
-                       "    \"name\": \"Bill\",\n" +
-                       "    \"lastName\": \"East\",\n" +
-                       "    \"email\": \"east@gmail.com\",\n" +
-                       "    \"city\": \"NY\",\n" +
-                       "    \"address\": \"Madison\",\n" +
-                       "    \"postCode\": \"23213\",\n" +
-                       "    \"phone\": \"3879713\",\n" +
-                       "    \"role\": \"ROLE_USER\",\n" +
-                       "    \"active\": true,\n" +
-                       "    \"activationCode\": null,\n" +
-                       "    \"comments\": null,\n" +
-                       "    \"cartList\": null,\n" +
-                       "    \"avatar\": null,\n" +
-                       "    \"purchases\": null,\n" +
-                               "}"))
-               .andExpect(MockMvcResultMatchers.status().isCreated())
-             .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(3))
+                        "    \"name\": \"Bill\",\n" +
+                        "    \"lastName\": \"East\",\n" +
+                        "    \"email\": \"east@gmail.com\",\n" +
+                        "    \"city\": \"NY\",\n" +
+                        "    \"address\": \"Madison\",\n" +
+                        "    \"postCode\": \"23213\",\n" +
+                        "    \"phone\": \"3879713\",\n" +
+                        "    \"role\": \"ROLE_USER\",\n" +
+                        "    \"active\": true,\n" +
+                        "    \"activationCode\": null,\n" +
+                        "    \"comments\": null,\n" +
+                        "    \"cartList\": null,\n" +
+                        "    \"avatar\": null,\n" +
+                        "    \"purchases\": null\n" +
+                        "}"))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("Bob"));
-      }
+    }
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void givenUserIdWhenDeletingUserByUserIdReturnSuccessfulResponse() throws Exception {

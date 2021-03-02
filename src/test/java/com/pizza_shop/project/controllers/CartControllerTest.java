@@ -10,12 +10,14 @@ import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -23,9 +25,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CartController.class)
@@ -65,12 +70,45 @@ public class CartControllerTest {
     @Test
     @WithMockUser
     public void givenValidCartBodyWhenInsertingCartElementReturnSuccessfulResponse() throws Exception{
+        BDDMockito.when(cartService.createCartElement(any(), ArgumentMatchers.anyInt())).thenReturn(carts);
         final Cart cart3 = new Cart(3, "Pizza pepperoni, cheddar", 30, "Large", 32, 340.00, 1, 0, 0, 0, user);
         carts.add(cart3);
-        BDDMockito.when(cartService.createCartElement(cart3, user.getId())).thenReturn(carts);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/cart/{id}", user.getId()))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.post("/cart/{id}", user.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "\"id\": 3,\n" +
+                        "    \"description\": \"Pizza pepperoni, cheddar\",\n" +
+                        "    \"price\": 30,\n" +
+                        "    \"size\": \"Large\",\n" +
+                        "    \"amount\": 32,\n" +
+                        "    \"volume\": 340.00,\n" +
+                        "    \"pizzaId\": 1,\n" +
+                        "    \"drinkId\": 0,\n" +
+                        "    \"snackId\": 0,\n" +
+                        "    \"dessertId\": 0,\n" +
+                        "    \"user\": {\n" +
+                                "\"id\": 3,\n" +
+                                "    \"username\": \"Bob\",\n" +
+                                "    \"password\": \"8fdgd79dfgdsadad\",\n" +
+                                "    \"name\": \"Bill\",\n" +
+                                "    \"lastName\": \"East\",\n" +
+                                "    \"email\": \"east@gmail.com\",\n" +
+                                "    \"city\": \"NY\",\n" +
+                                "    \"address\": \"Madison\",\n" +
+                                "    \"postCode\": \"23213\",\n" +
+                                "    \"phone\": \"3879713\",\n" +
+                                "    \"role\": \"ROLE_USER\",\n" +
+                                "    \"active\": true,\n" +
+                                "    \"activationCode\": null,\n" +
+                                "    \"comments\": null,\n" +
+                                "    \"cartList\": null,\n" +
+                                "    \"avatar\": null,\n" +
+                                "    \"purchases\": null\n" +
+                                "}\n"  +
+                        "}"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3));
+        carts.remove(cart3);
     }
     @Test
     @WithMockUser

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithAnonymousUser;
@@ -33,6 +34,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CommentController.class)
@@ -109,10 +112,30 @@ public class CommentControllerTest {
              ) {
             if (comment.getId() == id) commentFind = comment;
         }
+
         comments.remove(commentFind);
         Mockito.doNothing().when(commentService).deleteComment(id);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/comment/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    @Test
+    @WithMockUser
+    public void givenValidCommentBodyWhenInsertingCommentReturnAllComments() throws Exception {
+        Comment comment3 = new Comment(3, "Loc", "PepperoniTest", "Very good!", 1L, null, pizza, null);
+        comments.add(comment3);
+        Mockito.when(commentService.saveComment(1, 1, comment3)).thenReturn(comments);
+        mockMvc.perform(MockMvcRequestBuilders.post("/comment/1/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "\"id\": 3,\n" +
+                        "    \"author\": \"Loc\",\n" +
+                        "    \"tittle\": \"PepperoniTest\",\n" +
+                        "    \"body\": \"Very good!\",\n" +
+                        "    \"date\": 1\n" +
+                        "}"))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(comment1, comment2, comment3))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1));
     }
 }

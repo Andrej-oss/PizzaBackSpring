@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -35,7 +36,10 @@ public class UserController {
 
     @GetMapping("/user")
     public List<User> getAllUsers(){
-      return userService.getAllUsers();
+      return userService.getAllUsers()
+              .stream()
+              .peek(user -> user.setPassword(""))
+              .collect(Collectors.toList());
     }
 
     @PostMapping("/user")
@@ -59,7 +63,9 @@ public class UserController {
     @GetMapping("/user/authenticate/{name}")
     public User getUserByName(@PathVariable String name){
       log.info("Handling /get User by name = " + name);
-      return userService.getUserByUserName(name);
+      final User user = userService.getUserByUserName(name);
+      user.setPassword("");
+      return user;
     }
     @GetMapping("/user/remind/{email}")
     public String sendPasswordByEmail(@PathVariable String email){

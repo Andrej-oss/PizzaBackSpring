@@ -1,4 +1,180 @@
 package com.pizza_shop.project.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pizza_shop.project.config.SecurityConfig;
+import com.pizza_shop.project.entity.Avatar;
+import com.pizza_shop.project.entity.Cart;
+import com.pizza_shop.project.entity.User;
+import com.pizza_shop.project.services.JwtService;
+import com.pizza_shop.project.services.impl.AvatarService;
+import com.pizza_shop.project.services.impl.UserService;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(AvatarController.class)
+@Import({SecurityConfig.class})
 public class AvatarControllerTest {
+
+    @MockBean
+    private AvatarService avatarService;
+    @MockBean
+    private AuthenticationManager authenticationManager;
+    @MockBean
+    private JwtService jwtService;
+    @MockBean
+    private UserService userService;
+
+    private static List<Avatar> avatars;
+    private static Avatar avatar1;
+    private static Avatar avatar2;
+    private static User user1;
+    private static User user2;
+
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @BeforeAll
+    public static void init(){
+        avatars = new ArrayList<>();
+        user1 =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
+                "ROLE_USER", true, null, null, null, null, null);
+        user2 =  new User(2, "Joe", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
+                "ROLE_USER", true, null, null, null, null, null);
+        avatar1 = new Avatar(1, "/bob", new byte[]{32,1,34,5,0,-11}, user1);
+        avatar2 = new Avatar(2, "/joe", new byte[]{73,14,3,-50,100,-61,56}, user2);
+        avatars.add(avatar1);
+        avatars.add(avatar2);
+    }
+    @Test
+    public void givenNothingWhenGettingAllAvatarsReturnAllAvatarsAndSuccessfulResponse() throws Exception{
+
+        BDDMockito.when(avatarService.getAllAvatars()).thenReturn(avatars);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/avatar"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(avatar1, avatar2))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2));
+    }
+    @Test
+    public void givenUserIdWhenGettingAvatarReturnAvatarImage() throws Exception{
+        int id = 1;
+        Avatar avatarFind = null;
+        for (Avatar avatar: avatars
+             ) {
+            if (avatar.getUser().getId() == id) avatarFind = avatar;
+        }
+        assert avatarFind != null;
+       BDDMockito.when(avatarService.getAvatarByUserId(id)).thenReturn(avatarFind);
+
+       mockMvc.perform(MockMvcRequestBuilders.get("/avatar/{id}", id))
+               .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    @Test
+    @WithMockUser
+    public void givenPathAvatarWhenGettingImageAvatarReturnImage() throws Exception{
+        String path = "/bob";
+        Avatar avatarFind = null;
+        for (Avatar avatar: avatars
+             ) {
+            if (avatar.getPath().equals(path)) avatarFind = avatar;
+        }
+        assert avatarFind != null;
+        BDDMockito.when(avatarService.getAvatarByPath(path)).thenReturn(avatarFind.getData());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/avatar/image{path}", path))
+                .andExpect(MockMvcResultMatchers.status().isFound());
+    }
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    public void givenAvatarIdWhenDeletingAvatarReturnSuccessfulResponse() throws Exception{
+        int id = 3;
+        Avatar avatar3 = new Avatar(3, "/joe", new byte[]{73,14,3,-50,100,-61,56}, user2);
+        avatars.add(avatar3);
+        Avatar avatarFind = null;
+        for (Avatar avatar: avatars
+             ) {
+            if (avatar.getId() == id) avatarFind = avatar;
+        }
+        assert avatarFind != null;
+        avatars.remove(avatarFind);
+        BDDMockito.when(avatarService.deleteAvatar(id)).thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/avatar/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value(true));
+    }
+    @Test
+    public void givenValidAvatarBodyWhenInsertingAvatarReturnAvatarAndSuccessfulResponse() throws Exception{
+        int id = 1;
+        final Avatar avatar = new Avatar(1, "/ford", new byte[]{2, 13, 5, 7, 4, 0}, user1);
+        MockMultipartFile file = new MockMultipartFile(
+                "image",
+                "WX20180207-134704@2x.png",
+                "image/png",
+                "beckon.jpg".getBytes());
+        avatars.add(avatar);
+        Mockito.when(avatarService.saveAvatar(ArgumentMatchers.anyInt(), any(), file)).thenReturn(avatar);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/avatar/{id}", 1).file(file))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\n" +
+//                        "\"id\": 1,\n" +
+//                        "    \"path\": \"/ford\",\n" +
+//                        "    \"data\": \"8fdgd79rgrgrgdbxn5435bbq34rgkblgddfgdsadad\",\n" +
+//                        "    \"user\": \"{\n" +
+//                     "\"id\": 3,\n" +
+//                    "    \"username\": \"Bob\",\n" +
+//                    "    \"password\": \"8fdgd79dfgdsadad\",\n" +
+//                    "    \"name\": \"Bill\",\n" +
+//                    "    \"lastName\": \"East\",\n" +
+//                    "    \"email\": \"east@gmail.com\",\n" +
+//                    "    \"city\": \"NY\",\n" +
+//                    "    \"address\": \"Madison\",\n" +
+//                    "    \"postCode\": \"23213\",\n" +
+//                    "    \"phone\": \"3879713\",\n" +
+//                    "    \"role\": \"ROLE_USER\",\n" +
+//                    "    \"active\": true,\n" +
+//                    "    \"activationCode\": null,\n" +
+//                    "    \"comments\": null,\n" +
+//                    "    \"cartList\": null,\n" +
+//                    "    \"avatar\": null,\n" +
+//                    "    \"purchases\": null\n" +
+//                    "}" +
+//                        "}"))
+//                .andExpect(MockMvcResultMatchers.status().isCreated());
+//            //    .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+//              //  .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/ford"));
+    }
 }

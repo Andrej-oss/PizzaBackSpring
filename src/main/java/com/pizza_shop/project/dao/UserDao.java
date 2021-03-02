@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserDao extends JpaRepository<User, Integer> {
 
-    @Query(value = "select u from User u where u.email = :email")
-    User findUsersByEmail(String email);
 
     @Query(value = "select u from User u where u.username = :username")
     User findUsersByUsername (String username);
