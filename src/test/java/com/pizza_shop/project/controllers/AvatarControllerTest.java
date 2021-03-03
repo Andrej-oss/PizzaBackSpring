@@ -9,6 +9,7 @@ import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.AvatarService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -52,19 +53,19 @@ public class AvatarControllerTest {
     @MockBean
     private UserService userService;
 
-    private static List<Avatar> avatars;
-    private static Avatar avatar1;
-    private static Avatar avatar2;
-    private static User user1;
-    private static User user2;
+    private  List<Avatar> avatars;
+    private  Avatar avatar1;
+    private  Avatar avatar2;
+    private  User user1;
+    private  User user2;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public  void init(){
         avatars = new ArrayList<>();
         user1 =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
                 "ROLE_USER", true, null, null, null, null, null);
@@ -136,7 +137,6 @@ public class AvatarControllerTest {
     }
     @Test
     public void givenValidAvatarBodyWhenInsertingAvatarReturnAvatarAndSuccessfulResponse() throws Exception{
-        int id = 1;
         final Avatar avatar = new Avatar(1, "/ford", new byte[]{2, 13, 5, 7, 4, 0}, user1);
         MockMultipartFile file = new MockMultipartFile(
                 "image",
@@ -144,37 +144,13 @@ public class AvatarControllerTest {
                 "image/png",
                 "beckon.jpg".getBytes());
         avatars.add(avatar);
-        Mockito.when(avatarService.saveAvatar(ArgumentMatchers.anyInt(), any(), file)).thenReturn(avatar);
+        Mockito.when(avatarService.saveAvatar(ArgumentMatchers.anyInt(), any(Avatar.class), any(MultipartFile.class))).thenReturn(avatar);
 
+        mockMvc.perform(MockMvcRequestBuilders.post("/avatar/{id}", 1)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .flashAttr("avatar", avatar))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
         mockMvc.perform(MockMvcRequestBuilders.multipart("/avatar/{id}", 1).file(file))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content("{\n" +
-//                        "\"id\": 1,\n" +
-//                        "    \"path\": \"/ford\",\n" +
-//                        "    \"data\": \"8fdgd79rgrgrgdbxn5435bbq34rgkblgddfgdsadad\",\n" +
-//                        "    \"user\": \"{\n" +
-//                     "\"id\": 3,\n" +
-//                    "    \"username\": \"Bob\",\n" +
-//                    "    \"password\": \"8fdgd79dfgdsadad\",\n" +
-//                    "    \"name\": \"Bill\",\n" +
-//                    "    \"lastName\": \"East\",\n" +
-//                    "    \"email\": \"east@gmail.com\",\n" +
-//                    "    \"city\": \"NY\",\n" +
-//                    "    \"address\": \"Madison\",\n" +
-//                    "    \"postCode\": \"23213\",\n" +
-//                    "    \"phone\": \"3879713\",\n" +
-//                    "    \"role\": \"ROLE_USER\",\n" +
-//                    "    \"active\": true,\n" +
-//                    "    \"activationCode\": null,\n" +
-//                    "    \"comments\": null,\n" +
-//                    "    \"cartList\": null,\n" +
-//                    "    \"avatar\": null,\n" +
-//                    "    \"purchases\": null\n" +
-//                    "}" +
-//                        "}"))
-//                .andExpect(MockMvcResultMatchers.status().isCreated());
-//            //    .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-//              //  .andExpect(MockMvcResultMatchers.jsonPath("$.path").value("/ford"));
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 }

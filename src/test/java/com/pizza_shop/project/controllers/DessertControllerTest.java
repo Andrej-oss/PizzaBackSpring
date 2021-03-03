@@ -7,19 +7,24 @@ import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.DessertService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,30 +44,54 @@ public class DessertControllerTest {
     @MockBean
     private AuthenticationManager authenticationManager;
 
-    private static List<Dessert> desserts;
-    private static Dessert dessert1;
-    private static Dessert dessert2;
+    private List<Dessert> desserts;
+    private Dessert dessert1;
+    private Dessert dessert2;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         desserts = new ArrayList<Dessert>();
         dessert1 = new Dessert(1, "napoleon", "Sweet and delicious", new byte[]{1,0,23,43,-11}, 12, "/napoleon", "1pcs.", 11);
         dessert2 = new Dessert(2, "cookies", "Sweet and chocolates", new byte[]{11,23,49,111,121}, 7, "/cookies", "120gr.", 111);
         desserts.add(dessert1);
         desserts.add(dessert2);
     }
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    public void givenValidDessertBodyAndImageFileWhenInsertingDessertReturnAllDesserts() throws Exception {
+        Dessert dessert3 = new Dessert(3, "choco cookies", "Sweet and chocolates", new byte[]{11,-3,0,61,11}, 6, "/chococookies", "120gr.", 13);
+        MockMultipartFile file = new MockMultipartFile(
+                "image",
+                "WX20180207-134704@2x.png",
+                "image/png",
+                "chococookies.jpg".getBytes());
+        desserts.add(dessert3);
+        BDDMockito.when(dessertService.saveDessert(ArgumentMatchers.any(Dessert.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(desserts);
 
+        mockMvc.perform(MockMvcRequestBuilders.post("/dessert")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content("{\n" +
+                        "\"id\": 3,\n" +
+                        "    \"name\": \"choco cookies\",\n" +
+                        "    \"description\": \"Sweet and chocolates\",\n" +
+                        "    \"price\": 6,\n" +
+                        "    \"path\": \"/chococookies\",\n" +
+                        "    \"volume\": \"120gr.\",\n" +
+                        "    \"ordersCount\": 13,\n" +
+                   "}"))
+//                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+//                .flashAttr("dessert", dessert3))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/dessert").file(file))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
     @Test
     public void givenNothingWhenGettingAllDessertsReturnAllDessertsAndSuccessfulResponse() throws Exception{
-        if (desserts.size() == 1){
-            dessert1 = new Dessert(1, "napoleon", "Sweet and delicious", new byte[]{1,0,23,43,-11}, 12, "/napoleon", "1pcs.", 11);
-            desserts.add(0, dessert1);
-        }
         BDDMockito.when(dessertService.getAllDesserts()).thenReturn(desserts);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/dessert"))

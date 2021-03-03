@@ -9,7 +9,9 @@ import com.pizza_shop.project.entity.Voice;
 import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.CommentService;
 import com.pizza_shop.project.services.impl.UserService;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
@@ -52,18 +54,18 @@ public class CommentControllerTest {
     private AuthenticationManager authenticationManager;
 
 
-    private static List<Comment> comments;
-    private static Comment comment1;
-    private static Comment comment2;
-    private static Pizza pizza;
+    private  List<Comment> comments;
+    private  Comment comment1;
+    private  Comment comment2;
+    private  Pizza pizza;
 
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public  void init(){
         comments = new ArrayList<Comment>();
         pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
         comment1 = new Comment(1, "Bob", "Pepperoni", "Very good!", 1L, null, pizza, null);
@@ -124,7 +126,7 @@ public class CommentControllerTest {
     public void givenValidCommentBodyWhenInsertingCommentReturnAllComments() throws Exception {
         Comment comment3 = new Comment(3, "Loc", "PepperoniTest", "Very good!", 1L, null, pizza, null);
         comments.add(comment3);
-        Mockito.when(commentService.saveComment(1, 1, comment3)).thenReturn(comments);
+        Mockito.when(commentService.saveComment(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt(), any(Comment.class))).thenReturn(comments);
         mockMvc.perform(MockMvcRequestBuilders.post("/comment/1/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
