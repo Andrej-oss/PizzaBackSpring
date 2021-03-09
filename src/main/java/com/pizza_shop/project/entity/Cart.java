@@ -26,7 +26,7 @@ public class Cart {
 
     @Positive
     private int amount;
-    @Positive
+
     private Double volume;
 
     private int pizzaId;

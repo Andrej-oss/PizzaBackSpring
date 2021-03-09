@@ -8,6 +8,7 @@ import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.CartService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -46,19 +47,19 @@ public class CartControllerTest {
     @MockBean
     private UserService userService;
 
-    private static List<Cart> carts;
-    private static Cart cart1;
-    private static Cart cart2;
+    private List<Cart> carts;
+    private  Cart cart1;
+    private  Cart cart2;
     private Cart cart3;
-    private static User user;
+    private  User user;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public  void init(){
         carts = new ArrayList<Cart>();
         user =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
                 "ROLE_USER", true, null, null, null, null, null);

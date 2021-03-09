@@ -25,7 +25,7 @@ public class DrinkController {
     }
     @PostMapping(value = "/drink", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public List<Drink> saveDrink(@Valid Drink drink, MultipartFile image){
+    public List<Drink> saveDrink(@ModelAttribute("drink") @Valid Drink drink, MultipartFile image){
         log.info("handling Post /drink  " + drink + " and with image " + image);
         return drinkService.saveDrink(drink, image);
     }

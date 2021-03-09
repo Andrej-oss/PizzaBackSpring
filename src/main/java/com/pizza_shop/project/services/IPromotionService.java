@@ -9,7 +9,7 @@ public interface IPromotionService {
 
     Promotion getPromotion(int id);
     List<Promotion> getAllPromotions();
-    void savePromotion(Promotion promotion, MultipartFile image);
+   List<Promotion> savePromotion(Promotion promotion, MultipartFile image);
     void updatePromotion(int id, MultipartFile image);
     void deletePromotion(int id);
 

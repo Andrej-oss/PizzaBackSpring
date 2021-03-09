@@ -32,8 +32,20 @@ public class PizzaService implements IPizzaService {
 
     private Path rootFolder;
 
+    @PostConstruct
+    public void init() {
+        try {
+            rootFolder = Paths.get(storagePizzaConfig.getLocation()).toAbsolutePath().normalize();
+            if (!Files.isDirectory(rootFolder)) {
+                Files.createDirectory(rootFolder);
+            }
+        } catch (IOException e) {
+            log.warn("Unable to create folder " + e.getMessage());
+        }
+    }
+
     @Override
-    public Pizza createPizza(Pizza pizza, MultipartFile file) {
+    public List<Pizza> createPizza(Pizza pizza, MultipartFile file) {
         final String name = pizza.getName();
         final String extension = Objects.requireNonNull(file.getOriginalFilename())
                 .substring(file.getOriginalFilename().indexOf("."));
@@ -46,19 +58,7 @@ public class PizzaService implements IPizzaService {
             log.warn("Unable to copy file " + e.getMessage());
         }
         this.pizzaDao.save(pizza);
-        return pizza;
-    }
-
-    @PostConstruct
-    public void init() {
-        try {
-            rootFolder = Paths.get(storagePizzaConfig.getLocation()).toAbsolutePath().normalize();
-            if (!Files.isDirectory(rootFolder)) {
-                Files.createDirectory(rootFolder);
-            }
-        } catch (IOException e) {
-            log.warn("Unable to create folder " + e.getMessage());
-        }
+        return pizzaDao.findAll();
     }
 
     @Override

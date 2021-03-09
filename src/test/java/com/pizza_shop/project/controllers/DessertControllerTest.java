@@ -6,7 +6,6 @@ import com.pizza_shop.project.entity.Dessert;
 import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.DessertService;
 import com.pizza_shop.project.services.impl.UserService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -65,7 +63,7 @@ public class DessertControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void givenValidDessertBodyAndImageFileWhenInsertingDessertReturnAllDesserts() throws Exception {
         Dessert dessert3 = new Dessert(3, "choco cookies", "Sweet and chocolates", new byte[]{11,-3,0,61,11}, 6, "/chococookies", "120gr.", 13);
-        MockMultipartFile file = new MockMultipartFile(
+        MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "WX20180207-134704@2x.png",
                 "image/png",
@@ -73,22 +71,12 @@ public class DessertControllerTest {
         desserts.add(dessert3);
         BDDMockito.when(dessertService.saveDessert(ArgumentMatchers.any(Dessert.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(desserts);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/dessert")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("{\n" +
-                        "\"id\": 3,\n" +
-                        "    \"name\": \"choco cookies\",\n" +
-                        "    \"description\": \"Sweet and chocolates\",\n" +
-                        "    \"price\": 6,\n" +
-                        "    \"path\": \"/chococookies\",\n" +
-                        "    \"volume\": \"120gr.\",\n" +
-                        "    \"ordersCount\": 13,\n" +
-                   "}"))
-//                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-//                .flashAttr("dessert", dessert3))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/dessert").file(file))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/dessert").file(image)
+                .flashAttr("dessert", dessert3))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+        .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(dessert1, dessert2, dessert3))))
+        .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+        .andExpect(MockMvcResultMatchers.jsonPath("$[2].name").value("choco cookies"));
     }
     @Test
     public void givenNothingWhenGettingAllDessertsReturnAllDessertsAndSuccessfulResponse() throws Exception{

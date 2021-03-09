@@ -48,6 +48,12 @@ public class UserController {
         log.info("Handling User /save with requestBody" + user);
        return userService.createUser(user);
     }
+    @PutMapping("/user/{id}")
+    public User updateUser(@PathVariable int id, @Valid @RequestBody User user){
+      final StringBuilder stringBuilder = new StringBuilder();
+      log.info(stringBuilder.append("Handling post /user/").append(id).append(" With body : ").append(user.toString()).toString());
+      return userService.updateUser(id, user);
+    }
     @PostMapping("/user/authenticate")
     public AuthenticationResponse generateJwt(@RequestBody AuthRequest authRequest){
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(),

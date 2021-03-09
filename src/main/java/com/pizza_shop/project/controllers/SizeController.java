@@ -29,7 +29,7 @@ public class SizeController {
     @ResponseStatus(HttpStatus.CREATED)
     public List<Size> saveSizePizza(@PathVariable int pizzaId, @ModelAttribute Size size, MultipartFile file){
         log.info("Handling post PizzaSize with data " + size + file.getOriginalFilename());
-        return this.sizePizzaService.createSize(size, pizzaId, file);
+        return this.sizePizzaService.createSize(pizzaId, size, file);
     }
     @PutMapping(value = "/size/{sizeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Size> updateSizePizza(@PathVariable int sizeId,Size size, MultipartFile file){

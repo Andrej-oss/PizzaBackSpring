@@ -9,6 +9,7 @@ import com.pizza_shop.project.services.impl.RatingService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -39,19 +40,19 @@ public class RatingControllerTest {
     @MockBean
     private JwtService jwtService;
 
-    private static List<Rating> ratings;
-    private static Rating rating1;
-    private static Rating rating2;
-    private static Pizza pizza;
+    private  List<Rating> ratings;
+    private  Rating rating1;
+    private Rating rating2;
+    private Pizza pizza;
 
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
 
-    @BeforeAll
-    public static void init(){
-       ratings = new ArrayList<Rating>();
+    @BeforeEach
+    public void init(){
+        ratings = new ArrayList<Rating>();
         pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
         rating1 = new Rating(1, 1, pizza, 1);
         rating2 = new Rating(2, 2, pizza, 2);

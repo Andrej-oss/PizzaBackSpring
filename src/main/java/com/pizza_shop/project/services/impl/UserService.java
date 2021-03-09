@@ -41,9 +41,21 @@ public class UserService implements IUserService {
     }
 
     @Override
-    //TODO logic update user
-    public User updateUser(int id) {
-        return null;
+    public User updateUser(int id, User user) {
+        final User userDaoOne = userDao.getOne(id);
+        if (userDaoOne != null && user != null){
+            userDaoOne.setName(user.getName());
+            userDaoOne.setPassword(passwordEncoder.encode(user.getPassword()));
+            userDaoOne.setUsername(user.getUsername());
+            userDaoOne.setPhone(user.getPhone());
+            userDaoOne.setPostCode(user.getPostCode());
+            userDaoOne.setLastName(user.getLastName());
+            userDaoOne.setCity(user.getCity());
+            userDaoOne.setEmail(user.getEmail());
+            userDaoOne.setAddress(user.getAddress());
+            userDao.saveAndFlush(userDaoOne);
+        }
+        return userDao.getOne(id);
     }
 
     @Override
@@ -133,7 +145,6 @@ public class UserService implements IUserService {
                 userDao.saveAndFlush(user);
             }
         }
-
     }
 
     @Override

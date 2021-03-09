@@ -52,7 +52,7 @@ public class PromotionService implements IPromotionService {
     }
 
     @Override
-    public void savePromotion(Promotion promotion, MultipartFile image) {
+    public List<Promotion> savePromotion(Promotion promotion, MultipartFile image) {
         if (image != null && promotion != null){
             final String extension = Objects.requireNonNull(image.getOriginalFilename()).substring(image.getOriginalFilename().indexOf("."));
             final Path path = Paths.get(promotion.getName() + extension).normalize();
@@ -66,6 +66,7 @@ public class PromotionService implements IPromotionService {
                 log.warn("Unable to copy file " + e.getMessage());
             }
         }
+        return promotionDao.findAll();
     }
 
     @Override

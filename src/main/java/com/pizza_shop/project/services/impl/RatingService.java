@@ -28,10 +28,10 @@ public class RatingService implements IRatingService {
         final List<Rating> allRatingsByPizzaId = getAllRatingsByPizzaId(pizzaId);
         for (Rating rating1 : allRatingsByPizzaId) {
             if (rating1.getUserId() != rating.getUserId()){
-                return ratingDao.save(rating);
+                 ratingDao.save(rating);
             }
         }
-        ratingDao.getAllRatingsByUserId(rating.getUserId());
+        if (allRatingsByPizzaId.size() == 0) ratingDao.save(rating);
         return null;
     }
 

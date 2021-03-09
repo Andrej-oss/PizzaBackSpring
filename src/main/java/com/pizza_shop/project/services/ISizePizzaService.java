@@ -9,7 +9,7 @@ public interface ISizePizzaService {
 
     List<Size> getAllSizes();
     Size getSize(int id);
-    List<Size> createSize(Size size, int id, MultipartFile file);
+    List<Size> createSize(int id, Size size, MultipartFile file);
     List<Size> upDateSize(int id, Size size, MultipartFile image);
     List<Size> deleteSize(int id);
 

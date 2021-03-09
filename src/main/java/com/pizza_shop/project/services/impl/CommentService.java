@@ -57,8 +57,10 @@ public class CommentService implements ICommentService {
     public boolean updateComment(int id, Comment comment) {
         final Comment commentFind = commentDao.getOne(id);
         if (commentFind != null) {
+            comment.setDate(System.currentTimeMillis());
             commentFind.setTittle(comment.getTittle());
             commentFind.setBody(comment.getBody());
+            commentDao.save(commentFind);
             commentDao.flush();
             return true;
         }

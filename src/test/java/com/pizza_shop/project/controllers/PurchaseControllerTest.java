@@ -12,6 +12,7 @@ import com.pizza_shop.project.services.impl.PromotionService;
 import com.pizza_shop.project.services.impl.PurchaseService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -47,18 +48,18 @@ public class PurchaseControllerTest {
     @MockBean
     private AuthenticationManager authenticationManager;
 
-    private static List<Purchase> purchases;
-    private static Purchase purchase1;
-    private static Purchase purchase2;
-    private static User user;
+    private List<Purchase> purchases;
+    private Purchase purchase1;
+    private Purchase purchase2;
+    private User user;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         purchases = new ArrayList<Purchase>();
         user =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
                 "ROLE_USER", true, null, null, null, null, null);

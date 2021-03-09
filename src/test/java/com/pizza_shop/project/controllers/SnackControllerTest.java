@@ -7,19 +7,23 @@ import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.SnackService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,12 +48,12 @@ public class SnackControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private static List<Snack> snacks;
-    private static Snack snack1;
-    private static Snack snack2;
+    private List<Snack> snacks;
+    private Snack snack1;
+    private Snack snack2;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         snacks = new ArrayList<Snack>();
          snack1 = new Snack(1, "chipotle", "Good tasted snack with meat and cheese",
                 6, "1pcs.", new byte[]{21, 0, 11, 23, 10, -1}, "/chipotle", 0);
@@ -59,13 +63,25 @@ public class SnackControllerTest {
         snacks.add(snack2);
     }
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    public void givenValidSnackBodyAndImageWhenInsertingSnackReturnAllSnacks() throws Exception{
+       Snack snack3 = new Snack(3, "pasta", "Good tasted snack with meat and cheese",
+               7, "200gr.", new byte[]{21, 89, 11, 56, 121, 0}, "/pasta", 11);
+        MockMultipartFile file = new MockMultipartFile(
+                "image",
+                "WX20180207-134704@2x.png",
+                "image/png",
+                "pepperoniMedium.jpg".getBytes());
+       snacks.add(snack3);
+       BDDMockito.when(snackService.saveSnack(ArgumentMatchers.any(Snack.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(snacks);
+
+       mockMvc.perform(MockMvcRequestBuilders.multipart("/snack")
+               .file(file).flashAttr("snack", snack3))
+               .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+    @Test
     @WithMockUser
     public void givenNothingWhenGettingAllSnacksReturnAllSnacks() throws Exception{
-        if (snacks.size() == 1){
-            snack1 = new Snack(1, "chipotle", "Good tasted snack with meat and cheese",
-                    6, "1pcs.", new byte[]{21, 0, 11, 23, 10, -1}, "/chipotle", 0);
-            snacks.add(0, snack1);
-        }
         BDDMockito.given(snackService.getAllSnacks()).willReturn(snacks);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/snack"))

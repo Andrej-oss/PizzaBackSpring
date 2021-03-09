@@ -25,7 +25,7 @@ public class DessertController {
     }
     @PostMapping(value = "/dessert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Dessert> saveDessert(@ModelAttribute @Valid Dessert dessert, MultipartFile image){
+    public List<Dessert> saveDessert(@ModelAttribute("dessert") @Valid Dessert dessert, MultipartFile image){
         log.info("Handling Post/ dessert with body " + dessert + " and image " + image);
         return dessertService.saveDessert(dessert, image);
     }

@@ -7,19 +7,23 @@ import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.PromotionService;
 import com.pizza_shop.project.services.impl.UserService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,22 +42,37 @@ public class PromotionControllerTest {
     @MockBean
     private AuthenticationManager authenticationManager;
 
-    private static List<Promotion> promotions;
-    private static Promotion promotion1;
-    private static Promotion promotion2;
+    private  List<Promotion> promotions;
+    private  Promotion promotion1;
+    private  Promotion promotion2;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public  void init(){
         promotions = new ArrayList<Promotion>();
         promotion1 = new Promotion(1, "best", new byte[]{12,12,44,56,7,8}, "/best");
         promotion2 = new Promotion(2, "bestFromTheBest", new byte[]{12,-56,44,116,7,89}, "/bestofthebest");
         promotions.add(promotion1);
         promotions.add(promotion2);
+    }
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    public void givenValidPromoBodyWhenInsertingPromotionReturnAllPromotions() throws Exception {
+        Promotion promotion3 = new Promotion(3, "bestbest", new byte[]{12,-12,44,56,-7,8}, "/bestbest");
+        MockMultipartFile image = new MockMultipartFile(
+                "image",
+                "WX20180207-134704@2x.png",
+                "image/png",
+                "garlic.jpg".getBytes());
+        BDDMockito.when(promotionService.savePromotion(ArgumentMatchers.any(Promotion.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(promotions);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/promotion")
+                .file(image).flashAttr("promotion", promotion3))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
     @Test
     public void givenNothingWhenGettingAllPromotionsReturnAllPromotions() throws Exception{
@@ -89,7 +108,7 @@ public class PromotionControllerTest {
             if (promo.getId() == id) promotionFind = promo;
         }
         assert promotionFind != null;
-        //promotions.remove(promotionFind);
+        promotions.remove(promotionFind);
         BDDMockito.doNothing().when(promotionService).deletePromotion(id);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/promotion/{id}", id))

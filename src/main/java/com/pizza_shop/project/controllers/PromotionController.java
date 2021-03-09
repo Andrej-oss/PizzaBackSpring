@@ -25,10 +25,9 @@ public class PromotionController {
     }
     @PostMapping(value = "/promotion", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public List<Promotion> savePromotion(@Valid Promotion promotion, MultipartFile image){
+    public List<Promotion> savePromotion(@ModelAttribute @Valid Promotion promotion, MultipartFile image){
         log.info("handling Post /promotion with " + promotion + " and image " + image);
-        promotionService.savePromotion(promotion, image);
-        return promotionService.getAllPromotions();
+        return promotionService.savePromotion(promotion, image);
     }
     @GetMapping(value = "/promotion/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImageByPath(@PathVariable String path){

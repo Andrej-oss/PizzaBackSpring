@@ -146,11 +146,11 @@ public class AvatarControllerTest {
         avatars.add(avatar);
         Mockito.when(avatarService.saveAvatar(ArgumentMatchers.anyInt(), any(Avatar.class), any(MultipartFile.class))).thenReturn(avatar);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/avatar/{id}", 1)
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/avatar/{id}", 1).file(file)
                 .flashAttr("avatar", avatar))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/avatar/{id}", 1).file(file))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(avatar1, avatar2))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2));;
     }
 }

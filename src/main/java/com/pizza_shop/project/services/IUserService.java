@@ -12,7 +12,7 @@ public interface IUserService extends UserDetailsService {
 
     User getUser(int id);
     List<User> getAllUsers();
-    User updateUser(int id);
+    User updateUser(int id, User user);
     User createUser(User user);
     List<User> deleteUser(int id);
 

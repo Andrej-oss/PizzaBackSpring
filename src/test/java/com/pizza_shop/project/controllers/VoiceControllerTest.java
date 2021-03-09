@@ -3,12 +3,11 @@ package com.pizza_shop.project.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizza_shop.project.config.SecurityConfig;
 import com.pizza_shop.project.entity.Comment;
-import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.entity.Voice;
 import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.UserService;
 import com.pizza_shop.project.services.impl.VoiceService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -40,18 +39,18 @@ public class VoiceControllerTest {
     @MockBean
     private AuthenticationManager authenticationManager;
 
-    private static List<Voice> voices;
-    private static Comment comment;
-    private static Voice voice1;
-    private static Voice voice2;
+    private List<Voice> voices;
+    private Comment comment;
+    private Voice voice1;
+    private Voice voice2;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         voices = new ArrayList<>();
         comment = new Comment(1, "Bob", "Pepperoni", "Very good!", 1L, null, null, null);
         voice1 =  new Voice(1, comment, 4, 1);

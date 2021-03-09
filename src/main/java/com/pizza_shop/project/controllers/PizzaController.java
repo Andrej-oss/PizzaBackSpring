@@ -31,9 +31,8 @@ public class PizzaController {
     @PostMapping(value = "/pizza", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Pizza> SavePizza(@ModelAttribute @Valid Pizza pizza, MultipartFile image){
-         pizzaService.createPizza(pizza, image);
          log.info("Handling PostRequest pizza controller with body " + pizza);
-         return pizzaService.getAllPizzas();
+         return  pizzaService.createPizza(pizza, image);
     }
     @GetMapping(value = "/pizza/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getPizzaImage(@PathVariable String path){

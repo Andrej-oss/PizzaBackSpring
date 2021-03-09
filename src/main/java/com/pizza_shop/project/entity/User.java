@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class User implements UserDetails {
     @NotBlank
     private String lastName;
     @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String city;

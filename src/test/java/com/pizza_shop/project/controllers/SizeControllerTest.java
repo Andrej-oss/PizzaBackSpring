@@ -1,6 +1,5 @@
 package com.pizza_shop.project.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizza_shop.project.config.SecurityConfig;
 import com.pizza_shop.project.entity.Pizza;
@@ -8,7 +7,7 @@ import com.pizza_shop.project.entity.Size;
 import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.SizeService;
 import com.pizza_shop.project.services.impl.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,18 +46,18 @@ public class SizeControllerTest {
     @MockBean
     private JwtService jwtService;
 
-    private static List<Size> sizes;
-    private static Size size1;
-    private static Size size2;
-    private static Pizza pizza;
+    private  List<Size> sizes;
+    private  Size size1;
+    private  Size size2;
+    private  Pizza pizza;
 
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         sizes = new ArrayList<Size>();
         pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
         size1 = new Size(1, "pepperoniSmall", 20, 320, 16, new byte[]{12, 32, 45, -11, 0, 43}, "/pepperoni20", pizza);
@@ -65,12 +66,24 @@ public class SizeControllerTest {
         sizes.add(size2);
     }
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    public void givenValidSizePizzaAndImageWhenInsertingSizePizzaReturnAllPizzaSizes() throws Exception{
+        Size size3 = new Size(3, "pepperoniMedium", 25, 540, 22, new byte[]{32, -32, 45, -11, 100, 73}, "/pepperoni30", pizza);
+        MockMultipartFile file = new MockMultipartFile(
+                "image",
+                "WX20180207-134704@2x.png",
+                "image/png",
+                "pepperoniMedium.jpg".getBytes());
+        BDDMockito.when(sizeService.createSize(ArgumentMatchers.anyInt(), ArgumentMatchers.any(Size.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(sizes);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/size/3" )
+                .file(file)
+                .flashAttr("size", size3))
+                 .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+    @Test
     public void givenPizzaIdWhenGettingAllSizesByPizzaIdReturnAllPizzaSizes() throws Exception {
         int id = 1;
-        if (sizes.size() == 1){
-            size1 = new Size(1, "pepperoniSmall", 20, 320, 16, new byte[]{12, 32, 45, -11, 0, 43}, "pepperoni20", pizza);
-            sizes.add(0, size1);
-        }
         List<Size> sizeFind = new ArrayList<Size>();
         for (Size size: sizes
              ) {
@@ -85,10 +98,6 @@ public class SizeControllerTest {
     @Test
     public void givenPizzaIdAndPizzaNameWhenGettingPizzaSizeByPizzaIdAndSizeNameReturnAllSizesBySizeName() throws Exception {
         int id = 1;
-        if (sizes.size() == 1){
-            size1 = new Size(1, "pepperoniSmall", 20, 320, 16, new byte[]{12, 32, 45, -11, 0, 43}, "pepperoni20", pizza);
-            sizes.add(0, size1);
-        }
         String name = "pepperoniSmall";
         Size sizeFind = null;
         for (Size size:sizes

@@ -5,7 +5,7 @@ import com.pizza_shop.project.config.SecurityConfig;
 import com.pizza_shop.project.entity.User;
 import com.pizza_shop.project.services.JwtService;
 import com.pizza_shop.project.services.impl.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -41,17 +41,17 @@ public class UserControllerTest {
     @MockBean
     private AuthenticationManager authenticationManager;
 
-    private static List<User> users;
-    private static User user1;
-    private static User user2;
+    private List<User> users;
+    private User user1;
+    private User user2;
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         users = new ArrayList<>();
         user1 =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
                 "ROLE_USER", true, null, null, null, null, null);
@@ -64,11 +64,6 @@ public class UserControllerTest {
     @Test
     @WithMockUser
     public void givenNothingWhenGettingAllUsersReturnAllUsers() throws Exception {
-        if (users.size() == 1) {
-            user1 =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
-                    "ROLE_USER", true, null, null, null, null, null);
-            users.add(user1);
-        }
         BDDMockito.given(userService.getAllUsers()).willReturn(users);
         mockMvc.perform(MockMvcRequestBuilders.get("/user"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
