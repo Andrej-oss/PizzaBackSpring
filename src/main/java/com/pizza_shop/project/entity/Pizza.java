@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,7 @@ public class Pizza {
     @JsonIgnore
     private byte[] data;
     @Positive
-    private int price;
+    private Double price;
     @NotBlank
     private String ingredients;
 

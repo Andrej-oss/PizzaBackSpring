@@ -41,14 +41,14 @@ public class PurchaseServiceTest {
         purchases = new ArrayList<Purchase>();
         user =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
                 "ROLE_USER", true, null, null, null, null, null);
-        purchase1 = new Purchase(1, "pepperoni", "pepperoni, mozzarella, pepper", 1, 22, user, 1, 0, 0, 0, 1L);
-        purchase2 = new Purchase(2, "coca cola", "coca cola 0.5", 11, 4, user, 0, 1, 0, 0, 2L);
+        purchase1 = new Purchase(1, "pepperoni", "pepperoni, mozzarella, pepper", 348.00, 1, 22, user, 1, 0, 0, 0, 1L);
+        purchase2 = new Purchase(2, "coca cola", "coca cola 0.5", 0.5, 11, 4, user, 0, 1, 0, 0, 2L);
         purchases.add(purchase1);
         purchases.add(purchase2);
     }
     @Test
     public void givenPurchaseWhenInsertingPurchaseReturnAllPurchasesByUserId(){
-       Purchase purchase3 = new Purchase(3, "fanta", "fanta 1l", 11, 4, user, 0, 2, 0, 0, 2L);
+       Purchase purchase3 = new Purchase(3, "fanta", "fanta 1l",0.5, 11, 4, user, 0, 2, 0, 0, 2L);
         Mockito.when(purchaseDao.save(purchase3)).thenReturn(purchase3);
         purchases.add(purchase3);
         Mockito.when(purchaseDao.getAllPurchasesByUserId(ArgumentMatchers.anyInt())).thenReturn(purchases);

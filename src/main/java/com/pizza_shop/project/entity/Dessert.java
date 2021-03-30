@@ -25,10 +25,10 @@ public class Dessert{
     @Column(columnDefinition = "TEXT")
     private String description;
     @Lob
-    //@JsonIgnore
+    @JsonIgnore
     private byte[] data;
     @Positive
-    private int price;
+    private double price;
     @NotBlank
     private String path;
     @NotBlank

@@ -45,7 +45,7 @@ public class UserMvcControllerTest {
     @BeforeAll
     public static void init(){
         ratings = new ArrayList<Rating>();
-        pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
+        pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10.00, "1,24,6", 4, null, null, null);
         rating1 = new Rating(1, 1, pizza, 1);
         rating2 = new Rating(2, 2, pizza, 2);
         ratings.add(rating1);

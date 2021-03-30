@@ -43,7 +43,7 @@ public class UserService implements IUserService {
     @Override
     public User updateUser(int id, User user) {
         final User userDaoOne = userDao.getOne(id);
-        if (userDaoOne != null && user != null){
+        if (userDaoOne != null && user != null) {
             userDaoOne.setName(user.getName());
             userDaoOne.setPassword(passwordEncoder.encode(user.getPassword()));
             userDaoOne.setUsername(user.getUsername());
@@ -62,7 +62,7 @@ public class UserService implements IUserService {
     public User createUser(User user) {
         final User usersByEmail = this.userDao.findUserByEmail(user.getEmail());
         final User usersByUsername = this.userDao.findUsersByUsername(user.getUsername());
-        if (usersByEmail == null && usersByUsername == null){
+        if (usersByEmail == null && usersByUsername == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 //            if (user.getUsername().equals("tomsawyer")){
 //                user.setRole("ROLE_ADMIN");
@@ -70,21 +70,21 @@ public class UserService implements IUserService {
             user.setActive(false);
             user.setActivationCode(UUID.randomUUID().toString());
             this.userDao.save(user);
-            if (!StringUtils.isEmpty(user.getEmail())){
+            if (!StringUtils.isEmpty(user.getEmail())) {
                 String message = String.format(
                         "Hello, %s! \n" +
-                        "Welcome to Pizza Shop Please, visit this" +
+                                "Welcome to Pizza Shop Please, visit this" +
                                 " link to finished registration http://localhost:8080/activate/%s",
                         user.getUsername(),
                         user.getActivationCode());
                 mailSenderService.sendMail(user.getEmail(), "Activation Code", message);
             }
         }
-         if(usersByUsername != null){
-           throw  new UserNameException("Login occupied already");
-         }
-         if (usersByEmail != null){
-             throw new EmailException("This email occupied already");
+        if (usersByUsername != null) {
+            throw new UserNameException("Login occupied already");
+        }
+        if (usersByEmail != null) {
+            throw new EmailException("This email occupied already");
         }
         return userDao.getOne(user.getId());
     }
@@ -99,6 +99,7 @@ public class UserService implements IUserService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userDao.findByUserName(s);
     }
+
     @Override
     public User getUserByUserName(String name) {
         return userDao.findUsersByUsername(name);
@@ -107,7 +108,7 @@ public class UserService implements IUserService {
     @Override
     public boolean activateUser(String activateCode) {
         final User user = userDao.getUserByActivationCode(activateCode);
-        if (user == null){
+        if (user == null) {
             return false;
         }
         user.setActivationCode(null);
@@ -119,7 +120,7 @@ public class UserService implements IUserService {
     @Override
     public String sendPasswordUserByEmail(String email) {
         final User user = getUserByEmail(email);
-        if (user != null){
+        if (user != null) {
             user.setActive(false);
             user.setActivationCode(UUID.randomUUID().toString());
             userDao.save(user);
@@ -135,10 +136,10 @@ public class UserService implements IUserService {
 
     @Override
     public void changePassword(PasswordUserDto passwordUserDto) {
-        if(passwordUserDto != null){
+        if (passwordUserDto != null) {
             final User user = getUserByUserName(passwordUserDto.getUserName());
             if (user != null && user.getActivationCode() != null
-            ){
+            ) {
                 user.setActivationCode(null);
                 user.setActive(true);
                 user.setPassword(passwordEncoder.encode(passwordUserDto.getPassword()));

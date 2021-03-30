@@ -93,14 +93,14 @@ public class CartServiceTest {
     public void givenCartIdAndPizzaPriceWhenAddingCartElementReturnSuccessfulResponse(){
         Mockito.when(cartDao.getOne(ArgumentMatchers.anyInt())).thenReturn(cart1);
         final @Positive int amount = cart1.getAmount();
-        final @Positive int price = cart1.getPrice();
+        final @Positive double price = cart1.getPrice();
         cartService.addElementInCart(cart1.getId(),  8);
         Assertions.assertEquals(cart1.getPrice(), price + 8);
     }
     @Test
     public void givenCartIdAndPriceWhenRemovingCartElementFromCartReturnSuccessfulResponse(){
         Mockito.when(cartDao.getOne(ArgumentMatchers.anyInt())).thenReturn(cart1);
-        final @Positive int price = cart1.getPrice();
+        final @Positive double price = cart1.getPrice();
         final @Positive int amount = cart1.getAmount();
         cartService.removePizzaInCart(cart1.getId(), 7);
         Assertions.assertEquals(cart1.getAmount(), amount - 1);

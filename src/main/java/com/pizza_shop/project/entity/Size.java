@@ -27,7 +27,7 @@ public class Size {
     @Positive
     private int weight;
     @Positive
-    private int price;
+    private double price;
     @JsonIgnore
     @Lob
     private byte[] data;

@@ -20,13 +20,13 @@ public class Cart {
     @Column(columnDefinition = "TEXT")
     private String description;
     @Positive
-    private int price;
+    private double price;
 
     private String size;
 
     @Positive
     private int amount;
-
+    @Positive
     private Double volume;
 
     private int pizzaId;

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Data
@@ -18,10 +19,10 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
-
+    @NotBlank
     private String name;
-
-    private int price;
+    @Positive
+    private double price;
     @JsonIgnore
     @Lob
     private byte[] data;

@@ -41,7 +41,7 @@ public class CommentServiceTest {
     @BeforeEach
     public  void init(){
         comments = new ArrayList<Comment>();
-        pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
+        pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10.00, "1,24,6", 4, null, null, null);
         comment1 = new Comment(1, "Bob", "Pepperoni", "Very good!", 1L, null, pizza, null);
         comment2 = new Comment(2, "Joe", "Pepperoni", "Very bad", 11L, null, pizza, null);
         user =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",

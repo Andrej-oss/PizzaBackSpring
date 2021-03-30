@@ -25,7 +25,7 @@ public class Snack {
     @NotBlank
     private String description;
     @Positive
-    private int price;
+    private double price;
     @NotBlank
     private String volume;
     @Lob

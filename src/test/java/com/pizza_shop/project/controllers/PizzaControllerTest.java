@@ -59,15 +59,15 @@ public class PizzaControllerTest {
     @BeforeEach
     public void init(){
         pizzas = new ArrayList<Pizza>();
-        pizza1 = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
-        pizza2 = new Pizza(2, false, "/sfdsfd", "lala", "description", new byte[]{45, 7, 0, 7}, 123, "14,24,6", 4, null, null, null);
+        pizza1 = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10.00, "1,24,6", 4, null, null, null);
+        pizza2 = new Pizza(2, false, "/sfdsfd", "lala", "description", new byte[]{45, 7, 0, 7}, 123.00, "14,24,6", 4, null, null, null);
         pizzas.add(pizza1);
         pizzas.add(pizza2);
     }
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void givenValidPizzaBodyWhenInsertingPizzaReturnAllPizzas() throws Exception{
-        Pizza pizza3 = new Pizza(3, true, "/grgfd", "hawaii", "description", null, 10, "1,24,6", 4, null, null, null);
+        Pizza pizza3 = new Pizza(3, true, "/grgfd", "hawaii", "description", null, 10.00, "1,24,6", 4, null, null, null);
         pizzas.add(pizza3);
         MockMultipartFile image = new MockMultipartFile(
                 "image",

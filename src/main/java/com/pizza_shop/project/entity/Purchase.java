@@ -6,6 +6,7 @@ import lombok.*;
 import org.joda.time.Instant;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.Date;
 
@@ -18,14 +19,16 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @NotBlank
     private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Positive
+    private Double volume;
     private int amount;
     @Positive
-    private int price;
+    private double price;
     @ManyToOne
     @ToString.Exclude
     @JsonIgnore

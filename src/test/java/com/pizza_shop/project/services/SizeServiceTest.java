@@ -37,7 +37,7 @@ public class SizeServiceTest {
     @BeforeEach
     public void init(){
         sizes = new ArrayList<Size>();
-        pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10, "1,24,6", 4, null, null, null);
+        pizza = new Pizza(1, true, "/scdcsd", "papa", "description", null, 10.00, "1,24,6", 4, null, null, null);
         size1 = new Size(1, "pepperoniSmall", 20, 320, 16, new byte[]{12, 32, 45, -11, 0, 43}, "/pepperoni20", pizza);
         size2 = new Size(2, "pepperoniLarge", 30, 700, 33, new byte[]{18, 22, 121, 0, 19, -67}, "/pepperoni30", pizza);
         sizes.add(size1);

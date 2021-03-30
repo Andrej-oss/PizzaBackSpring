@@ -58,7 +58,7 @@ public class CartService implements ICartService {
     public void addElementInCart(int cartId, int pricePizza) {
          Cart cartElement = cartDao.getOne(cartId);
          int amount = cartElement.getAmount();
-         int price = cartElement.getPrice();
+         double price = cartElement.getPrice();
         cartElement.setAmount(amount + 1);
         cartElement.setPrice(price + pricePizza);
         cartDao.save(cartElement);
@@ -68,7 +68,7 @@ public class CartService implements ICartService {
     public void removePizzaInCart(int cartId, int pricePizza) {
         final Cart cart = cartDao.getOne(cartId);
          int amount = cart.getAmount();
-         int price = cart.getPrice();
+         double price = cart.getPrice();
          cart.setPrice(price - pricePizza);
          cart.setAmount(amount - 1);
          cartDao.save(cart);

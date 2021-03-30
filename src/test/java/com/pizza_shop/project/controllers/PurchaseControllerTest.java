@@ -63,8 +63,8 @@ public class PurchaseControllerTest {
         purchases = new ArrayList<Purchase>();
         user =  new User(1, "Fort", "128qwsdh", "Zack", "North", "saSAA@gmail.com", "NY", "Madison", "23213", "312321213",
                 "ROLE_USER", true, null, null, null, null, null);
-        purchase1 = new Purchase(1, "pepperoni", "pepperoni, mozzarella, pepper", 1, 22, user, 1, 0, 0, 0, 1L);
-        purchase2 = new Purchase(2, "coca cola", "coca cola 0.5", 11, 4, user, 0, 1, 0, 0, 2L);
+        purchase1 = new Purchase(1, "pepperoni", "pepperoni, mozzarella, pepper", 380.0, 1, 22, user, 1, 0, 0, 0, 1L);
+        purchase2 = new Purchase(2, "coca cola", "coca cola 0.5", 0.5, 11, 4, user, 0, 1, 0, 0, 2L);
         purchases.add(purchase1);
         purchases.add(purchase2);
     }

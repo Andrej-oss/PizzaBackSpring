@@ -27,7 +27,7 @@ public class Drink {
     @Positive
     private double volume;
     @Positive
-    private int price;
+    private double price;
 
     private int ordersCount;
 
