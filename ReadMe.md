@@ -25,3 +25,5 @@ Successfully studied and applied technology in this application.<br>
 - Spring actuator
 - Exception handling
 - pagination and sorting
+
+p.s. if you need stripe key send me message!
