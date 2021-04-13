@@ -74,7 +74,7 @@ public class UserService implements IUserService {
                 String message = String.format(
                         "Hello, %s! \n" +
                                 "Welcome to Pizza Shop Please, visit this" +
-                                " link to finished registration http://localhost:8080/activate/%s",
+                                " link to finished registration http://ec2-3-131-135-137.us-east-2.compute.amazonaws.com:8080 /activate/%s",
                         user.getUsername(),
                         user.getActivationCode());
                 mailSenderService.sendMail(user.getEmail(), "Activation Code", message);
@@ -93,7 +93,7 @@ public class UserService implements IUserService {
     public List<User> deleteUser(int id) {
         this.userDao.deleteById(id);
         return this.userDao.findAll();
-    }
+     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -125,7 +125,7 @@ public class UserService implements IUserService {
             user.setActivationCode(UUID.randomUUID().toString());
             userDao.save(user);
             String message = String.format("Hello, %s!\n" +
-                    "Link to changing your password http://localhost:8080/email/activate/%s\n" +
+                    "Link to changing your password http://ec2-3-131-135-137.us-east-2.compute.amazonaws.com:8080/email/activate/%s\n" +
                     "And login is %s.", user.getName(), user.getActivationCode(), user.getUsername());
             mailSenderService.sendMail(user.getEmail(), "Forgotten Password", message);
         }

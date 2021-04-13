@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
@@ -29,11 +26,15 @@ public class UserMvcController {
         assert user != null;
         model.addAttribute("name", user.getUsername());
         model.addAttribute("newPassword", new PasswordUserDto(user.getUsername()));
-        return "index";
+        return "password";
     }
     @PostMapping("/user/password")
     public String changeUserPassword(PasswordUserDto passwordUserDto) {
         userService.changePassword(passwordUserDto);
         return "email";
+    }
+    @GetMapping("/")
+    public String home(){
+        return "forward:index.html";
     }
 }

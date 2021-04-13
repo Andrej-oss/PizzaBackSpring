@@ -90,10 +90,14 @@ public class SizeService implements ISizePizzaService {
                     Files.deleteIfExists(rootFolder.resolve(path));
                     Files.copy(image.getInputStream(), rootFolder.resolve(path));
                     sizeFind.setData(image.getBytes());
+                    if (sizeFind.getPath().contains(" ")){
+                        final String[] strings = sizeFind.getPath().split(" ");
+                        sizeFind.setPath(strings[0] + path);
+                    }
                 } catch (IOException e) {
                     log.warn("Unable to copy image file " + e.getMessage());
                 }
-                sizeDao.saveAndFlush(size);
+                sizeDao.saveAndFlush(sizeFind);
             }
         }
         return getAllSizesByPizzaId(sizeDao.getOne(id).getPizza().getId());

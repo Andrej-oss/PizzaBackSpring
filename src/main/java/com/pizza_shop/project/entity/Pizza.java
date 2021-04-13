@@ -38,14 +38,14 @@ public class Pizza {
     private String ingredients;
 
     private int ordersCount;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "pizza_id")
     private List<Rating> rating;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
     @JsonIgnore
     @JoinColumn(name = "pizza_id")
     private List<Size> sizes;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
     @JsonIgnore
     @JoinColumn(name = "pizza_id")
     private List<Comment> comments;

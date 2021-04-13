@@ -55,11 +55,11 @@ public class User implements UserDetails {
     @JoinColumn(name = "user_id")
     private List<Comment> comments;
     @ToString.Exclude
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private List<Cart> cartList;
-    @OneToOne
+    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private Avatar avatar;
     @OneToMany

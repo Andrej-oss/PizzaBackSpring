@@ -61,7 +61,7 @@ public class IngredientControllerTest {
      ingredients.add(ingredient2);
     }
     @Test
-   // @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void givenValidIngredientBodyWhenInsertingIngredientReturnAllIngredients() throws Exception{
         final Ingredient ingredient3 = new Ingredient(1, "garlic", 1, new byte[]{111, 0, -12, -10, 12}, "/garlic");
         ingredients.add(ingredient3);
