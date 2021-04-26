@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -148,9 +149,6 @@ public class AvatarControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/avatar/{id}", 1).file(file)
                 .flashAttr("avatar", avatar))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(avatar1, avatar2))))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2));;
-    }
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+                 }
 }
