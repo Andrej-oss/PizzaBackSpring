@@ -48,3 +48,5 @@ services:
       - app
     container_name: pizza-shop-frontend
     command: ng build --prod
+    volumes:
+    - ./PizzaShopAngular:/app/PizzaShopAngular
