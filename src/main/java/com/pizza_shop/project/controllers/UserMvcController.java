@@ -29,7 +29,7 @@ public class UserMvcController {
         assert user != null;
         model.addAttribute("name", user.getUsername());
         model.addAttribute("newPassword", new PasswordUserDto(user.getUsername()));
-        return "index";
+        return "password";
     }
     @PostMapping("/user/password")
     public String changeUserPassword(PasswordUserDto passwordUserDto) {
