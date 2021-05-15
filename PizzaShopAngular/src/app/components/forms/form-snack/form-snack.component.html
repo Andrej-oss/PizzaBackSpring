@@ -1,0 +1,54 @@
+<mat-card
+  [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <form [formGroup]="snackForm">
+    <ng-template matStepLabel>Create Snack</ng-template>
+    <mat-form-field style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Snack name
+      </mat-label>
+      <input matInput placeholder="Name"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             [formControl]="nameSnack"  required>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Snack volume
+      </mat-label>
+      <input matInput placeholder="2pcs. or 400gr."
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             [formControl]="volumeSnack"  required>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Snack Description
+      </mat-label>
+      <textarea matInput placeholder="description"
+                style="width: 300px; height: 80px"
+                [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+                [formControl]="descriptionSnack" required></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Price
+      </mat-label>
+      <input matInput type="number"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"class="example-left-align" [formControl]="priceSnack">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+    </mat-form-field>
+    <input type="file" (change)="upLoadFileSize($event)" accept=".jpg"/>
+    <div>
+      <button mat-button
+              (click)="onSave(snackForm)"
+              [disabled]="snackForm.invalid"
+              style="left: 90%" *ngIf="!snack">
+        Save
+      </button>
+      <button mat-button
+              (click)="onUpdate(snackForm)"
+              style="left: 90%" *ngIf="snack">
+        Update
+      </button>
+    </div>
+  </form>
+</mat-card>

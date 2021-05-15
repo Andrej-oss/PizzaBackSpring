@@ -1,0 +1,423 @@
+
+{
+  "header": {
+    "reportVersion": 2,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20210203.235803.7704.0.001.json",
+    "dumpEventTime": "2021-02-03T23:58:03Z",
+    "dumpEventTimeStamp": "1612393083354",
+    "processId": 7704,
+    "threadId": null,
+    "cwd": "C:\\Users\\snowt\\pizza-shop",
+    "commandLine": [
+      "node",
+      "C:\\Users\\snowt\\pizza-shop\\node_modules\\.bin\\\\..\\jest\\bin\\jest.js"
+    ],
+    "nodejsVersion": "v12.16.3",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.16.3",
+      "v8": "7.8.279.23-node.35",
+      "uv": "1.34.2",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.16.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.4",
+      "http_parser": "2.9.3",
+      "openssl": "1.1.1g",
+      "cldr": "36.0",
+      "icu": "65.1",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.16.3/node-v12.16.3-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.16.3/node-v12.16.3.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.16.3/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.19041",
+    "osVersion": "Windows 10 Home",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Celeron(R) N4000 CPU @ 1.10GHz",
+        "speed": 1094,
+        "user": 43958484,
+        "nice": 0,
+        "sys": 31802218,
+        "idle": 141315687,
+        "irq": 886156
+      },
+      {
+        "model": "Intel(R) Celeron(R) N4000 CPU @ 1.10GHz",
+        "speed": 1094,
+        "user": 46113906,
+        "nice": 0,
+        "sys": 31894109,
+        "idle": 139067640,
+        "irq": 220515
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "2a02:a311:c006:200:2506:a1ce:7270:6fa4",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "2a02:a311:c006:200:833:6c53:62b4:885b",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "2a02:a311:c006:200:149f:a4bf:c49e:22ea",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "2a02:a311:c006:200:35a9:1348:dd0f:5948",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "2a02:a311:c006:200:5cc7:d991:89d2:168c",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "fe80::2506:a1ce:7270:6fa4",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 9
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a0:a4:c5:8c:19:55",
+        "address": "192.168.0.143",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "LAPTOP-PDEMU8LQ"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff61d682449",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+11577"
+    },
+    {
+      "pc": "0x00007ff61d6869a9",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+29337"
+    },
+    {
+      "pc": "0x00007ff61d685828",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+24856"
+    },
+    {
+      "pc": "0x00007ff61d7bd8c2",
+      "symbol": "v8::base::CPU::has_sse+68658"
+    },
+    {
+      "pc": "0x00007ff61dfd9bbe",
+      "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
+    },
+    {
+      "pc": "0x00007ff61dfc1c91",
+      "symbol": "v8::SharedArrayBuffer::Externalize+833"
+    },
+    {
+      "pc": "0x00007ff61de8e1ec",
+      "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
+    },
+    {
+      "pc": "0x00007ff61de99420",
+      "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1312"
+    },
+    {
+      "pc": "0x00007ff61de95f44",
+      "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
+    },
+    {
+      "pc": "0x00007ff61de8b743",
+      "symbol": "v8::internal::Heap::CollectGarbage+1283"
+    },
+    {
+      "pc": "0x00007ff61de89db4",
+      "symbol": "v8::internal::Heap::AddRetainedMap+2452"
+    },
+    {
+      "pc": "0x00007ff61deb1a6f",
+      "symbol": "v8::internal::Factory::NewRawTwoByteString+95"
+    },
+    {
+      "pc": "0x00007ff61dcd393c",
+      "symbol": "v8::internal::String::SlowFlatten+492"
+    },
+    {
+      "pc": "0x00007ff61db9be5f",
+      "symbol": "unibrow::Utf8::EncodeOneByte+687"
+    },
+    {
+      "pc": "0x00007ff61dcd366e",
+      "symbol": "v8::internal::String::SlowEquals+606"
+    },
+    {
+      "pc": "0x00007ff61dbd6277",
+      "symbol": "v8::internal::StubCache::value_reference+8487"
+    },
+    {
+      "pc": "0x00007ff61e426c4d",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+546637"
+    },
+    {
+      "pc": "0x00007ff61e3e97e6",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+295654"
+    },
+    {
+      "pc": "0x000002dc42629bab",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2155245568,
+    "totalCommittedMemory": 2155245568,
+    "usedMemory": 2135342984,
+    "availableMemory": 46743048,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 4194304,
+        "committedMemory": 4194304,
+        "capacity": 2094912,
+        "used": 311544,
+        "available": 1783368
+      },
+      "old_space": {
+        "memorySize": 1363816448,
+        "committedMemory": 1363816448,
+        "capacity": 1351589592,
+        "used": 1351294552,
+        "available": 295040
+      },
+      "code_space": {
+        "memorySize": 4624384,
+        "committedMemory": 4624384,
+        "capacity": 3663936,
+        "used": 3663936,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 22548480,
+        "committedMemory": 22548480,
+        "capacity": 21727760,
+        "used": 21727760,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 759750656,
+        "committedMemory": 759750656,
+        "capacity": 758309504,
+        "used": 758309504,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 2880,
+        "used": 2880,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 2094912,
+        "used": 0,
+        "available": 2094912
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 215.437,
+    "kernelCpuSeconds": 26.734,
+    "cpuConsumptionPercent": 28.5579,
+    "maxRss": 2096009216,
+    "pageFaults": {
+      "IORequired": 1273666,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 39328,
+      "writes": 397
+    }
+  },
+  "libuv": [
+  ],
+  "workers": [
+  ],
+  "environmentVariables": {
+    "=C:": "C:\\Users\\snowt\\pizza-shop",
+    "dp0": "C:\\Users\\snowt\\pizza-shop\\node_modules\\.bin\\",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "JEST_WORKER_ID": "1",
+    "M2_HOME": "C:\\Program Files (x86)\\Java\\apache-maven-3.6.3",
+    "NODE_ENV": "test",
+    "PATH": "C:\\Users\\snowt\\pizza-shop\\node_modules\\.bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Intel\\TXE Components\\iCLS\\;C:\\Program Files\\Intel\\TXE Components\\iCLS\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\TXE Components\\DAL\\;C:\\Program Files (x86)\\Intel\\TXE Components\\DAL\\;C:\\Program Files\\Intel\\TXE Components\\IPT\\;C:\\Program Files (x86)\\Intel\\TXE Components\\IPT\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\nodejs\\;C:\\Program Files (x86)\\Java\\apache-maven-3.6.3\\bin;C:\\Users\\snowt\\AppData\\Local\\Android\\Sdk\\bin;C:\\Gradle\\gradle-6.7.1\\bin;C:\\Program Files (x86)\\Python\\Scripts\\;C:\\Program Files (x86)\\Python\\;C:\\Users\\snowt\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\snowt\\AppData\\Roaming\\npm;C:\\Program Files\\heroku\\bin;",
+    "PROMPT": "$P$G",
+    "SESSIONNAME": "Console",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 122 Stepping 1, GenuineIntel",
+    "TERMINAL_EMULATOR": "JetBrains-JediTerm",
+    "OneDriveConsumer": "C:\\Users\\snowt\\OneDrive",
+    "_prog": "node",
+    "__INTELLIJ_COMMAND_HISTFILE__": "C:\\Users\\snowt\\.IntelliJIdea2019.3\\config\\terminal\\history\\history-1088",
+    "SystemDrive": "C:",
+    "NUMBER_OF_PROCESSORS": "2",
+    "LOGONSERVER": "\\\\LAPTOP-PDEMU8LQ",
+    "TEMP": "C:\\Users\\snowt\\AppData\\Local\\Temp",
+    "ProgramW6432": "C:\\Program Files",
+    "HOMEPATH": "\\Users\\snowt",
+    "OnlineServices": "Online Services",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC",
+    "LOCALAPPDATA": "C:\\Users\\snowt\\AppData\\Local",
+    "IDEA_INITIAL_DIRECTORY": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2019.3.4\\bin",
+    "ANDROID_HOME": "C:\\Users\\snowt\\AppData\\Local\\Android\\Sdk",
+    "=::": "::\\",
+    "USERNAME": "snowt",
+    "ProgramFiles": "C:\\Program Files",
+    "USERDOMAIN_ROAMINGPROFILE": "LAPTOP-PDEMU8LQ",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "PROCESSOR_REVISION": "7a01",
+    "TMP": "C:\\Users\\snowt\\AppData\\Local\\Temp",
+    "RegionCode": "EMEA",
+    "APPDATA": "C:\\Users\\snowt\\AppData\\Roaming",
+    "HOMEDRIVE": "C:",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "USERDOMAIN": "LAPTOP-PDEMU8LQ",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "OS": "Windows_NT",
+    "PROCESSOR_LEVEL": "6",
+    "ProgramData": "C:\\ProgramData",
+    "JAVA_HOME": "C:\\Program Files (x86)\\Java\\jdk-14.0.2",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "SystemRoot": "C:\\WINDOWS",
+    "GOOGLE_API_KEY": "no",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "OneDrive": "C:\\Users\\snowt\\OneDrive",
+    "GOOGLE_DEFAULT_CLIENT_ID": "no",
+    "platformcode": "AN",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "USERPROFILE": "C:\\Users\\snowt",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "PSModulePath": "C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "windir": "C:\\WINDOWS",
+    "PUBLIC": "C:\\Users\\Public",
+    "COMPUTERNAME": "LAPTOP-PDEMU8LQ",
+    "GOOGLE_DEFAULT_CLIENT_SECRET": "no"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\powrprof.dll",
+    "C:\\WINDOWS\\SYSTEM32\\UMPDC.dll",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\SYSTEM32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\System32\\bcryptprimitives.dll",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\pnrpnsp.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll"
+  ]
+}

@@ -1,0 +1,63 @@
+<div class="promotion-admin">
+  <table mat-table [dataSource]="promotions | async"
+         [style]="this.themeObjectService.data.value.isDarkTheme ? black : white">
+    <ng-container matColumnDef="position" style="margin: 10px 10px 10px 10px">
+      <th mat-header-cell *matHeaderCellDef
+          [style]="this.themeObjectService.data.value.isDarkTheme ? blackColor : whiteColor" class="admin-table-column">
+        No.
+      </th>
+      <td mat-cell *matCellDef="let i = index"
+          [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor"
+          class="admin-table-column"> {{i + 1}} </td>
+    </ng-container>
+    <ng-container matColumnDef="image" class="admin-table-column">
+      <th mat-header-cell *matHeaderCellDef
+          [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+        Image
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <img [src]="url+element.path" class="promotion-admin-image">
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name" style="margin: 10% 10% 10% 10%">
+      <th mat-header-cell *matHeaderCellDef
+          [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+        Name
+      </th>
+      <td mat-cell *matCellDef="let element"
+          [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+        {{element.name}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="option" style="margin: 10px 10px 10px 10px">
+      <th mat-header-cell *matHeaderCellDef
+          [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+        Option
+      </th>
+      <td mat-cell *matCellDef="let element"
+          [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+        <div>
+          <div class="admin-promotion-delete">
+    <span class="material-icons"
+          style="margin-left: 70%"
+          (click)="onDelete(element.id)">
+       delete
+    </span>
+          </div>
+          <div class="admin-ingredient-settings">
+          <span class="material-icons"
+                style="margin-left: 70%"
+                (click)="upDate(element)">
+              settings
+          </span>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <div *ngIf="isOpenPromotionUpdater">
+    <app-form-promotion [promotion]="promotion"></app-form-promotion>
+  </div>
+</div>

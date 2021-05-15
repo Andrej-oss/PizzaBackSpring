@@ -1,0 +1,40 @@
+.pizza-cart-card-item{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 10% 10% 10% 10%;
+
+}
+.pizza-cart-cart-item-element{
+  border-bottom: black solid 1px;
+}
+.pizza-cart-card-item-image{
+  margin: 2% 2% 2% 2%;
+  width: 100px;
+  border-radius: 50%;
+}
+.pizza-cart-card-item-content{
+  margin: 2% 2% 2% 2%;
+}
+.pizza-cart-card-item-content-size{
+  font-size: 1vw;
+  font-weight: lighter;
+}
+.pizza-cart-card-item-content-tittle{
+  font-size: 1.5vw;
+  font-weight: bold;
+
+}
+.pizza-cart-cart-item-price{
+  font-size: 1.5vw;
+  font-weight: bold;
+  margin-top: 90%;
+}
+button:focus{
+  outline: 0;
+}
+.material-icons:hover{
+  cursor: pointer;
+  color: grey;
+}

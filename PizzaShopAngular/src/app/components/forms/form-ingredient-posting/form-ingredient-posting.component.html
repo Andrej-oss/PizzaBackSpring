@@ -1,0 +1,38 @@
+<form [formGroup]="ingredientFormGroup"
+      [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <ng-template matStepLabel>Fill out your ingredient</ng-template>
+  <mat-form-field style="width: 100%">
+    <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+      Ingredient
+    </mat-label>
+    <input matInput
+           [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+           placeholder="Name Ingredient"
+           [formControl]="name" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+      Price
+    </mat-label>
+    <input matInput type="number"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+           class="example-right-align"
+           [formControl]="price">
+    <span matPrefix>$&nbsp;</span>
+    <span matSuffix>.00</span>
+  </mat-form-field>
+  <input type="file"
+         (change)="upLoadFile($event)"
+         accept=".jpg" style="width: 100%"/>
+  <mat-button-toggle
+    (click)="saveIngredient(ingredientFormGroup)"
+    [disabled]="ingredientFormGroup.invalid" style="left: 90%" *ngIf="!ingredient">
+    Save
+  </mat-button-toggle>
+  <mat-button-toggle
+    (click)="updateIngredient(ingredientFormGroup)"
+    style="left: 90%" *ngIf="ingredient">
+    Update
+  </mat-button-toggle>
+</form>
+

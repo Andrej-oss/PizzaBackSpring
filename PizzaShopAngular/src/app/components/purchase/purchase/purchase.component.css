@@ -1,0 +1,21 @@
+.purchase-item-black{
+  color: white;
+  background-color: black;
+}
+.purchase-item{
+  color: black;
+  background-color: white;
+}
+.purchases-delete:hover{
+  color: grey;
+  cursor: pointer;
+}
+.purchases-add-cart:hover{
+  color: grey;
+  cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  .purchases-table {
+    font-size: 1vw;
+  }
+}

@@ -1,0 +1,20 @@
+button:focus{
+  outline: none;
+}
+.registration-card{
+  width: 40%;
+  left: 25%;
+  margin: 2%;
+  padding: 5%;
+  box-shadow: 0 0 5px;
+}
+.registration-card-dark {
+background-color: black;
+  color: white;
+}
+@media only screen and (max-width: 600px) {
+  .registration-card {
+    width: 90%;
+    left: 0%;
+  }
+}

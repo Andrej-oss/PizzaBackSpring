@@ -1,0 +1,8 @@
+.admin-comment-settings:hover{
+  cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  .comment-table {
+    font-size: 1vw;
+  }
+}

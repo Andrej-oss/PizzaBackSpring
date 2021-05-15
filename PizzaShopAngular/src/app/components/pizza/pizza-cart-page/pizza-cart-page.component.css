@@ -1,0 +1,18 @@
+.pizza-cart-page{
+  margin: 10% 10% 15% 20%;
+
+}
+.pizza-cart-page-payment-content-user{
+  margin: 5% 5% 5% 5%;
+  font-family: "Comic Sans MS";
+  font-size: 1.5vw;
+}
+.pizza-cart-page-payment-content-user-name{
+font-size: 1.5vw;
+}
+.pizza-cart-page-payment-content-user-address{
+  font-size: 1.5vw;
+}
+.pizza-cart-page-payment-payment{
+  margin: 5% 5% 10% 5%;
+}

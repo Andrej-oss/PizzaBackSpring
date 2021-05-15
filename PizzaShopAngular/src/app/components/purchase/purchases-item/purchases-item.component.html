@@ -1,0 +1,17 @@
+<div class="item-card">
+  <div *ngIf="pizzaId !== 0">
+    <img [src]="url+item.path" class="item-card-image">
+  </div>
+  <div *ngIf="drinkId !== 0">
+    <img [src]="urlDrink+item.path" class="item-card-image">
+  </div>
+  <div *ngIf="snackId !== 0">
+    <img [src]="urlSnack+item.path" class="item-card-image">
+  </div>
+  <div *ngIf="dessertId !== 0">
+    <img [src]="urlDessert+item.path" class="item-card-image">
+  </div>
+  <div *ngIf="item">
+    {{item.name}}
+  </div>
+</div>

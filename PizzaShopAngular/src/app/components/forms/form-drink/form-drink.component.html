@@ -1,0 +1,52 @@
+<mat-card
+  [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <form [formGroup]="drinkForm">
+    <mat-form-field style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Drink name
+      </mat-label>
+      <input matInput aria-placeholder="Drink name"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             [formControl]="nameDrink"
+             placeholder="Drink"
+             required>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Weight
+      </mat-label>
+      <input matInput type="number"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             [formControl]="volume"
+             placeholder="0.5"
+             required>
+      <span matSuffix>l</span>
+    </mat-form-field>
+    <mat-form-field appearance="fill"
+                    [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+                    style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Price
+      </mat-label>
+      <input matInput type="number"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             class="example-left-align"
+             [formControl]="priceDrink">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+    </mat-form-field>
+    <input type="file" (change)="upLoadFileSize($event)" accept=".jpg"/>
+    <div>
+      <button mat-button
+              (click)="onSave(drinkForm)"
+              style="left: 90%" *ngIf="!drink">
+        Save
+      </button>
+      <button mat-button
+              (click)="onUpdate(drinkForm)"
+              style="left: 90%" *ngIf="drink">
+        Update
+      </button>
+    </div>
+  </form>
+</mat-card>

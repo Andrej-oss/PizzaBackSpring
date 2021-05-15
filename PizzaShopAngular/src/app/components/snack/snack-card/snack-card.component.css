@@ -1,0 +1,30 @@
+.snack-card{
+  width: 300px;
+  height: 500px;
+  border-radius: 5px;
+  font-family: "Comic Sans MS";
+}
+.snack-card-image{
+  width: 80%;
+  border-radius: 80%;
+  margin: 10% 10% 10% 10%;
+  left: 25%;
+  transition: 1000ms;
+  cursor: pointer;
+}
+.snack-card-text{
+  margin: 5% 5% 5% 5%;
+}
+.snack-card-image:hover{
+  transform: translateY(-10px);
+  transition: 1000ms;
+}
+.snack-card-price{
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 5% 5% 5%;
+}
+button:focus{
+  outline: 0;
+}
+

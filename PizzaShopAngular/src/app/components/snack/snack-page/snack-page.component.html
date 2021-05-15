@@ -1,0 +1,12 @@
+<div class="drink-page" *ngIf="snacks.length && !count">
+  <div *ngFor="let snack of snacks">
+    <app-snack-card [snack]="snack"></app-snack-card>
+  </div>
+</div>
+<div class="drink-page" *ngIf="snacks.length && count">
+  <div *ngFor="let snack of snacks; let i = index">
+    <div *ngIf="i <= count">
+    <app-snack-card [snack]="snack"></app-snack-card>
+    </div>
+  </div>
+</div>

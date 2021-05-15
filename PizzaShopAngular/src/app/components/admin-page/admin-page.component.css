@@ -1,0 +1,32 @@
+.admin-card-menu {
+  width: 100%;
+  min-height: 600px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  display: flex;
+}
+
+.example-sidenav-content {
+  height: 100%;
+  width: 80%;
+}
+
+.example-sidenav {
+  padding: 20px;
+  width: 30%;
+}
+button:hover{
+  color: grey;
+}
+button:focus{
+  outline: none;
+}
+button{
+ font-size: 1.1vw;
+  width: 70%;
+  margin: 3%
+}
+.admin-users-content{
+display: flex;
+  flex-direction: row;
+}

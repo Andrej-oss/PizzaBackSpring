@@ -1,0 +1,18 @@
+.dessert-admin-image{
+  width: 50px;
+  border-radius: 50%;
+}
+.admin-table-column{
+  margin: 10% 10% 10% 10%;
+}
+.dessert-admin{
+  width: 400px;
+}
+.admin-dessert-delete:hover{
+  color: grey;
+  cursor: pointer;
+}
+.admin-dessert-settings:hover{
+  color: grey;
+  cursor: pointer;
+}

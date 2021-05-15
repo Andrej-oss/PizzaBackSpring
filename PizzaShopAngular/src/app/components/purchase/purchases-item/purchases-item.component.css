@@ -1,0 +1,13 @@
+.item-card{
+  width: 100%;
+  height: 50%;
+  border-radius: 2%;
+  border: black 1px solid;
+  display: flex;
+  justify-content: space-around;
+}
+.item-card-image{
+  margin: 2% 2% 2% 2%;
+  width: 50px;
+  border-radius: 50%;
+}

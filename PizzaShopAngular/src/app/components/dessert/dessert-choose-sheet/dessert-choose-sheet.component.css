@@ -1,0 +1,39 @@
+.dessert-sheet{
+  width: 800px;
+}
+@media only screen and (max-width: 600px) {
+  .dessert-sheet {
+    width: 100%;
+  }
+  img{
+    width: 90%;
+  }
+}
+img{
+  height: 20%;
+}
+.dessert-card-image-content{
+  height: 20%;
+  margin: 10% 10% 10% 10%;
+  border-radius: 50%;
+}
+
+.dessert-sheet-content{
+  display: flex;
+  justify-content: space-around;
+}
+@media only screen and (max-width: 600px) {
+  .dessert-sheet-content {
+    flex-direction: column;
+  }
+  .dessert-sheet-content-text{
+    width: 100%;
+  }
+}
+.dessert-sheet-content-text{
+  background-color: gainsboro;
+  width: 50%;
+}
+button:focus{
+  outline: 0;
+}

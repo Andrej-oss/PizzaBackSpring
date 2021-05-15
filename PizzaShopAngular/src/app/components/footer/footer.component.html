@@ -1,0 +1,31 @@
+<div class="footer">
+  <div class="footer-content">
+    <div class="footer-image">
+      <a href="">
+        <img [src]="isWuActive ? wA : w"
+             style="width: 50%; border-radius: 50%; margin: 40% 0% 0% 0%"
+             (mouseenter)="changeWImage()"
+             (mouseleave)="changeWImage()"/>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.linkedin.com/in/andrii-holinko/">
+        <img [src]="isLiActive ? inA : in"
+             style="width: 50%; border-radius: 50%; margin: 40% 0% 0% 0%"
+             (mouseenter)="changeImg()"
+             (mouseleave)="changeImg()"/>
+      </a>
+    </div>
+    <div>
+      <a href="https://github.com/Andrej-oss">
+        <img [src]="isGitActive ? gitA : git"
+             style="width: 50%; border-radius: 50%; margin: 40% 0% 0% 0%"
+             (mouseleave)="changeGitImage()"
+             (mouseenter)="changeGitImage()"/>
+      </a>
+    </div>
+  </div>
+  <div class="footer-content-text">
+  All rights reserved. copyright © 2021. Andrii Holinko.
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div *ngIf="!count">
+  <div class="pizza-page">
+    <mat-label [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      Sorting by
+    </mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="food" >
+      <mat-option *ngFor="let option of options"
+                  [value]="option.value"
+                  [class]="this.themeObjectService.data.value.isDarkTheme  ? blackTheme : whiteTheme"
+                  (click)="onSortPizza(option.value)">
+        {{option.name}}
+      </mat-option>
+    </mat-select>
+    <div *ngFor="let pizza of pizzas">
+      <app-pizza-card [pizza]="pizza"></app-pizza-card>
+    </div>
+    <div style="margin: 5% 5% 5% 45%"
+         *ngIf=" themeObjectService.data.value.lastPage !== 0">
+      <app-pagination [source]="source" [activePage]="activePage"></app-pagination>
+    </div>
+  </div>
+</div>
+<div *ngIf="count">
+  <div class="pizza-page">
+    <div *ngFor="let pizza of pizzas; let i = index">
+      <div *ngIf="i <= count">
+        <app-pizza-card [pizza]="pizza"></app-pizza-card>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

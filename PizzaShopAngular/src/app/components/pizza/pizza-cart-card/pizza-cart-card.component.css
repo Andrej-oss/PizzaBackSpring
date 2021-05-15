@@ -1,0 +1,46 @@
+.pizza-cart-cart{
+  width: 95%;
+  height: 60%;
+  overflow-y: scroll;
+  margin: 5%;
+
+}
+.pizza-cart-cart-element{
+  border-bottom: black solid 1px;
+}
+#pizza-cart-cart::-webkit-scrollbar-track {
+  -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+  background-color: #f9f9fd;
+}
+::-webkit-scrollbar-button {
+  background-repeat:no-repeat;
+  width:6px;
+  height:0px
+}
+
+::-webkit-scrollbar-track {
+  opacity: 1;
+  /*box-shadow:0px 0px 3px wheat inset;*/
+  /*-webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;*/
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color:#ffcb17;
+  box-shadow:0px 1px 1px #fff inset;
+  background-image:url('https://yraaa.ru/_pu/24/59610063.png');
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+::-webkit-resizer{
+  background-repeat:no-repeat;
+  width:7px;
+  height:0px
+}
+
+::-webkit-scrollbar{
+  width: 11px;
+}
+

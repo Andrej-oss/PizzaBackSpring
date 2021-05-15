@@ -1,0 +1,46 @@
+<mat-card class="card-auth"
+          [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <form [formGroup]="authForm">
+    <ng-template matStepLabel>Fill out your name</ng-template>
+    <mat-form-field [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Login
+      </mat-label>
+      <input matInput
+             placeholder="Login"
+             [formControl]="username" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill"
+                    [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Enter your password
+      </mat-label>
+      <input matInput
+             [type]="hide ? 'password' : 'text'" [formControl]="password" >
+      <button mat-icon-button matSuffix (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+  <button  mat-stroked-button
+           aria-label="Show an example snack-bar"
+          (click)="onAuthenticate(authForm)"
+          [disabled]="authForm.invalid || authForm.disabled"
+          style="left: 70%; background-color: white; margin-top: 5%">
+    Login
+  </button>
+  <div *ngIf="error" class="card-auth-error">
+    <a>{{error}}</a>
+  </div>
+  <div class="card-auth-link-reg">
+    <a (click)="onRegistration()">
+      Don't registered?
+    </a>
+  </div>
+  <div class="card-auth-link-rem">
+    <a (click)="onReminder()">
+      Forget your password or login?
+    </a>
+  </div>
+</mat-card>

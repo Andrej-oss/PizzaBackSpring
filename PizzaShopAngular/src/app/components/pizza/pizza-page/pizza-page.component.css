@@ -1,0 +1,8 @@
+.pizza-page {
+  margin: 10% 10% 0% 15%;
+  display: flex;
+  flex-wrap: wrap;
+}
+mat-button-toggle:focus{
+  outline: 0;
+}

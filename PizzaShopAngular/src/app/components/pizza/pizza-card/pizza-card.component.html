@@ -1,0 +1,19 @@
+<div class="pizza-card">
+  <img [src]="url+pizza.path"
+       class="pizza-card-image"
+       (click)="onChoosePizza(pizza.id)">
+  <div class="pizza-card-text">
+    <h2>
+      {{pizza.name}}
+    </h2>
+    <p>
+      {{pizza.description}}
+    </p>
+  </div>
+  <div class="pizza-card-price">
+    <h2>
+      from: {{pizza.price}}
+    </h2>
+    <mat-button-toggle (click)="onChoosePizza(pizza.id)">choose</mat-button-toggle>
+  </div>
+</div>

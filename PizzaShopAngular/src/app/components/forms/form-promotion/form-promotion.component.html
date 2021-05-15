@@ -1,0 +1,22 @@
+<mat-card
+  [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <form [formGroup]="promotionForm">
+    <ng-template matStepLabel>Creat comment</ng-template>
+    <mat-form-field style="width: 100%">
+      <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+        Promotion Name
+      </mat-label>
+      <input matInput placeholder="Promotion"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             [formControl]="promotionName" required>
+    </mat-form-field>
+    <p>
+      <input type="file" (change)="upLoadFile($event)" accept=".jpg" />
+    </p>
+    <button mat-button
+            (click)="savePromotion(promotionForm)"
+            [disabled]="promotionForm.invalid">
+      save promotion
+    </button>
+  </form>
+</mat-card>

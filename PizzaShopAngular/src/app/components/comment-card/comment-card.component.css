@@ -1,0 +1,15 @@
+.example-card{
+  margin-top: 2%;
+}
+.material-icons{
+  cursor: pointer;
+}
+.material-icons:hover{
+  color: grey;
+}
+.like-grey-style{
+  color: grey;
+}
+.like-red-style{
+  color: red;
+}

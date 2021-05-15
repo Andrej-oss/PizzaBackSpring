@@ -1,0 +1,10 @@
+<div class="ingredient-card"
+     [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <img [src]="url + ingredient.path" class="ingredient-card-image">
+  <div>
+    {{ingredient.name.split('_').join(' ')}}
+  </div>
+  <h2>
+    {{ingredient.price}}
+  </h2>
+</div>

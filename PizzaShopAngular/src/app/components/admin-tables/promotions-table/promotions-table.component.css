@@ -1,0 +1,17 @@
+.promotion-admin-image{
+  width: 200px;
+}
+.admin-table-column{
+  margin: 10% 10% 10% 10%;
+}
+.promotion-admin{
+  width: 400px;
+}
+.admin-promotion-delete:hover{
+  color: grey;
+  cursor: pointer;
+}
+.admin-promotion-settings:hover{
+  color: grey;
+  cursor: pointer;
+}

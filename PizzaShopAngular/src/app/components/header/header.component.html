@@ -1,0 +1,60 @@
+<div class="header">
+  <div class="header-content">
+    <a class="header-content-logo">
+      <img src="../../../assets/img/logo.jpg"
+           (click)="onHome()"
+           style="height: 100px; border-radius: 60%"/>
+    </a>
+    <div class="header-content-search">
+      <div style="width: 70%" *ngIf="!isMobile()">
+        Order pizza now by phone and we will deliver it to you within 30 minutes.
+        <span class="material-icons">
+          local_phone
+        </span>
+        tel. 777-777-7777
+      </div>
+    </div>
+    <div class="header-content-buttons-group">
+      <a class="header-content-buttons">
+        <button mat-button (click)="onLogin()" *ngIf="!userService.isAuthenticated()">Sing in</button>
+        <button mat-button (click)="userService.logOut()" *ngIf="userService.isAuthenticated()">Sing out</button>
+        <button mat-button (click)="onRegistration()" *ngIf="!userService.isAuthenticated()">Sing up</button>
+        <button mat-button (click)="onAdmin()" *ngIf="userService.isAdmin()">
+          ADMIN: {{userService.getUserName()}}
+        </button>
+        <button mat-button (click)="onUserPage()" *ngIf="userService.isUser()">
+          USER: {{userService.getUserName()}}
+        </button>
+      </a>
+      <a class="header-content-buttons">
+        <mat-slide-toggle (click)="onDark()">To Dark</mat-slide-toggle>
+        <button mat-button>
+      <span class="material-icons"
+            (mouseleave)="hideCart(false)"
+            (mouseenter)="showCart(false)"
+            (click)="onCartPage()"
+            [matBadge]="themeSubjectService.data.value.sizeCart"
+            matBadgePosition="before"
+            matBadgeColor="warn">shopping_cart</span>
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="nav-bar">
+  <app-nav-bar></app-nav-bar>
+</div>
+<div *ngIf="isCartOpen && (cartElements | async).length !== 0">
+  <div
+    [style]="themeSubjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+    class="header-content-buttons-cart"
+    (mouseenter)="showCartNow(true)"
+    (mouseleave)="hideCart(false)">
+    <app-pizza-cart-card [cartElements]="cartElements | async"
+                         [snacks]="snacks | async"
+                         [drinks]="drinks | async"
+                         [desserts]="desserts | async"
+                         [pizzas]="pizzas | async"></app-pizza-cart-card>
+  </div>
+</div>
+<router-outlet></router-outlet>

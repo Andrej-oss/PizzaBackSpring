@@ -1,0 +1,65 @@
+<div *ngIf="(cartElements | async)?.length"
+     [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <mat-horizontal-stepper
+    [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+    (animationDone)="onPayment()">
+    <mat-step label="Cart" state="cart" (click)="onPayment()">
+      <div class="pizza-cart-page"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+        <h2>
+          Cart
+        </h2>
+        <app-pizza-cart-card [pizzas]="pizzas | async"
+                             [drinks]="drinks | async"
+                             [snacks]="snacks | async"
+                             [desserts]="desserts | async"
+                             [cartElements]="cartElements | async">
+
+        </app-pizza-cart-card>
+        <div>
+          <button mat-button matStepperNext (click)="onPayment()">Next</button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step label="User" state="payment">
+      <div class="pizza-cart-page-payment-content-user"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+        <div class="pizza-cart-page-payment-content-user-name">
+          Dear customer, {{(principal | async)?.name }} {{(principal | async)?.lastName}}, please check and
+          confirm your data for delivery or change if data is wrong.
+        </div>
+        <br>
+        <h2>Address for delivery:</h2>
+        <p>Post code: {{(principal | async)?.postCode + '\n'}}</p>
+        <p>City: {{(principal | async)?.city + '\n'}}</p>
+        <p>Street: {{(principal | async)?.address + '\n'}}</p>
+        <br/>
+        <div class="pizza-cart-page-payment-content-user-address">
+          We will send you email on {{(principal | async)?.email}} and call you
+          on your phone number {{(principal | async)?.phone}} when your order delivered.
+        </div>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step label="Payment">
+      <p>{{(principal | async)?.name }} {{(principal | async)?.lastName}}
+        , input your name and number your card, data and CVC code.
+      </p>
+      <div class="pizza-cart-page-payment-payment" *ngIf="themeObjectService.data.value.isOpenPayment">
+        <app-payment [price]="themeObjectService.data.value.totalPrice"
+                     [allCart]="cartElements | async"
+                     [description]="cartElements | async | json"
+                     [tittle]="'all elements in cart'"></app-payment>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+<div *ngIf="!(cartElements | async)?.length">
+  <h1>
+    Your cart is empty. Please add pizza to cart.
+  </h1>
+</div>
+<router-outlet></router-outlet>

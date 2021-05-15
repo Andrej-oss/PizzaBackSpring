@@ -1,0 +1,80 @@
+<table mat-table [dataSource]="comments$ | async"
+       class="comment-table"
+       [style]="this.themeObjectService.data.value.isDarkTheme ? black : white">
+  <ng-container matColumnDef="position" style="margin: 10px 10px 10px 10px">
+    <th mat-header-cell *matHeaderCellDef
+        [style]="this.themeObjectService.data.value.isDarkTheme ? blackColor : whiteColor" class="admin-table-column">
+      No.
+    </th>
+    <td mat-cell *matCellDef="let i = index"
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor"
+        class="admin-table-column"> {{i + 1}} </td>
+  </ng-container>
+  <ng-container matColumnDef="body" class="admin-table-column">
+    <th mat-header-cell *matHeaderCellDef
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      Body
+    </th>
+    <td mat-cell *matCellDef="let element"
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      {{element.body}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="tittle" style="margin: 10% 10% 10% 10%">
+    <th mat-header-cell *matHeaderCellDef
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      Tittle
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.tittle}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="author" style="margin: 10px 10px 10px 10px">
+    <th mat-header-cell *matHeaderCellDef
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      Author
+    </th>
+    <td mat-cell *matCellDef="let element"
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      {{element.author}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="voice" style="margin: 10px 10px 10px 10px">
+    <th mat-header-cell *matHeaderCellDef
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor"> Voices
+    </th>
+    <td mat-cell *matCellDef="let element"
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      {{getVoices(element.voice)}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="option" style="margin: 10px 10px 10px 10px">
+    <th mat-header-cell *matHeaderCellDef
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor"> Option
+    </th>
+    <td mat-cell *matCellDef="let element"
+        [style]="this.themeObjectService.data.value.isDarkTheme  ? blackColor : whiteColor">
+      <div>
+        <div class="admin-comment-settings">
+    <span class="material-icons"
+          style="margin-left: 70%"
+          (click)="onDelete(element.id)">
+       delete
+    </span>
+        </div>
+        <div class="admin-comment-settings">
+          <span class="material-icons"
+                style="margin-left: 70%"
+                (click)="upDate(element)">
+              settings
+          </span>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<div *ngIf="isOpenCommentUpdate">
+  <app-form-comment [commentUser]="comment"></app-form-comment>
+</div>

@@ -1,0 +1,86 @@
+<div class="pizza-sheet"
+     [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <div *ngFor="let pizza of pizzas">
+    <div *ngIf="themeObjectService.data.value.idChoosePizza === pizza.id" class="pizza-sheet-content">
+      <div class="pizza-sheet-content-image" *ngIf="(size | async) === null">
+        <img [src]="url+pizza.path" class="pizza-card-image-content">
+      </div>
+      <div class="pizza-sheet-content-image" *ngIf="(size | async) !== null">
+        <img [src]="sizeUrl+(size | async)?.path + '/' + (size | async)?.name" [className]="classSize">
+        <app-star-rating-vote [pizzaId]="pizza.id" [pizzaRating]="pizza.rating"></app-star-rating-vote>
+      </div>
+      <div class="pizza-sheet-content-text"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black' : 'background-color: white;'">
+        <h1>
+          {{pizza.name}}
+        </h1>
+        <p>
+          {{(size | async)?.diameter}}cm,  {{(size | async)?.weight}}g
+        </p>
+        <p class="pizza-sheet-content-text-description">
+          {{pizzaName.join(',')}}
+        </p>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle (click)="onSmallPizza(pizza.id)">Small</mat-button-toggle>
+          <mat-button-toggle (click)="onMediumPizza(pizza.id)">Medium</mat-button-toggle>
+          <mat-button-toggle (click)="onLargePizza(pizza.id)">Large</mat-button-toggle>
+        </mat-button-toggle-group>
+        <div class="pizza-sheet-content-text-ingredients">
+          <div *ngFor="let ingredient of ingredients | async">
+            <div *ngFor="let ingred, let i = index of pizza.ingredients.split(',')">
+              <div *ngIf="ingred == ingredient.id" style="margin-right: 10px">
+                <app-ingredient-card [ingredient]="ingredient"
+                                     [matBadge]="isAddPrice3 && i === 2
+                                     || isAddPrice2 && i === 1
+                                     || isAddPrice1 && i === 0 ? '-' : '+'" matBadgePosition="before"
+                                     matBadgeColor="accent"
+                                     (click)="onAdd(ingredient.price, ingredient.name, i)">
+                </app-ingredient-card>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button mat-button
+                  (click)="savePizzaInCart(pizza.id)"
+                  [disabled]="!themeObjectService.data.value.userName.length">
+             <span class="material-icons">
+              shopping_cart
+            </span>
+            Add to cart for {{themeObjectService.data.value.price}}
+          </button>
+          <button mat-button style="margin-left: 2%"
+                  (click)="openPayment()"
+                  [disabled]="!themeObjectService.data.value.userName.length">
+            <span class="material-icons">
+              payment
+            </span>
+            {{isPaymentOpen ? 'hide payment form' : "Buy pizza for " + themeObjectService.data.value.price}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isPaymentOpen">
+    <mat-card>
+      <app-payment [description]="pizzaName.join(', ')"
+                   [tittle]="pizza.name"
+                   [volume]="currentSize.weight"
+                   [price]="themeObjectService.data.value.price"
+                   [pizzaId]="themeObjectService.data.value.idChoosePizza"></app-payment>
+    </mat-card>
+  </div>
+  <div *ngIf="isOpenComments">
+    <div *ngFor="let comment of comments | async">
+      <app-comment-card [comment]="comment" [pizzaId]="pizza.id"></app-comment-card>
+    </div>
+    <div *ngIf="isOpenCommentForm">
+      <app-form-comment [pizzaId]="pizza.id"></app-form-comment>
+    </div>
+    <button mat-button
+            [disabled]="!themeObjectService.data.value.userName.length"
+            (click)="openCommentFrom()">
+      {{isOpenCommentForm ? 'back' : 'Write something about this pizza'}}</button>
+  </div>
+  <button mat-button (click)="openComments()">{{!isOpenComments ? 'show comments' : 'hide comments'}}</button>
+</div>

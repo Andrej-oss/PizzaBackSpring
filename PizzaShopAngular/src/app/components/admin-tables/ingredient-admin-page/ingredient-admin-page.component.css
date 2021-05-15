@@ -1,0 +1,18 @@
+.ingredient-admin-image{
+  width: 50px;
+  border-radius: 50%;
+}
+.admin-table-column{
+  margin: 10% 10% 10% 10%;
+}
+.ingredient-admin{
+  width: 400px;
+}
+.admin-ingredient-delete:hover{
+  color: grey;
+  cursor: pointer;
+}
+.admin-ingredient-settings:hover{
+  color: grey;
+  cursor: pointer;
+}

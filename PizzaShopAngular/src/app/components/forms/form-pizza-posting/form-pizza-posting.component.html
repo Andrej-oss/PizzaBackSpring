@@ -1,0 +1,79 @@
+
+<mat-vertical-stepper
+  [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+  [linear]="true" #stepper>
+  <mat-step [stepControl]="pizzaForm">
+    <form [formGroup]="pizzaForm"
+          [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+      <ng-template matStepLabel>{{pizza ? 'Update Pizza' : 'Create pizza'}}</ng-template>
+        <mat-label>New!!!</mat-label>
+        <mat-checkbox
+          [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+          [formControl]="newPizza">
+        </mat-checkbox>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Pizza name
+        </mat-label>
+        <input matInput
+               placeholder="Name"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               [formControl]="pizzaName"  required>
+      </mat-form-field>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Pizza Description
+        </mat-label>
+        <textarea matInput placeholder="description"
+                  [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+                  style="width: 300px; height: 80px"
+                  [formControl]="pizzaDescription" required></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill"
+                      style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+          Choose ingredients
+        </mat-label>
+        <mat-select [formControl]="pizzaId">
+          <mat-option *ngFor="let ingredient of ingredients"
+                      [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+                      value="{{ingredient.id}}">
+            {{ingredient.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button (click)="onAddIngredient(pizzaId)">Add Ingredient</button>
+      <button mat-button (click)="onDeleteIngredient()">Delete ingredient</button>
+      <ul *ngFor="let ingredient of arrayIngredients">
+        <li>
+          {{ingredient | ingredient: ingredients}}
+        </li>
+      </ul>
+      <p>
+      <mat-form-field appearance="fill" >
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Price
+        </mat-label>
+        <input matInput type="number"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               class="example-right-align" [formControl]="pricePizza">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+      </mat-form-field>
+      </p>
+      <input type="file"
+             [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+             (change)="upLoadFile($event)" accept=".jpg"/>
+      <div style="margin: 10% 0% 0% 70%">
+        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button (click)="onSave(pizzaForm)" *ngIf="!pizza">Save</button>
+        <button mat-button (click)="onUpdate(pizzaForm)" *ngIf="pizza">Update</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-vertical-stepper>
+<div *ngIf="pizza">
+  <h1>{{pizza.name}} sizes</h1>
+  <app-pizza-size-admin-table [pizzaName]="pizza.name"></app-pizza-size-admin-table>
+</div>
+

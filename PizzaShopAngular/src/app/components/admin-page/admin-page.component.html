@@ -1,0 +1,157 @@
+<div class="admin-card-menu">
+  <div class="example-sidenav">
+    <p *ngIf="(avatar | async) === null">
+      <img src="../../../assets/img/awaiting-image-profile-1000-1000.jpg" style="width: 20%; border-radius: 50%">
+    </p>
+    <p *ngIf="(avatar | async) !== null">
+      <img src="{{avatarUrl  + (avatar | async)?.path}}" style="width: 20%; border-radius: 50%">
+    </p>
+    <p *ngIf="admin">
+      {{admin.username}}
+    </p>
+    <p *ngIf="isUpdateInfoOpen">
+      <a *ngIf="isAvatarOpen">
+        <input type="file" (change)="uploadFile($event)" accept=".jpg">
+        <button mat-button (click)="onSaveAvatar(admin.id)">save avatar</button>
+      </a>
+      <button mat-button (click)="onOpenAvatarChange()">change avatar</button>
+    </p>
+    <button mat-raised-button (click)="onUserUpdate()">
+      Profile
+    </button>
+    <button mat-raised-button (click)="onPizzaUpdate()" *ngIf="isAdmin">
+      Pizza
+    </button>
+    <button mat-raised-button (click)="onIngredientPage()">
+      Ingredients
+    </button>
+    <button mat-raised-button (click)="onPromotions()">
+      Promotions
+    </button>
+    <button mat-raised-button (click)="onDrinks()">
+      Drinks
+    </button>
+    <button mat-raised-button (click)="onDessert()">
+      Dessert
+    </button>
+    <button mat-raised-button (click)="onSnacks()">
+      Snacks
+    </button>
+    <button mat-raised-button (click)="onAllPurchases()">
+      Purchases
+    </button>
+    <button mat-raised-button (click)="onUsersAdmin()">
+      Users
+    </button>
+  </div>
+  <div *ngIf="isOpenPizzaOptions">
+    <div class="example-sidenav-content">
+      <button mat-button (click)="onPizzaCreate()">
+        {{!isOpenPizzaCreator ? 'Create New Pizza': 'Hide pizza form'}}
+      </button>
+      <app-pizza-admin-table></app-pizza-admin-table>
+      <div *ngIf="isOpenPizzaOptions && isOpenPizzaCreator"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+        <mat-accordion class="example-headers-align"
+                       style="padding: 10%">
+          <mat-expansion-panel
+            [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+            [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title
+                [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+                Pizza
+              </mat-panel-title>
+              <mat-panel-description
+                [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+                Type your new pizza
+                <mat-icon>pizza</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-form-pizza-posting></app-form-pizza-posting>
+            <mat-action-row>
+              <button mat-button color="warn" (click)="prevStep()">Previous</button>
+              <button mat-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel
+            [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+            [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title
+                [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+                Pizza Size
+              </mat-panel-title>
+              <mat-panel-description
+                [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+                Type your new Pizzas size
+                <mat-icon>date_range</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-form-size-pizza-post></app-form-size-pizza-post>
+            <mat-action-row>
+              <button mat-button color="warn" (click)="prevStep()">Previous</button>
+              <button mat-button color="primary" (click)="nextStep()">End</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isOpenUsersAdministrating" class="admin-users-content">
+    <app-user-admin-table></app-user-admin-table>
+  </div>
+  <div *ngIf="isOpenAllPurchases">
+    <app-purchase type="admin"></app-purchase>
+  </div>
+  <div *ngIf="isOpenUserUpdate">
+    <app-form-user-registration [user]="admin" style="width: 2vw"></app-form-user-registration>
+  </div>
+  <div *ngIf="isOpenIngredientUpdate">
+    <button mat-button (click)="onOpenIngredientCreator()">
+      {{isOpenIngredientCreator ? 'Hide Ingredient form creation' : 'Create new Pizza Ingredient'}}</button>
+    <app-ingredient-admin-page></app-ingredient-admin-page>
+    <div *ngIf="isOpenIngredientCreator">
+      <app-form-ingredient-posting></app-form-ingredient-posting>
+    </div>
+  </div>
+  <div *ngIf="isPromotionsOpen">
+    <button mat-button (click)="onOpenPromoCreator()">
+      {{!isPromotionCreator ? 'create new promotion' : 'hide promotion form'}}
+    </button>
+    <app-promotions-table></app-promotions-table>
+    <div *ngIf="isOpenIngredientCreator">
+      <app-form-promotion></app-form-promotion>
+    </div>
+  </div>
+  <div *ngIf="isDrinksOpen">
+    <button mat-button (click)="onOpenDrinkCreator()">
+      {{!isOpenDrinkCreator ? 'create new drink' : 'hide drink form'}}
+    </button>
+    <p *ngIf="drinks && drinks.length">
+      <app-drinks-table [drinks]="drinks"></app-drinks-table>
+    </p>
+    <p *ngIf="isOpenDrinkCreator">
+      <app-form-drink></app-form-drink>
+    </p>
+  </div>
+  <div *ngIf="isOpenSnacks">
+    <button mat-button (click)="onOpenSnackCreator()">
+      {{!isOpenSnackCreator ? 'create new snack' : 'hide snack form'}}
+    </button>
+    <app-snacks-admin-table></app-snacks-admin-table>
+    <p *ngIf="isOpenSnackCreator">
+      <app-form-snack></app-form-snack>
+    </p>
+  </div>
+  <div *ngIf="isDessertOpen">
+    <button mat-button (click)="onOpenDessertCreator()">
+      {{!isOpenDessertCreator ? 'create new dessert' : 'hide dessert form'}}
+    </button>
+    <app-dessert-table></app-dessert-table>
+    <p *ngIf="isOpenDessertCreator">
+      <app-form-dessert></app-form-dessert>
+    </p>
+  </div>
+</div>
+

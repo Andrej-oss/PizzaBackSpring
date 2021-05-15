@@ -1,0 +1,43 @@
+<div class="user-card-menu">
+  <div class="example-sidenav">
+    <p *ngIf="(avatar | async) === null">
+      <img src="../../../assets/img/awaiting-image-profile-1000-1000.jpg" style="width: 20%; border-radius: 50%">
+    </p>
+    <p *ngIf="(avatar | async) !== null">
+      <img src="{{avatarUrl  + (avatar | async)?.path}}" style="width: 20%; border-radius: 50%">
+    </p>
+    <p *ngIf="user">
+      {{user.username}}
+    </p>
+    <p *ngIf="isUpdateInfoOpen">
+    <a *ngIf="isAvatarOpen">
+      <input type="file" (change)="uploadFile($event)" accept=".jpg">
+      <button mat-button (click)="onSaveAvatar(user.id)">save avatar</button>
+    </a>
+    <button mat-button (click)="onOpenAvatarChange()">change avatar</button>
+    </p>
+    <!--    <button (click)="showFiller = !showFiller" mat-raised-button style="width: 70%">-->
+    <!--      Toggle extra text-->
+    <!--    </button>-->
+    <button mat-raised-button (click)="onUserUpdate()">
+      Administrating Profile
+    </button>
+    <button mat-raised-button (click)="onBasket()">
+      Cart
+    </button>
+    <button mat-raised-button (click)="onPurchase()">
+      Purchases
+    </button>
+  </div>
+  <div class="example-sidenav-content">
+    <div *ngIf="isUpdateInfoOpen">
+      <app-form-user-registration [user]="user" style="width: 2vw"></app-form-user-registration>
+    </div>
+    <div *ngIf="isCartOpen">
+      <app-pizza-cart-page></app-pizza-cart-page>
+    </div>
+    <div *ngIf="isPurchasesOpen">
+      <app-purchase></app-purchase>
+    </div>
+  </div>
+</div>

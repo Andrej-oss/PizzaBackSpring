@@ -1,0 +1,58 @@
+<mat-card class="example-card"
+          [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+          *ngIf="!isEditComment">
+  <div style="display: flex; justify-content: space-between">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <p *ngIf="(comment.author.toLowerCase() | userAvatar: (avatars | async)) !== null">
+          <img src="{{avatarUrl}}{{comment.author.toLowerCase() | userAvatar: (avatars | async)}}"
+               style="width: 100%; border-radius: 50%">
+        </p>
+        <p *ngIf="(comment.author.toLowerCase() | userAvatar: (avatars | async)) === null">
+          <img src="../../../assets/img/awaiting-image-profile-1000-1000.jpg" style="width: 100%; border-radius: 50%">
+        </p>
+      </div>
+      <mat-card-title>{{comment.tittle}}</mat-card-title>
+      <mat-card-subtitle>{{comment.author}}</mat-card-subtitle>
+    </mat-card-header>
+    <div *ngIf="themeObjectService.data.value.userName === comment.author.toLowerCase()">
+    <span class="material-icons"
+          style="margin: 50% 0% 20% 40%"
+          (click)="onDeleteComment(comment.id)">
+       delete
+    </span>
+      <p>
+        <button mat-button (click)="onEdit(comment.id)">edit</button>
+      </p>
+    </div>
+  </div>
+  <mat-card-content>
+    <p>
+      {{comment.body}}
+    </p>
+  </mat-card-content>
+  <h6>-{{comment.date | date:'medium'}}</h6>
+  <div style="display: flex; justify-content: space-between">
+    <div>
+      <mat-card-actions>
+        <button mat-button (click)="onLikeComment(comment.id)"
+                [disabled]="isLiked || themeObjectService.data.value.userId === 0">
+          LIKE
+        </button>
+      </mat-card-actions>
+    </div>
+    <div>
+      <mat-button (click)="onDeleteVoice(comment.id)"
+                  class="material-icons"
+                  [style]="isLiked ? 'color: red' : 'color: grey'"
+                  [disabled]="themeObjectService.data.value.userId === 0">
+        favorite
+      </mat-button>
+      <p style="margin: 50% 0% 0% 40%">{{this.voiceSum}}</p>
+    </div>
+  </div>
+</mat-card>
+<p *ngIf="isEditComment">
+  <app-form-comment [commentUser]="comment" [pizzaId]="pizzaId"></app-form-comment>
+  <button mat-button (click)="onEdit(comment.id)">back</button>
+</p>

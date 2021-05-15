@@ -1,0 +1,49 @@
+.pizza-sheet{
+  width: 800px;
+}
+@media only screen and (max-width: 600px) {
+  .pizza-sheet {
+    width: 100%;
+  }
+}
+
+.pizza-card-image-content{
+  width: 250px;
+  border-radius: 50%;
+  margin-top: 50%;
+}
+.pizza-card-image-content-large{
+  margin-top: 25%;
+  width: 350px;
+  border-radius: 50%;
+}
+.pizza-card-image-content-medium{
+  margin-top: 35%;
+  width: 300px;
+  border-radius: 50%;
+}
+.pizza-sheet-content{
+  display: flex;
+  justify-content: space-around;
+}
+@media only screen and (max-width: 600px) {
+  .pizza-sheet-content {
+    flex-direction: column;
+  }
+  .pizza-sheet-content-text{
+    width: 100%;
+  }
+}
+.pizza-sheet-content-text{
+  background-color: gainsboro;
+  width: 50%;
+}
+.pizza-sheet-content-text-ingredients{
+  display: flex;
+  flex-direction: row;
+  margin: 5% 5% 5% 5%;
+}
+button:focus{
+  outline: 0;
+}
+

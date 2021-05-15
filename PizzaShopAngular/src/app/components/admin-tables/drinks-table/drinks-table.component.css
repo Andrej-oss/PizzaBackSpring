@@ -1,0 +1,18 @@
+.drink-admin-image{
+  width: 50px;
+  border-radius: 50%;
+}
+.admin-table-column{
+  margin: 10% 10% 10% 10%;
+}
+.drink-admin{
+  width: 400px;
+}
+.admin-drink-delete:hover{
+  color: grey;
+  cursor: pointer;
+}
+.admin-drink-settings:hover{
+  color: grey;
+  cursor: pointer;
+}

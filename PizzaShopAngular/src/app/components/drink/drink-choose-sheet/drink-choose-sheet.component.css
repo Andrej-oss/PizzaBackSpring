@@ -1,0 +1,34 @@
+.drink-sheet{
+  width: 800px;
+
+}
+@media only screen and (max-width: 600px) {
+  .drink-sheet {
+    width: 100%;
+  }
+}
+.drink-card-image-content{
+height: 20%;
+  border-radius: 50%;
+  margin-top: 10%;
+}
+
+.drink-sheet-content{
+  display: flex;
+  justify-content: space-around;
+}
+@media only screen and (max-width: 600px) {
+  .drink-sheet-content {
+    flex-direction: column;
+  }
+  .drink-sheet-content-text{
+    width: 100%;
+  }
+}
+.drink-sheet-content-text{
+  background-color: gainsboro;
+  width: 50%;
+}
+button:focus{
+  outline: 0;
+}

@@ -1,0 +1,29 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" type="button" *ngIf="!(pages[0].id === 1)">
+      <a class="page-link" (click)="onPrevious(pages)">
+        Previous
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of pages;  let i = index">
+      <a *ngIf="activePage !== page.id">
+        <a class="page-link"
+           (click)="onChangePage(page.id)"
+           *ngIf="i < 10 && themeObjectService.data.value.lastPage >= page.id">{{page.id}}
+        </a>
+      </a>
+      <a *ngIf="activePage === page.id">
+        <a class="page-link"
+           style=" background-color: gray; color: blanchedalmond"
+           (click)="onChangePage(page.id)"
+           *ngIf="i < 10 && themeObjectService.data.value.lastPage >= page.id">{{page.id}}
+        </a>
+      </a>
+    </li>
+    <li class="page-item" *ngIf="pages[pages.length - 1].id < themeObjectService.data.value.lastPage">
+      <a class="page-link" (click)="onNext(pages)">
+        Next
+      </a>
+    </li>
+  </ul>
+</nav>

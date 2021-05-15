@@ -1,0 +1,43 @@
+<div class="drink-sheet"
+     [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <div *ngFor="let drink of drinks">
+    <div *ngIf="themeObjectService.data.value.idChooseDrink === drink.id"
+         class="drink-sheet-content">
+      <img [src]="url+drink.path" class="drink-card-image-content" style="height: 20%">
+      <div class="drink-sheet-content-text"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black' : 'background-color: white;'">
+        <h1>
+          {{drink.name}}
+        </h1>
+        <p>
+          {{drink.volume}} l
+        </p>
+        <div style="margin: 70% 5% 5% 5%">
+          <button mat-button
+                  (click)="saveDrinkInCart(drink)"
+                  [disabled]="!themeObjectService.data.value.userName.length">
+             <span class="material-icons">
+              shopping_cart
+            </span>
+            Add to cart for {{drink.price}}
+          </button>
+          <button mat-button style="margin-left: 2%"
+                  (click)="openPayment(drink)"
+                  [disabled]="!themeObjectService.data.value.userName.length">
+            <span class="material-icons">
+              payment
+            </span>
+            {{isPaymentOpen ? 'hide payment form' : "Buy drink for " + drink.price}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isPaymentOpen">
+    <app-payment [drinkId]="drinkChoose.id"
+                 [price]="drinkChoose.price"
+                 [volume]="drinkChoose.volume"
+                 [tittle]="drinkChoose.name"
+                 [description]="drinkChoose.path"></app-payment>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<div class="pizza-cart-card-item" *ngIf="pizza">
+  <div *ngIf="pizza">
+    <img [src]="url+pizza.path" class="pizza-cart-card-item-image">
+    <div class="pizza-cart-card-item-content">
+      <div class="pizza-cart-card-item-content-tittle">
+        {{pizza.name}}
+      </div>
+      <div class="pizza-cart-card-item-content-size">
+        {{cartElement.size}}
+      </div>
+      <p>
+        {{cartElement.description}}
+      </p>
+    </div>
+    <div class="pizza-cart-cart-item-buttons">
+      <button mat-mini-fab [disabled]="count <= 1" (click)="onDec()">-</button>
+      {{count}}
+      <button mat-mini-fab (click)="onInc()">+</button>
+    </div>
+  </div>
+  <div style="margin-top: 5%">
+      <span class="material-icons" (click)="onDelete(cartElement.id)">
+       delete
+    </span>
+    <div class="pizza-cart-cart-item-price">
+      {{price}}
+    </div>
+  </div>
+</div>
+<div class="pizza-cart-card-item" *ngIf="drink">
+  <div>
+    <img [src]="urlDrink + drink.path" class="pizza-cart-card-item-image">
+    <div class="pizza-cart-card-item-content">
+      <div class="pizza-cart-card-item-content-tittle">
+        {{drink.name}}
+      </div>
+      <p>
+        {{drink.volume}}
+      </p>
+    </div>
+    <div class="pizza-cart-cart-item-buttons">
+      <button mat-mini-fab [disabled]="count <= 1" (click)="onDec()">-</button>
+      {{count}}
+      <button mat-mini-fab (click)="onInc()">+</button>
+    </div>
+  </div>
+  <div style="margin-top: 5%">
+      <span class="material-icons" (click)="onDelete(cartElement.id)">
+       delete
+    </span>
+    <div class="pizza-cart-cart-item-price">
+      {{price}}
+    </div>
+  </div>
+</div>
+<div class="pizza-cart-card-item" *ngIf="snack">
+  <div>
+    <img [src]="urlSnack + snack.path" class="pizza-cart-card-item-image">
+    <div class="pizza-cart-card-item-content">
+      <div class="pizza-cart-card-item-content-tittle">
+        {{snack.name}}
+      </div>
+      <p>
+        {{snack.volume}}
+      </p>
+    </div>
+    <div class="pizza-cart-cart-item-buttons">
+      <button mat-mini-fab [disabled]="count <= 1" (click)="onDec()">-</button>
+      {{count}}
+      <button mat-mini-fab (click)="onInc()">+</button>
+    </div>
+  </div>
+  <div style="margin-top: 5%">
+      <span class="material-icons" (click)="onDelete(cartElement.id)">
+       delete
+    </span>
+    <div class="pizza-cart-cart-item-price">
+      {{price}}
+    </div>
+  </div>
+</div>
+<div class="pizza-cart-card-item" *ngIf="dessert">
+  <div>
+    <img [src]="urlDessert + dessert.path" class="pizza-cart-card-item-image">
+    <div class="pizza-cart-card-item-content">
+      <div class="pizza-cart-card-item-content-tittle">
+        {{dessert.name}}
+      </div>
+      <p>
+        {{dessert.volume}}
+      </p>
+    </div>
+    <div class="pizza-cart-cart-item-buttons">
+      <button mat-mini-fab [disabled]="count <= 1" (click)="onDec()">-</button>
+      {{count}}
+      <button mat-mini-fab (click)="onInc()">+</button>
+    </div>
+  </div>
+  <div style="margin-top: 5%">
+      <span class="material-icons" (click)="onDelete(cartElement.id)">
+       delete
+    </span>
+    <div class="pizza-cart-cart-item-price">
+    {{price}}
+  </div>
+</div>
+</div>

@@ -1,0 +1,44 @@
+.card-auth{
+  max-width: 40%;
+  padding: 10%;
+  left: 25%;
+  margin: 2%;
+  box-shadow: 0 0 5px;
+
+}
+@media only screen and (max-width: 600px) {
+  .card-auth {
+    min-width: 70%;
+    left: 10%;
+  }
+}
+.card-auth-black{
+  max-width: 40%;
+  padding: 10%;
+  left: 25%;
+  margin: 2%;
+  color: white;
+  background-color: black;
+}
+.card-auth-link-reg{
+  cursor: pointer;
+  font-size: 12px;
+  font-family: Candara;
+}
+.card-auth-link-reg:hover{
+  color: gray;
+}
+.card-auth-error{
+  color: red;
+}
+button:focus{
+  outline: none;
+}
+.card-auth-link-rem{
+  cursor: pointer;
+  font-size: 12px;
+  font-family: Candara;
+}
+.card-auth-link-rem:hover{
+  color: gray;
+}

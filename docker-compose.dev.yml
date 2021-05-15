@@ -36,7 +36,7 @@ services:
     stdin_open: true
     tty: true
     build:
-      context: ./frontend
+      context: ./PizzaShopAngular
       dockerfile: Dockerfile.dev
     restart: on-failure
     depends_on:
@@ -45,7 +45,7 @@ services:
     container_name: pizza-shop-frontend
     command: node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --disable-host-check
     volumes:
-      - ./frontend/src:/app/src
+      - ./PizzaShopAngular/src:/app/src
     networks:
       - pizzaShopNetwork
   nginx:

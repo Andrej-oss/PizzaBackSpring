@@ -1,0 +1,19 @@
+<div class="dessert-card">
+  <img [src]="url+dessert.path" class="dessert-card-image" (click)="onChooseDrink(dessert.id)">
+  <div class="pizza-card-text">
+    <h2 style="text-align: center">
+      {{dessert.name}}
+    </h2>
+  </div>
+  <div class="dessert-card-price">
+    <h2>
+      {{dessert.price}}
+    </h2>
+    <button mat-button
+            [disabled]="!themeObjectService.data.value.userName.length"
+            (click)="onToCartDessert(dessert)">to Cart</button>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+

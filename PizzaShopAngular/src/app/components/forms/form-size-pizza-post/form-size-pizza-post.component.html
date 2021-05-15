@@ -1,0 +1,58 @@
+
+<form [formGroup]="pizzaSizeForm"
+      [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <ng-template matStepLabel>Create sizes of pizza</ng-template>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+      {{size ? size.name : 'Choose pizza size'}}
+    </mat-label>
+    <mat-select name="size" [formControl]="sizePizza" [disabled]="size">
+      <mat-option *ngFor="let size of sizes" [value]="size.value" >
+        {{size.value.size + "     " + size.value.diameter}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+      {{size ? pizzaName : 'Choose pizza name'}}</mat-label>
+    <mat-select name="pizza" [formControl]="pizzaId" [disabled]="size">
+      <mat-option *ngFor="let pizza of pizzas | async"
+                  [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+                  [value]="pizza.id">{{pizza.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%">
+    <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+      Weight
+    </mat-label>
+    <input matInput type="number"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+           [formControl]="weight" placeholder="600"
+           required>
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+      Price
+    </mat-label>
+    <input matInput type="number"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+           class="example-left-align" [formControl]="priceSize">
+    <span matPrefix>$&nbsp;</span>
+    <span matSuffix>.00</span>
+  </mat-form-field>
+  <input type="file"
+         [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+         (change)="upLoadFileSize($event)" accept=".jpg"/>
+  <div style="margin: 10% 0% 0% 40%">
+    <button mat-button
+            (click)="onSave(pizzaSizeForm)"
+             style="left: 90%" *ngIf="!size">
+      Save
+    </button>
+    <button mat-button
+            (click)="onUpdate(pizzaSizeForm)"
+            style="left: 90%" *ngIf="size">
+      Update
+    </button>
+  </div>
+</form>

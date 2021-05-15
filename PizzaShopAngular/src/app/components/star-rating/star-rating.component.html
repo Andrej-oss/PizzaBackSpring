@@ -1,0 +1,7 @@
+<div class="col-sm-12">
+  <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
+    <li [ngClass]="{'selected': (star <= averageRating)}">
+      <mat-icon>grade</mat-icon>
+    </li>
+  </ul>
+</div>

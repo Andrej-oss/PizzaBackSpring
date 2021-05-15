@@ -1,0 +1,47 @@
+<div class="dessert-sheet"
+     [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+  <div *ngFor="let dessert of desserts">
+    <div *ngIf="themeObjectService.data.value.idChooseDessert === dessert.id"
+         class="dessert-sheet-content">
+      <img [src]="url+dessert.path" class="dessert-card-image-content">
+      <div class="dessert-sheet-content-text"
+           [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black' : 'background-color: white;'">
+        <h1>
+          {{dessert.name}}
+        </h1>
+        <p>
+          {{dessert.volume}}
+        </p>
+        <p>
+          {{dessert.description}}
+        </p>
+        <div style="margin: 70% 5% 5% 5%">
+          <button mat-button
+                  (click)="saveDessertInCart(dessert)"
+                  [disabled]="!themeObjectService.data.value.userName.length">
+             <span class="material-icons">
+              shopping_cart
+            </span>
+            Add to cart for {{dessert.price}}
+          </button>
+          <button mat-button style="margin-left: 2%"
+                  (click)="openPayment(dessert)"
+                  [disabled]="!themeObjectService.data.value.userName.length">
+            <span class="material-icons">
+              payment
+            </span>
+            {{isPaymentOpen ? 'hide payment form' : "Buy dessert for " + dessert.price}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isPaymentOpen">
+    <app-payment [dessertId]="dessertChoose.id"
+                 [price]="dessertChoose.price"
+                 [volume]="dessertChoose.volume"
+                 [tittle]="dessertChoose.name"
+                 [description]="dessertChoose.description"></app-payment>
+  </div>
+</div>
+

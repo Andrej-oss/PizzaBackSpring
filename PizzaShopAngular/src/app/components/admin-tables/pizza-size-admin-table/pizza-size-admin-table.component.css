@@ -1,0 +1,8 @@
+.size-admin-image{
+  width: 50px;
+  border-radius: 50%;
+}
+.admin-size-option:hover{
+  color: grey;
+  cursor: pointer;
+}

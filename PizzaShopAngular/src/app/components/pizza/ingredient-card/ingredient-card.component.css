@@ -1,0 +1,22 @@
+.ingredient-card-image{
+  width: 100px;
+  border-radius: 50%;
+}
+.ingredient-card{
+  border-radius: 5%;
+  box-shadow: 0 0 15px;
+  width: 100%;
+  height: 150px;
+  background-color: white;
+  text-align: center;
+}
+.ingredient-card:hover{
+  box-shadow: 0 0 5px;
+}
+.ingredient-card:active{
+  box-shadow: 0 0 0px;
+}
+.ingredient-card:visited{
+  outline: red;
+  box-shadow: 0 0 0px;
+}

@@ -1,0 +1,139 @@
+<mat-card class="registration-card"
+          [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+<mat-vertical-stepper
+  [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+  [linear]="true" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
+      <ng-template matStepLabel style="color: white;">Fill out your name</ng-template>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Login
+        </mat-label>
+        <input matInput placeholder="Login"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               [formControl]="login" required>
+      </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+            Enter your password
+          </mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'"
+                 [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+                 [formControl]="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Confirm your password
+        </mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               [formControl]="confirmPassword">
+        <button mat-icon-button matSuffix (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <div *ngIf="firstFormGroup.hasError('passwordError') && firstFormGroup.controls.confirmPassword.touched">
+        Password is not valid</div>
+      <div *ngIf="firstFormGroup.hasError('passwordLengthError')">
+        Password should have min 10 symbols length
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Name
+        </mat-label>
+        <input matInput placeholder="Name"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               [formControl]="name" required>
+      </mat-form-field>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Last Name
+        </mat-label>
+        <input matInput placeholder="Last Name"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               [formControl]="lastName" required>
+      </mat-form-field>
+      <mat-form-field style="width: 100%">
+        <mat-label>City</mat-label>
+        <input matInput [formControl]="city"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               placeholder="Ex. New York"
+               required>
+      </mat-form-field>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Address
+        </mat-label>
+        <input matInput [formControl]="address"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               placeholder="Ex. 1 Main St"
+               required>
+      </mat-form-field>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Post Code
+        </mat-label>
+        <input matInput [formControl]="postCode" placeholder="80100"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               required>
+      </mat-form-field>
+      <mat-form-field style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Email
+        </mat-label>
+        <input matInput [formControl]="email"
+               placeholder="Example@gmail.com"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               required>
+      </mat-form-field>
+      <div *ngIf="secondFormGroup.hasError('emailError')">
+        Should be valid email address. Please check your email address. Address should ended ".com"
+      </div>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label [style]="themeObjectService.data.value.isDarkTheme ? 'color: white' : 'color: black'">
+          Phone number
+        </mat-label>
+        <input matInput [formControl]="phone"
+               [style]="themeObjectService.data.value.isDarkTheme ? 'width: 100%;box-shadow: 0 1px 0;' :'width: 100%'"
+               placeholder="866-457-4757"
+               required>
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-hint>Include area code</mat-hint>
+      </mat-form-field>
+      <div *ngIf="secondFormGroup.hasError('phoneError')">Enter a numbers</div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+      <div *ngIf="!user">
+      <button mat-button (click)="onSave(firstFormGroup, secondFormGroup)" >Save</button>
+      </div>
+      <div *ngIf="user">
+        <button mat-button (click)="onUpdate(firstFormGroup, secondFormGroup)" >Update</button>
+      </div>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
+</mat-card>

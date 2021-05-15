@@ -1,0 +1,15 @@
+<mat-card class="user-card">
+  <p class="user-card-avatar">
+    <img src="../../../assets/img/awaiting-image-profile-1000-1000.jpg" style="width: 50%; border-radius: 50%">
+  </p>
+  <p>
+    {{user.username}}
+  </p>
+  <p>
+    {{user.role}}
+  </p>
+  <p>
+    ({{user.name}} {{user.lastName}})
+  </p>
+</mat-card>
+<button mat-button *ngIf="user.role !== 'ROLE_ADMIN'" (click)="onDelete(user.id)">Delete</button>

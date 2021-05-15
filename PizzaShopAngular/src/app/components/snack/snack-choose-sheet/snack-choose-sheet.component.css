@@ -1,0 +1,34 @@
+.snack-sheet{
+  width: 800px;
+
+}
+@media only screen and (max-width: 600px) {
+  .snack-sheet {
+    width: 100%;
+  }
+  .snack-sheet-content-text{
+    width: 100%;
+  }
+}
+.snack-card-image-content{
+  height: 20%;
+  margin: 10% 10% 10% 10%;
+  border-radius: 50%;
+}
+
+.snack-sheet-content{
+  display: flex;
+  justify-content: space-around;
+}
+@media only screen and (max-width: 600px) {
+  .snack-sheet-content {
+    flex-direction: column;
+  }
+}
+.snack-sheet-content-text{
+  background-color: gainsboro;
+  width: 50%;
+}
+button:focus{
+  outline: 0;
+}
