@@ -14,7 +14,7 @@ export class UserService {
   private token = null;
   private authority = null;
   private userName = null;
-  private baseUrl = '/api/user';
+  private baseUrl = '192.168.99.100:8080/api/user';
 
   constructor(private httpClient: HttpClient,
               private themeObjectService: ThemeObjectService,
@@ -29,7 +29,6 @@ export class UserService {
     return  this.httpClient.post<User[]>(this.baseUrl, user);
   }
   updateUser(id: number, user: User): Observable<User>{
-    console.log(id);
     return this.httpClient.put<User>(this.baseUrl + `/${id}`, user);
   }
   passwordReminder(email: string): Observable<string>{
@@ -49,7 +48,6 @@ export class UserService {
               rol.splice(-1, 1);
               const s = rol.join('');
               this.setAuthority(s);
-              console.log(this.authority);
             }
             this.userName = username;
           }

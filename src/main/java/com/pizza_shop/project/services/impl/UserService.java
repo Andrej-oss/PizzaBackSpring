@@ -1,5 +1,6 @@
 package com.pizza_shop.project.services.impl;
 
+
 import com.pizza_shop.project.dao.UserDao;
 import com.pizza_shop.project.dto.PasswordUserDto;
 import com.pizza_shop.project.entity.User;
@@ -62,11 +63,17 @@ public class UserService implements IUserService {
     public User createUser(User user) {
         final User usersByEmail = this.userDao.findUserByEmail(user.getEmail());
         final User usersByUsername = this.userDao.findUsersByUsername(user.getUsername());
+        if (usersByUsername != null) {
+            throw new UserNameException("Login occupied already");
+        }
+        if (usersByEmail != null) {
+            throw new EmailException("This email occupied already");
+        }
         if (usersByEmail == null && usersByUsername == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-//            if (user.getUsername().equals("tomsawyer")){
-//                user.setRole("ROLE_ADMIN");
-//            }
+            if (user.getUsername().equals("tomsawyer")){
+                user.setRole("ROLE_ADMIN");
+            }
             user.setActive(false);
             user.setActivationCode(UUID.randomUUID().toString());
             this.userDao.save(user);
@@ -79,12 +86,6 @@ public class UserService implements IUserService {
                         user.getActivationCode());
                 mailSenderService.sendMail(user.getEmail(), "Activation Code", message);
             }
-        }
-        if (usersByUsername != null) {
-            throw new UserNameException("Login occupied already");
-        }
-        if (usersByEmail != null) {
-            throw new EmailException("This email occupied already");
         }
         return userDao.getOne(user.getId());
     }
@@ -129,7 +130,9 @@ public class UserService implements IUserService {
                     "And login is %s.", user.getName(), user.getActivationCode(), user.getUsername());
             mailSenderService.sendMail(user.getEmail(), "Forgotten Password", message);
         }
-        if (user == null) throw new NotExistEmailException("Rewrite your email");
+        if (user == null) {
+            throw new NotExistEmailException("Rewrite your email");
+        }
         assert user != null;
         return user.getEmail();
     }

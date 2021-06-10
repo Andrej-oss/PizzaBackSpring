@@ -27,7 +27,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /pizzaShop:/var/lib/mysql
+      - /pizza:/var/lib/mysql/pizza
     networks:
       - pizzaShopNetwork
   web:

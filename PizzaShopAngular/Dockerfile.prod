@@ -1,17 +1,17 @@
 # node
-FROM node:13.12.0-alpine as buider
+FROM node:13.12.0-alpine as builder
 
 # copy
-RUN mkdir -p /app
-WORKDIR /app
-COPY . .
-COPY package*.json ./
+# RUN mkdir -p /app
+# WORKDIR /app
+# COPY . .
+# COPY package*.json ./
 
 # angular
-RUN npm i
-RUN npm cache clean --force
-RUN npm install -g @angular/cli@11.2.11
-RUN node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build
+# RUN npm i -g npm
+# RUN npm cache clean --force
+# RUN npm install -g @angular/cli@11.2.11
+# RUN node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build
 
 # nginx
 FROM nginx:alpine
