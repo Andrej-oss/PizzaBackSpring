@@ -77,7 +77,7 @@ public class PurchaseControllerTest {
         String type = "desc";
         final PageRequest pageRequest = PageRequest.of(page, size, type.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
         BDDMockito.given(purchaseService.getAllPurchases(pageRequest)).willReturn(new PurchasePageDto(purchases, purchases.size(), size, purchases.size() / size, page));
-        mockMvc.perform(MockMvcRequestBuilders.get("/purchase?page=" + page + "&size=" + size + "&type=" + type + "&sort=" + sort))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/purchase?page=" + page + "&size=" + size + "&type=" + type + "&sort=" + sort))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalElements").value(purchases.size()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size").value(size))
@@ -96,7 +96,7 @@ public class PurchaseControllerTest {
         }
             BDDMockito.when(purchaseService.getAllPurchasesByUserId(id)).thenReturn(purchasesUser);
 
-            mockMvc.perform(MockMvcRequestBuilders.get("/purchase/{id}", id))
+            mockMvc.perform(MockMvcRequestBuilders.get("api/purchase/{id}", id))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(purchase1, purchase2))))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -114,7 +114,7 @@ public class PurchaseControllerTest {
         assert purchaseFind != null;
         BDDMockito.when(purchaseService.deletePurchase(id)).thenReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/purchase/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("api/purchase/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value(true));
     }

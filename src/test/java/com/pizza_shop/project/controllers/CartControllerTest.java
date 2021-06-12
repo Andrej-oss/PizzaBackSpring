@@ -74,7 +74,7 @@ public class CartControllerTest {
         BDDMockito.when(cartService.createCartElement(any(), ArgumentMatchers.anyInt())).thenReturn(carts);
         final Cart cart3 = new Cart(3, "Pizza pepperoni, cheddar", 30, "Large", 32, 340.00, 1, 0, 0, 0, user);
         carts.add(cart3);
-        mockMvc.perform(MockMvcRequestBuilders.post("/cart/{id}", user.getId())
+        mockMvc.perform(MockMvcRequestBuilders.post("api/cart/{id}", user.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
                         "\"id\": 3,\n" +
@@ -116,7 +116,7 @@ public class CartControllerTest {
     public void givenNothingWhenGettingAllCartsReturnAllCArtsAndSuccessfulResponse() throws Exception{
         BDDMockito.when(cartService.getAllCartElements()).thenReturn(carts);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/cart"))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/cart"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(cart1, cart2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -133,7 +133,7 @@ public class CartControllerTest {
         }
         BDDMockito.when(cartService.getAllPizzasByUserId(id)).thenReturn(userCarts);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/cart/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/cart/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(cart1, cart2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -151,7 +151,7 @@ public class CartControllerTest {
         assert cartFind != null;
         Mockito.doNothing().when(cartService).deleteCartElement(id);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/cart/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("api/cart/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

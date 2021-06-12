@@ -65,14 +65,14 @@ public class UserControllerTest {
     @WithMockUser
     public void givenNothingWhenGettingAllUsersReturnAllUsers() throws Exception {
         BDDMockito.given(userService.getAllUsers()).willReturn(users);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user"))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/user"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(user1, user2))));
         }
         @Test
     public void givenUserNameWhenGettingUserReturnUser() throws Exception{
             BDDMockito.given(userService.getUserByUserName("Fort")).willReturn(user1);
-            mockMvc.perform(MockMvcRequestBuilders.get("/user/authenticate/Fort"))
+            mockMvc.perform(MockMvcRequestBuilders.get("api/user/authenticate/Fort"))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("Fort"));
         }
@@ -82,7 +82,7 @@ public class UserControllerTest {
         String message = "Please activate this code and go to http://localhost:8080/email/activate/4324234-4234rfewf-23423." +
                 "and your login is " + name;
         BDDMockito.given(userService.sendPasswordUserByEmail(user1.getEmail())).willReturn(message);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/remind/"+user1.getEmail()))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/user/remind/"+user1.getEmail()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         }
         @Test
@@ -90,7 +90,7 @@ public class UserControllerTest {
     public void givenActivationCodeWhenActivatingUserReturnMessage() throws Exception{
             String activateCode = "342quhageug3ho354ljgfaegrpo345gker54";
                     BDDMockito.given(userService.activateUser(activateCode)).willReturn(true);
-            mockMvc.perform(MockMvcRequestBuilders.get("/activate/342quhageug3ho354ljgfaegrpo345gker54"))
+            mockMvc.perform(MockMvcRequestBuilders.get("api/activate/342quhageug3ho354ljgfaegrpo345gker54"))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         }
 //        @Test
@@ -107,7 +107,7 @@ public class UserControllerTest {
                 "ROLE_USER", false, null, null, null, null, null);
         users.add(newUser);
         Mockito.when(userService.createUser(argThat(arg -> "Bob".equals(arg.getUsername())))).thenReturn(newUser);
-        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+        mockMvc.perform(MockMvcRequestBuilders.post("api/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
                         "\"id\": 3,\n" +
@@ -144,7 +144,7 @@ public class UserControllerTest {
         }
         assert userFind != null;
         users.remove(userFind);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/user/{id}", userFind.getId()))
+        mockMvc.perform(MockMvcRequestBuilders.delete("api/user/{id}", userFind.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(user2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2));

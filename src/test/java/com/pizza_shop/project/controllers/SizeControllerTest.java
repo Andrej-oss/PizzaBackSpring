@@ -90,7 +90,7 @@ public class SizeControllerTest {
             if (size.getPizza().getId() == id) sizeFind.add(size);
         }
         BDDMockito.given(sizeService.getAllSizesByPizzaId(id)).willReturn(sizeFind);
-            mockMvc.perform(MockMvcRequestBuilders.get("/size/"+ id))
+            mockMvc.perform(MockMvcRequestBuilders.get("api/size/"+ id))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(size1, size2))))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1));
@@ -107,7 +107,7 @@ public class SizeControllerTest {
         assert sizeFind != null;
         BDDMockito.given(sizeService.getSizeByPizzaId(id, name)).willReturn(sizeFind);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/size/"+id+"/"+name))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/size/"+id+"/"+name))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name));
@@ -123,7 +123,7 @@ public class SizeControllerTest {
             assert sizeFind != null;
             BDDMockito.given(sizeService.getSizeImageByPath(path)).willReturn(sizeFind.getData());
 
-            mockMvc.perform(MockMvcRequestBuilders.get("/size/image/"+ path))
+            mockMvc.perform(MockMvcRequestBuilders.get("api/size/image/"+ path))
                     .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -138,7 +138,7 @@ public class SizeControllerTest {
         assert sizeFind != null;
         BDDMockito.given(sizeService.getSizeImageByNameType(path, name)).willReturn(sizeFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/size/image/" + path + "/" + name))
+        mockMvc.perform(MockMvcRequestBuilders.get("api/size/image/" + path + "/" + name))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -154,7 +154,7 @@ public class SizeControllerTest {
         sizes.remove(sizeFind);
         BDDMockito.given(sizeService.deleteSize(id)).willReturn(sizes);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/size/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("api/size/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(size2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2));
