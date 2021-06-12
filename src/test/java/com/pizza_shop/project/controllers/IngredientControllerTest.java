@@ -72,7 +72,7 @@ public class IngredientControllerTest {
                 "garlic.jpg".getBytes());
         BDDMockito.when(ingredientService.createIngredient(ArgumentMatchers.any(Ingredient.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(ingredients);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("api/ingredient")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/ingredient")
                 .file(image)
                 .flashAttr("ingredient", ingredient3))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -81,7 +81,7 @@ public class IngredientControllerTest {
     public void givenNothingWhenGettingAllIngredientsReturnAllIngredients() throws Exception{
         BDDMockito.when(ingredientService.getAllIngredients()).thenReturn(ingredients);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/ingredient"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/ingredient"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(ingredient1, ingredient2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -98,7 +98,7 @@ public class IngredientControllerTest {
         assert ingredientFind != null;
         BDDMockito.when(ingredientService.getImageByPath(path)).thenReturn(ingredientFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/ingredient/image{path}", path))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/ingredient/image{path}", path))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -114,7 +114,7 @@ public class IngredientControllerTest {
         ingredients.remove(ingredientFind);
         BDDMockito.when(ingredientService.deleteIngredient(id)).thenReturn(ingredients);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/ingredient/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/ingredient/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(ingredient2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2))

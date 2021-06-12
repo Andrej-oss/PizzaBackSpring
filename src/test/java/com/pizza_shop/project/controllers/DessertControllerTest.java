@@ -71,7 +71,7 @@ public class DessertControllerTest {
         desserts.add(dessert3);
         BDDMockito.when(dessertService.saveDessert(ArgumentMatchers.any(Dessert.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(desserts);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("api/dessert").file(image)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/dessert").file(image)
                 .flashAttr("dessert", dessert3))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
         .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(dessert1, dessert2, dessert3))))
@@ -82,7 +82,7 @@ public class DessertControllerTest {
     public void givenNothingWhenGettingAllDessertsReturnAllDessertsAndSuccessfulResponse() throws Exception{
         BDDMockito.when(dessertService.getAllDesserts()).thenReturn(desserts);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/dessert"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/dessert"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(dessert1, dessert2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -99,7 +99,7 @@ public class DessertControllerTest {
         assert dessertFind != null;
         BDDMockito.when(dessertService.getImageByPath(path)).thenReturn(dessertFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/dessert{path}", path))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/dessert{path}", path))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -115,7 +115,7 @@ public class DessertControllerTest {
         desserts.remove(dessertFind);
         BDDMockito.when(dessertService.deleteDessert(id)).thenReturn(desserts);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/dessert/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/dessert/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(dessert2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2))

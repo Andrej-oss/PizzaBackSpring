@@ -85,7 +85,7 @@ public class CommentControllerTest {
         System.out.println(commentsFind);
         BDDMockito.given(commentService.getUserCommentsByUserName(name)).willReturn(commentsFind);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/comment/user/{name}", name))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/comment/user/{name}", name))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(comment2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2));
@@ -100,7 +100,7 @@ public class CommentControllerTest {
         }
         BDDMockito.given(commentService.getCommentsPizzaId(pizzaId)).willReturn(commentsFind);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/comment/{id}", pizzaId))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/comment/{id}", pizzaId))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(comment1, comment2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1));
@@ -118,7 +118,7 @@ public class CommentControllerTest {
         comments.remove(commentFind);
         Mockito.doNothing().when(commentService).deleteComment(id);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/comment/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/comment/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -127,7 +127,7 @@ public class CommentControllerTest {
         Comment comment3 = new Comment(3, "Loc", "PepperoniTest", "Very good!", 1L, null, pizza, null);
         comments.add(comment3);
         Mockito.when(commentService.saveComment(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt(), any(Comment.class))).thenReturn(comments);
-        mockMvc.perform(MockMvcRequestBuilders.post("api/comment/1/1")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/comment/1/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
                         "\"id\": 3,\n" +

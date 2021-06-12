@@ -70,7 +70,7 @@ public class PromotionControllerTest {
                 "garlic.jpg".getBytes());
         BDDMockito.when(promotionService.savePromotion(ArgumentMatchers.any(Promotion.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(promotions);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("api/promotion")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/promotion")
                 .file(image).flashAttr("promotion", promotion3))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
@@ -78,7 +78,7 @@ public class PromotionControllerTest {
     public void givenNothingWhenGettingAllPromotionsReturnAllPromotions() throws Exception{
         BDDMockito.when(promotionService.getAllPromotions()).thenReturn(promotions);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/promotion"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/promotion"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(promotion1, promotion2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -95,7 +95,7 @@ public class PromotionControllerTest {
         assert promotionFind != null;
         BDDMockito.given(promotionService.getImageByPath(path)).willReturn(promotionFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/promotion{path}", path))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/promotion{path}", path))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -111,7 +111,7 @@ public class PromotionControllerTest {
         promotions.remove(promotionFind);
         BDDMockito.doNothing().when(promotionService).deletePromotion(id);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/promotion/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/promotion/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

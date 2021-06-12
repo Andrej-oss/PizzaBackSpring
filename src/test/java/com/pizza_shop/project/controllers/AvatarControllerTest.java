@@ -77,7 +77,7 @@ public class AvatarControllerTest {
 
         BDDMockito.when(avatarService.getAllAvatars()).thenReturn(avatars);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/avatar"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/avatar"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(avatar1, avatar2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -94,7 +94,7 @@ public class AvatarControllerTest {
         assert avatarFind != null;
        BDDMockito.when(avatarService.getAvatarByUserId(id)).thenReturn(avatarFind);
 
-       mockMvc.perform(MockMvcRequestBuilders.get("api/avatar/{id}", id))
+       mockMvc.perform(MockMvcRequestBuilders.get("/api/avatar/{id}", id))
                .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -109,7 +109,7 @@ public class AvatarControllerTest {
         assert avatarFind != null;
         BDDMockito.when(avatarService.getAvatarByPath(path)).thenReturn(avatarFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/avatar/image{path}", path))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/avatar/image{path}", path))
                 .andExpect(MockMvcResultMatchers.status().isFound());
     }
     @Test
@@ -127,7 +127,7 @@ public class AvatarControllerTest {
         avatars.remove(avatarFind);
         BDDMockito.when(avatarService.deleteAvatar(id)).thenReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/avatar/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/avatar/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value(true));
     }
@@ -142,7 +142,7 @@ public class AvatarControllerTest {
         avatars.add(avatar);
         Mockito.when(avatarService.saveAvatar(ArgumentMatchers.anyInt(), any(Avatar.class), any(MultipartFile.class))).thenReturn(avatar);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("api/avatar/{id}", 1).file(file)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/avatar/{id}", 1).file(file)
                 .flashAttr("avatar", avatar))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
                  }

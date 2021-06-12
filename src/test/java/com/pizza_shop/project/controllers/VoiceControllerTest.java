@@ -71,7 +71,7 @@ public class VoiceControllerTest {
         voices.remove(voiceFind);
         BDDMockito.when(voiceService.deleteVoice(id)).thenReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/voice/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/voice/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value(true));
     }

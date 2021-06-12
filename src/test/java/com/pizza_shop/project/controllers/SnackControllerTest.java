@@ -75,7 +75,7 @@ public class SnackControllerTest {
        snacks.add(snack3);
        BDDMockito.when(snackService.saveSnack(ArgumentMatchers.any(Snack.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(snacks);
 
-       mockMvc.perform(MockMvcRequestBuilders.multipart("api/snack")
+       mockMvc.perform(MockMvcRequestBuilders.multipart("/api/snack")
                .file(file).flashAttr("snack", snack3))
                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
@@ -84,7 +84,7 @@ public class SnackControllerTest {
     public void givenNothingWhenGettingAllSnacksReturnAllSnacks() throws Exception{
         BDDMockito.given(snackService.getAllSnacks()).willReturn(snacks);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/snack"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/snack"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(snack1, snack2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -102,7 +102,7 @@ public class SnackControllerTest {
         assert snackFind != null;
         BDDMockito.given(snackService.getImageByPath(path)).willReturn(snackFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/snack/" + snackFind.getPath()))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/snack/" + snackFind.getPath()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -118,7 +118,7 @@ public class SnackControllerTest {
         snacks.remove(snackFind);
         BDDMockito.given(snackService.deleteSnack(snackFind.getId())).willReturn(snacks);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/snack/" + snackFind.getId()))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/snack/" + snackFind.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(snack2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2));

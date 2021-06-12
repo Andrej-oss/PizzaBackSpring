@@ -76,7 +76,7 @@ public class PizzaControllerTest {
                 "garlic.jpg".getBytes());
         BDDMockito.when(pizzaService.createPizza(ArgumentMatchers.any(Pizza.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(pizzas);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("api/pizza")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/pizza")
                 .file(image)
                 .flashAttr("pizza", pizza3))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -90,7 +90,7 @@ public class PizzaControllerTest {
     public void givenNothingWhenGettingAllPizzasReturnAllPizzas() throws Exception{
         BDDMockito.given(pizzaService.getAllPizzas()).willReturn(pizzas);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/pizza"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/pizza"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(pizza1, pizza2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -106,7 +106,7 @@ public class PizzaControllerTest {
         };
         BDDMockito.given(pizzaService.getPizzaImage(pizza.getPath())).willReturn(pizza.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/pizza/image/sfdsfd"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/pizza/image/sfdsfd"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -119,7 +119,7 @@ public class PizzaControllerTest {
         final PageRequest pageRequest = PageRequest.of(page, size, type.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
         BDDMockito.given(pizzaService.getSortedPizzas(pageRequest)).willReturn(new PizzaDto(pizzas, pizzas.size(), size, pizzas.size()/size, page));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/pizza/sort?page=" + page + "&size="+ size +"&type="+ type +"&sort=" + sort))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/pizza/sort?page=" + page + "&size="+ size +"&type="+ type +"&sort=" + sort))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalElements").value(pizzas.size()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size").value(size))
@@ -138,7 +138,7 @@ public class PizzaControllerTest {
             if (pizza.getId() == id) pizzaFind = pizza;
         }
         pizzas.remove(pizzaFind);
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/pizza/{id}", pizzaFind.getId()))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/pizza/{id}", pizzaFind.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(pizza2))))
         .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2));

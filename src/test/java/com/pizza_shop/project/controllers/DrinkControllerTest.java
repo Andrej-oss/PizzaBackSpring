@@ -75,7 +75,7 @@ public class DrinkControllerTest {
         drinks.add(drink3);
         BDDMockito.when(drinkService.saveDrink(ArgumentMatchers.any(Drink.class), ArgumentMatchers.any(MultipartFile.class))).thenReturn(drinks);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("api/drink").file(image)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/drink").file(image)
                 .flashAttr("drink", drink3))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(drink1, drink2, drink3))))
@@ -86,7 +86,7 @@ public class DrinkControllerTest {
     public void givenNothingWhenGettingAllDrinksReturnAllDrinksAndSuccessfulResponse() throws Exception{
         BDDMockito.when(drinkService.getAllDrinks()).thenReturn(drinks);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/drink"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/drink"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(drink1, drink2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
@@ -103,7 +103,7 @@ public class DrinkControllerTest {
         assert drinkFind != null;
         BDDMockito.when(drinkService.getImageByPath(path)).thenReturn(drinkFind.getData());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/drink{path}", path))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/drink{path}", path))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
@@ -119,7 +119,7 @@ public class DrinkControllerTest {
         drinks.remove(drinkFind);
         BDDMockito.when(drinkService.deleteDrink(id)).thenReturn(drinks);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/drink/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/drink/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(Arrays.asList(drink2))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2));
