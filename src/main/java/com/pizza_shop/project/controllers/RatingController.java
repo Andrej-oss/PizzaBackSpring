@@ -19,7 +19,7 @@ public class RatingController {
     public RatingController(IRatingService ratingService) {
         this.ratingService = ratingService;
     }
-    @PostMapping("/rating/{pizzaId}")
+    @PostMapping("api/rating/{pizzaId}")
     public List<Rating> saveRating(@PathVariable int pizzaId, @RequestBody Rating rating){
         ratingService.saveRating(rating, pizzaId);
         return ratingService.getAllRatingsByPizzaId(pizzaId);

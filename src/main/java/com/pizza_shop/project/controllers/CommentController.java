@@ -22,26 +22,26 @@ public class CommentController {
     public CommentController(ICommentService commentService) {
         this.commentService = commentService;
     }
-    @PostMapping("/comment/{userId}/{pizzaId}")
+    @PostMapping("api/comment/{userId}/{pizzaId}")
     @ResponseStatus(HttpStatus.CREATED)
     public List<Comment> saveComment(@PathVariable int userId, @PathVariable int pizzaId, @RequestBody @Valid Comment comment){
          return commentService.saveComment(userId, pizzaId, comment);
     }
-    @PutMapping("/comment/{id}")
+    @PutMapping("api/comment/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public boolean updateComment(@PathVariable int id,
                                  @RequestBody Comment comment){
        return commentService.updateComment(id, comment);
     }
-    @GetMapping("/comment/{pizzaId}")
+    @GetMapping("api/comment/{pizzaId}")
     public List<Comment> getCommentsByPizzaId(@PathVariable int pizzaId){
         return commentService.getCommentsPizzaId(pizzaId);
     }
-    @GetMapping("/comment/user/{userName}")
+    @GetMapping("api/comment/user/{userName}")
     public List<Comment> getCommentsByUserName(@PathVariable String userName){
         return commentService.getUserCommentsByUserName(userName);
     }
-    @DeleteMapping("/comment/{id}")
+    @DeleteMapping("api/comment/{id}")
     public void deleteComment(@PathVariable int id){
         commentService.deleteComment(id);
     }

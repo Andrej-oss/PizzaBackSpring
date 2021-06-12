@@ -23,7 +23,7 @@ public class UserMvcController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/email/activate/{activateCode}")
+    @RequestMapping(method = RequestMethod.GET, value = "api/email/activate/{activateCode}")
     public String index(@PathVariable String activateCode, Model model){
         final User user = userService.getUserByActivationCode(activateCode);
         assert user != null;
@@ -31,7 +31,7 @@ public class UserMvcController {
         model.addAttribute("newPassword", new PasswordUserDto(user.getUsername()));
         return "password";
     }
-    @PostMapping("/user/password")
+    @PostMapping("api/user/password")
     public String changeUserPassword(PasswordUserDto passwordUserDto) {
         userService.changePassword(passwordUserDto);
         return "email";

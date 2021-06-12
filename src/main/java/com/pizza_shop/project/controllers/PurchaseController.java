@@ -24,12 +24,12 @@ public class PurchaseController {
         this.purchaseService = purchaseService;
     }
 
-    @GetMapping("/purchase/{userId}")
+    @GetMapping("api/purchase/{userId}")
     public List<Purchase> getPurchasesByUser(@PathVariable int userId){
         log.info("Handling getting all purchases in /Get with user id: " + userId);
         return purchaseService.getAllPurchasesByUserId(userId);
     }
-    @GetMapping("/purchase")
+    @GetMapping("api/purchase")
     public PurchasePageDto getAllPurchases(@RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size,
                                            @RequestParam String sort,
@@ -45,7 +45,7 @@ public class PurchaseController {
         }
         return purchaseService.getAllPurchases(pageRequest);
     }
-    @DeleteMapping("/purchase/{id}")
+    @DeleteMapping("api/purchase/{id}")
     public boolean deletePurchase(@PathVariable int id){
         log.info("Handling delete purchase by id:" + id);
         return purchaseService.deletePurchase(id);

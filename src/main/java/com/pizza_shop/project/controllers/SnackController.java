@@ -24,29 +24,29 @@ public class SnackController {
         this.snackService = snackService;
     }
 
-    @PostMapping(value = "/snack", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "api/snack", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Snack> saveSnack(@Valid Snack snack, MultipartFile image){
         log.info("Handling Post/snack with body " + snack + " with image " + image);
         return snackService.saveSnack(snack, image);
     }
-    @PutMapping(value = "/snack/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "api/snack/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Snack> updateSnack(@PathVariable int id, @Valid Snack snack, MultipartFile image){
         log.info("Handling Put/snack by id " + id + " and with new body " + snack + " and image " + image);
         return snackService.updateSnake(id, snack, image);
     }
-    @GetMapping(value = "/snack/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "api/snack/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImageByPath(@PathVariable String path){
         log.info("Handling Get/ snack image by path " + path);
         return snackService.getImageByPath(path);
     }
-    @GetMapping("/snack")
+    @GetMapping("api/snack")
     public List<Snack> getAllSnacks(){
         log.info("Handling Get/snack all");
         return snackService.getAllSnacks();
     }
-    @DeleteMapping("/snack/{id}")
+    @DeleteMapping("api/snack/{id}")
     public List<Snack> deleteSnack(@PathVariable int id){
         log.info("Handling Delete/ snack by id " + id);
         return snackService.deleteSnack(id);

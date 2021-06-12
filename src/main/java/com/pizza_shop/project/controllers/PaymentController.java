@@ -24,7 +24,7 @@ public class PaymentController {
     public PaymentController(IPaymentService paymentService) {
         this.paymentService = paymentService;
     }
-    @PostMapping("/stripe/payment")
+    @PostMapping("api/stripe/payment")
     public ResponseEntity<String> payment(@RequestBody PaymentIntentDto paymentIntentDto){
         String payment = null;
         try {
@@ -36,7 +36,7 @@ public class PaymentController {
         }
         return new ResponseEntity<String>(payment, HttpStatus.OK);
     }
-    @PostMapping("/stripe/confirm/{id}/{userId}")
+    @PostMapping("api/stripe/confirm/{id}/{userId}")
     public ResponseEntity<String> confirm(@PathVariable String id,
                                           @PathVariable int userId,
                                           @RequestBody Purchase purchase) throws StripeException{
@@ -45,7 +45,7 @@ public class PaymentController {
         final String payment = paymentIntent.toJson();
         return new ResponseEntity<String>(payment, HttpStatus.OK);
     }
-    @PostMapping("/stripe/confirm/all_cart/{id}/{userId}")
+    @PostMapping("api/stripe/confirm/all_cart/{id}/{userId}")
     public ResponseEntity<String> confirmAllCart(@PathVariable String id,
                                                  @PathVariable int userId,
                                                  @RequestBody List<Cart> carts) throws StripeException {
@@ -54,7 +54,7 @@ public class PaymentController {
         final String intent = paymentIntent.toJson();
         return new ResponseEntity<String>(intent, HttpStatus.OK);
     }
-    @PostMapping("/stripe/cancel/{id}")
+    @PostMapping("api/stripe/cancel/{id}")
     public ResponseEntity<String> cancelPayment(@PathVariable String id) throws StripeException{
         final PaymentIntent paymentIntent = paymentService.cancel(id);
         log.info("Handling /post cancel payment by id " + id);

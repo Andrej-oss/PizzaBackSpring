@@ -19,11 +19,11 @@ public class VoiceController {
         this.voiceService = voiceService;
     }
 
-    @PostMapping("/voice/{commentId}")
+    @PostMapping("api/voice/{commentId}")
     public List<Voice> saveVoice(@PathVariable int commentId, @RequestBody Voice voice){
         return voiceService.saveVoice(commentId, voice);
     }
-    @DeleteMapping("/voice/{id}")
+    @DeleteMapping("api/voice/{id}")
     public boolean deleteVoice(@PathVariable int id){
         return voiceService.deleteVoice(id);
     }

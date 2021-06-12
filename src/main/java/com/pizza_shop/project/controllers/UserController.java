@@ -34,7 +34,7 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
-    @GetMapping("/user")
+    @GetMapping("api/user")
     public List<User> getAllUsers(){
       return userService.getAllUsers()
               .stream()
@@ -42,19 +42,19 @@ public class UserController {
               .collect(Collectors.toList());
     }
 
-    @PostMapping("/user")
+    @PostMapping("api/user")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user){
         log.info("Handling User /save with requestBody" + user);
        return userService.createUser(user);
     }
-    @PutMapping("/user/{id}")
+    @PutMapping("api/user/{id}")
     public User updateUser(@PathVariable int id, @Valid @RequestBody User user){
       final StringBuilder stringBuilder = new StringBuilder();
       log.info(stringBuilder.append("Handling post /user/").append(id).append(" With body : ").append(user.toString()).toString());
       return userService.updateUser(id, user);
     }
-    @PostMapping("/user/authenticate")
+    @PostMapping("api/user/authenticate")
     public AuthenticationResponse generateJwt(@RequestBody AuthRequest authRequest){
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
               authRequest.getPassword()));
@@ -66,19 +66,19 @@ public class UserController {
         return new AuthenticationResponse(jwtService.generateToken(authRequest.getUsername()),
                 userDetails.getAuthorities().toString(), userDetails.getUsername());
     }
-    @GetMapping("/user/authenticate/{name}")
+    @GetMapping("api/user/authenticate/{name}")
     public User getUserByName(@PathVariable String name){
       log.info("Handling /get User by name = " + name);
       final User user = userService.getUserByUserName(name);
       user.setPassword("");
       return user;
     }
-    @GetMapping("/user/remind/{email}")
+    @GetMapping("api/user/remind/{email}")
     public String sendPasswordByEmail(@PathVariable String email){
       log.info("Handling /get forgotten password by email = " + email);
       return userService.sendPasswordUserByEmail(email);
     }
-    @GetMapping("/activate/{activateCode}")
+    @GetMapping("api/activate/{activateCode}")
     public String activateUser(@PathVariable String activateCode){
       boolean isActivate = userService.activateUser(activateCode);
       if (isActivate){
@@ -89,7 +89,7 @@ public class UserController {
       }
     return "Your account is activated.";
     }
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("api/user/{id}")
     public List<User> deleteUser(@PathVariable int id){
       log.info("Handling delete User with id = " + id);
       return userService.deleteUser(id);

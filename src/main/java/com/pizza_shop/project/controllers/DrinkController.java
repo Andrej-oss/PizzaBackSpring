@@ -23,29 +23,29 @@ public class DrinkController {
     public DrinkController(IDrinkService drinkService) {
         this.drinkService = drinkService;
     }
-    @PostMapping(value = "/drink", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "api/drink", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Drink> saveDrink(@ModelAttribute("drink") @Valid Drink drink, MultipartFile image){
         log.info("handling Post /drink  " + drink + " and with image " + image);
         return drinkService.saveDrink(drink, image);
     }
-    @PutMapping(value = "/drink/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "api/drink/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Drink> updateDrink(@PathVariable int id, @Valid Drink drink, MultipartFile image){
         log.info("handling Put /drink update by id " + id + " with body " + drink + " and with image " + image);
         return drinkService.updateDrink(id, drink, image);
     }
-    @GetMapping(value = "/drink/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "api/drink/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImageByPath(@PathVariable String path){
         log.info("handling Get /drink image by path " + path);
         return drinkService.getImageByPath(path);
     }
-    @GetMapping("/drink")
+    @GetMapping("api/drink")
     public List<Drink> getAllDrinks(){
         log.info("handling Get /drinks all ");
         return drinkService.getAllDrinks();
     }
-    @DeleteMapping("/drink/{id}")
+    @DeleteMapping("api/drink/{id}")
     public List<Drink> deleteDrink(@PathVariable int id){
         log.info("handling Delete /drink by id " + id);
         return drinkService.deleteDrink(id);

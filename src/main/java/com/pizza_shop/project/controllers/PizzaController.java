@@ -28,23 +28,23 @@ public class PizzaController {
         this.pizzaService = pizzaService;
     }
 
-    @PostMapping(value = "/pizza", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "api/pizza", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Pizza> SavePizza(@ModelAttribute @Valid Pizza pizza, MultipartFile image){
          log.info("Handling PostRequest pizza controller with body " + pizza);
          return  pizzaService.createPizza(pizza, image);
     }
-    @GetMapping(value = "/pizza/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "api/pizza/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getPizzaImage(@PathVariable String path){
         log.info("Handling getting pizza image from path" + path);
         return pizzaService.getPizzaImage(path);
     }
-    @GetMapping("/pizza")
+    @GetMapping("api/pizza")
     public List<Pizza> getAllPizza(){
         log.info("Handling getting all pizzas");
         return pizzaService.getAllPizzas();
     }
-    @GetMapping("/pizza/sort")
+    @GetMapping("api/pizza/sort")
     public PizzaDto getSortedPizzas(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "9") int size,
                                     @RequestParam String type,
@@ -59,12 +59,12 @@ public class PizzaController {
             }
             return pizzaService.getSortedPizzas(pageRequest);
     }
-    @DeleteMapping("/pizza/{id}")
+    @DeleteMapping("api/pizza/{id}")
     public List<Pizza> deletePizza(@PathVariable int id){
         log.info("Handling deleting pizza with id = " + id);
         return pizzaService.deletePizza(id);
     }
-    @PutMapping(value = "/pizza/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "api/pizza/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public List<Pizza> upDatePizza(@PathVariable int id, @Valid Pizza pizza, MultipartFile image){
         log.info("Handling updating pizza with id: " + id);

@@ -25,36 +25,36 @@ public class SizeController {
         this.sizePizzaService = sizePizzaService;
     }
 
-    @PostMapping(value = "/size/{pizzaId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "api/size/{pizzaId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public List<Size> saveSizePizza(@PathVariable int pizzaId, @ModelAttribute Size size, MultipartFile file){
         log.info("Handling post PizzaSize with data " + size + file.getOriginalFilename());
         return this.sizePizzaService.createSize(pizzaId, size, file);
     }
-    @PutMapping(value = "/size/{sizeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "api/size/{sizeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Size> updateSizePizza(@PathVariable int sizeId,Size size, MultipartFile file){
         return sizePizzaService.upDateSize(sizeId, size, file);
     }
-    @GetMapping(value = "/size/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "api/size/image/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImagePizzaBySize(@PathVariable String path){
         log.info("Handling getting image pizza size by path " + path);
         return sizePizzaService.getSizeImageByPath(path);
     }
-    @GetMapping(value = "/size/image/{path}/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "api/size/image/{path}/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImageByName(@PathVariable String path, @PathVariable String name){
         log.info("Handling getting image size pizza by name " + name);
         return sizePizzaService.getSizeImageByNameType(path, name);
     }
-    @GetMapping("/size/{pizzaId}/{name}")
+    @GetMapping("api/size/{pizzaId}/{name}")
     public Size getPizzaSizes(@PathVariable int pizzaId, @PathVariable String name){
         return sizePizzaService.getSizeByPizzaId(pizzaId, name);
     }
-    @GetMapping("/size/{pizzaId}")
+    @GetMapping("api/size/{pizzaId}")
     public List<Size> getPizzaSizesByPizzaId(@PathVariable int pizzaId){
         log.info("Handling getting all sizes by pizza id " + pizzaId);
         return sizePizzaService.getAllSizesByPizzaId(pizzaId);
     }
-    @DeleteMapping("/size/{id}")
+    @DeleteMapping("api/size/{id}")
     public List<Size> deletePizzaSize(@PathVariable int id){
         log.info("Handling deleting size by pizza id " + id);
         return sizePizzaService.deleteSize(id);

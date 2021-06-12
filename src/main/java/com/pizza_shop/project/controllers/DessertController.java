@@ -23,29 +23,29 @@ public class DessertController {
     public DessertController(IDessertService dessertService) {
         this.dessertService = dessertService;
     }
-    @PostMapping(value = "/dessert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "api/dessert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public List<Dessert> saveDessert(@ModelAttribute("dessert") @Valid Dessert dessert, MultipartFile image){
         log.info("Handling Post/ dessert with body " + dessert + " and image " + image);
         return dessertService.saveDessert(dessert, image);
     }
-    @PutMapping(value = "/dessert/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "api/dessert/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public List<Dessert> updateDessert(@PathVariable int id, Dessert dessert, MultipartFile image){
         log.info("Handling Put/ dessert update with id " + id + " with new body " + dessert + " and image " + image);
         return dessertService.updateDessert(id, dessert, image);
     }
-    @GetMapping(value = "/dessert/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "api/dessert/{path}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImageByPath(@PathVariable String path){
         log.info("Handling Get/ dessert image by path " + path);
         return dessertService.getImageByPath(path);
     }
-    @GetMapping("/dessert")
+    @GetMapping("api/dessert")
     public List<Dessert> getAllDesserts(){
         log.info("Handling Get/ desserts all");
         return dessertService.getAllDesserts();
     }
-    @DeleteMapping("/dessert/{id}")
+    @DeleteMapping("api/dessert/{id}")
     public List<Dessert> deleteDessert(@PathVariable int id){
         log.info("Handling Delete/ dessert by id " + id);
         return dessertService.deleteDessert(id);
