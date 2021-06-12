@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/api")
 @Slf4j
 public class PizzaController {
 

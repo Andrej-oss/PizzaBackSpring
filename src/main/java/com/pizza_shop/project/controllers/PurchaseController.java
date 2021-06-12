@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/api")
 public class PurchaseController {
 
     private IPurchaseService purchaseService;

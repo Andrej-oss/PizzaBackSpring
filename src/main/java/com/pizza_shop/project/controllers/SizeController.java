@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/api")
 public class SizeController {
 
     private ISizePizzaService sizePizzaService;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value = "http://localhost:4200")
+@CrossOrigin(value = "http://localhost:4200/api")
 @Slf4j
 public class RatingController {
 
