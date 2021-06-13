@@ -2844,7 +2844,7 @@ class UserService {
         this.token = null;
         this.authority = null;
         this.userName = null;
-        this.baseUrl = '192.168.99.100:8080/api/user';
+        this.baseUrl = '/api/user';
     }
     getUserByName(name) {
         return this.httpClient.get(this.baseUrl + '/authenticate/' + name);
