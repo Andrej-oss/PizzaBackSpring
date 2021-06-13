@@ -22,7 +22,7 @@ export class PizzaCardCartItemComponent implements OnInit {
   @Input() snack: Snack;
   @Input() dessert: Dessert;
   @Input() pizzaPrice: number;
-  url = 'http://localhost:8080/pizza/image/';
+  url = 'api/pizza/image/';
   count: number;
   price: number;
   cart: Cart;

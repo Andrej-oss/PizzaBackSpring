@@ -8021,7 +8021,7 @@ class PizzaCardCartItemComponent {
         this.themeObjectService = themeObjectService;
         this.userService = userService;
         this.cartService = cartService;
-        this.url = 'http://localhost:8080/pizza/image/';
+        this.url = 'api/pizza/image/';
         this.urlDrink = '/api/drink/';
         this.urlSnack = '/api/snack/';
         this.urlDessert = '/api/dessert/';
