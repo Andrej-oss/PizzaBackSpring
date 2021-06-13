@@ -14,7 +14,7 @@ export class UserService {
   private token = null;
   private authority = null;
   private userName = null;
-  private baseUrl = '192.168.99.100:8080/api/user';
+  private baseUrl = '/api/user';
 
   constructor(private httpClient: HttpClient,
               private themeObjectService: ThemeObjectService,
