@@ -18,6 +18,8 @@ import {UserActionsService} from '../../../logic/store/actions/user/user-actions
 import {Comment} from '../../models/Comment';
 import {CartService} from '../../../logic/services/cartDao/cart.service';
 import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-action.service';
+import {UserService} from "../../../logic/services/userDao/user.service";
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-pizza-choose-sheet',
@@ -26,8 +28,8 @@ import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-actio
 })
 export class PizzaChooseSheetComponent implements OnInit {
   diameter: number;
-  url = '/api/pizza/image/';
-  sizeUrl = '/api/size/image/';
+  url = APiURL.pizzaImage;
+  sizeUrl = APiURL.pizzaSizeImage;
   cart: Cart;
   classSize = 'pizza-card-image-content';
   size: Observable<Size> = this.store$.pipe(select(SizePizzaSelector));
@@ -51,6 +53,7 @@ export class PizzaChooseSheetComponent implements OnInit {
               public themeObjectService: ThemeObjectService,
               private pizzaService: PizzaActionService,
               private cartService: CartService,
+              private userService: UserService,
               private userActionsService: UserActionsService,
               private snackBar: MatSnackBar,
               private store$: Store) {
@@ -70,7 +73,6 @@ export class PizzaChooseSheetComponent implements OnInit {
   }
 
   onAdd(price: number, name: string, i: number): void {
-    debugger;
     if (i === 0 && !this.isAddPrice1) {
       this.isAddPrice1 = !this.isAddPrice1;
       this.themeObjectService.data.value.price = this.themeObjectService.data.value.price + price;
@@ -145,18 +147,22 @@ export class PizzaChooseSheetComponent implements OnInit {
       size: this.pizzaSize,
     };
     this.themeObjectService.data.value.message = 'Pizza added to cart';
-    this.userActionsService.saveElementInCart(this.cart);
+    if (this.userService.isAuthenticated()) {
+      this.userActionsService.saveElementInCart(this.cart);
+    } else {
+      this.userService.saveCartInLocalStorage(this.cart);
+    }
   }
 
-  openCommentFrom(): void{
+  openCommentFrom(): void {
     this.isOpenCommentForm = !this.isOpenCommentForm;
   }
 
-  openComments(): void{
+  openComments(): void {
     this.isOpenComments = !this.isOpenComments;
   }
 
-  openPayment(): void{
+  openPayment(): void {
     this.isPaymentOpen = !this.isPaymentOpen;
   }
 }

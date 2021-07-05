@@ -15,6 +15,8 @@ import {User} from '../../models/User';
 import {Drink} from '../../models/Drink';
 import {Snack} from '../../models/Snack';
 import {Dessert} from '../../models/Dessert';
+import {CartService} from "../../../logic/services/cartDao/cart.service";
+import {UserService} from "../../../logic/services/userDao/user.service";
 
 @Component({
   selector: 'app-pizza-cart-page',
@@ -28,10 +30,19 @@ export class PizzaCartPageComponent implements OnInit {
   drinks: Observable<Drink[]> = this.store$.pipe(select(DrinksSelector));
   snacks: Observable<Snack[]> = this.store$.pipe(select(SnacksSelector));
   desserts: Observable<Dessert[]> = this.store$.pipe(select(DessertSelector));
+  cartElementsLS: Cart[];
+  isAuth: boolean;
   constructor(private store$: Store,
+              private cartService: CartService,
+              private userService: UserService,
               public themeObjectService: ThemeObjectService) { }
 
   ngOnInit(): void {
+    let cartFromLocalStorage = this.cartService.getCartFromLocalStorage();
+    this.isAuth = this.userService.isAuthenticated();
+    if (cartFromLocalStorage.length){
+      this.cartElementsLS = cartFromLocalStorage;
+    }
     this.themeObjectService.data.value.isOpenPayment = false;
   }
 

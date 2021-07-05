@@ -5,39 +5,48 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {DessertChooseSheetComponent} from '../dessert-choose-sheet/dessert-choose-sheet.component';
 import {Cart} from '../../models/Cart';
 import {UserActionsService} from "../../../logic/store/actions/user/user-actions.service";
+import {APiURL} from "../../../config/urlConfig";
+import {UserService} from "../../../logic/services/userDao/user.service";
 
 @Component({
-  selector: 'app-dessert-card',
-  templateUrl: './dessert-card.component.html',
-  styleUrls: ['./dessert-card.component.css']
+    selector: 'app-dessert-card',
+    templateUrl: './dessert-card.component.html',
+    styleUrls: ['./dessert-card.component.css']
 })
 export class DessertCardComponent implements OnInit {
-  @Input()
-  dessert: Dessert;
-  cart: Cart;
-  url = '/api/dessert/';
-  constructor(private bottomSheet: MatBottomSheet,
-              private userActionsService: UserActionsService,
-              public themeObjectService: ThemeObjectService) { }
+    @Input()
+    dessert: Dessert;
+    cart: Cart;
+    url = APiURL.dessertImage;
 
-  ngOnInit(): void {
-  }
+    constructor(private bottomSheet: MatBottomSheet,
+                private userActionsService: UserActionsService,
+                private userService: UserService,
+                public themeObjectService: ThemeObjectService) {
+    }
 
-  onChooseDrink(id: number): void{
-    this.themeObjectService.data.value.idChooseDessert = id;
-    this.bottomSheet.open(DessertChooseSheetComponent);
-  }
+    ngOnInit(): void {
+    }
 
-  onToCartDessert(dessert: Dessert): void{
-    this.cart = {
-      description: dessert.name,
-      dessertId: dessert.id,
-      amount: 1,
-      price: dessert.price,
-      userId: this.themeObjectService.data.value.userId,
-      volume: +dessert.volume.match(/[0-9]/gi).join('') + 0.00,
-    };
-    this.themeObjectService.data.value.message = 'Dessert added to cart';
-    this.userActionsService.saveElementInCart(this.cart);
-  }
+    onChooseDrink(id: number): void {
+        this.themeObjectService.data.value.idChooseDessert = id;
+        this.bottomSheet.open(DessertChooseSheetComponent);
+    }
+
+    onToCartDessert(dessert: Dessert): void {
+        this.cart = {
+            description: dessert.name,
+            dessertId: dessert.id,
+            amount: 1,
+            price: dessert.price,
+            userId: this.themeObjectService.data.value.userId,
+            volume: +dessert.volume.match(/[0-9]/gi).join('') + 0.00,
+        };
+        this.themeObjectService.data.value.message = 'Dessert added to cart';
+        if (this.userService.isAuthenticated()) {
+            this.userActionsService.saveElementInCart(this.cart);
+        } else {
+            this.userService.saveCartInLocalStorage(this.cart);
+        }
+    }
 }

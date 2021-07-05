@@ -11,6 +11,7 @@ import {
 import {Drink} from '../../models/Drink';
 import {Snack} from '../../models/Snack';
 import {Dessert} from '../../models/Dessert';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-purchases-item',
@@ -22,10 +23,10 @@ export class PurchasesItemComponent implements OnInit {
   @Input() drinkId: number;
   @Input() snackId: number;
   @Input() dessertId: number;
-  url = '/api/pizza/image/';
-  urlDrink = '/api/drink/';
-  urlSnack = '/api/snack/';
-  urlDessert = '/api/dessert/';
+  url = APiURL.pizzaImage;
+  urlDrink = APiURL.drinkImage;
+  urlSnack = APiURL.snackImage;
+  urlDessert = APiURL.dessertImage;
   pizzas: Pizza[];
   drinks: Drink[];
   snacks: Snack[];

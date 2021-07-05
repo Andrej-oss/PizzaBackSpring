@@ -19,7 +19,7 @@
     </div>
   </div>
   <div style="margin-top: 5%">
-      <span class="material-icons" (click)="onDelete(cartElement.id)">
+      <span class="material-icons" (click)="onDelete(cartElement.id, cartElement.description)">
        delete
     </span>
     <div class="pizza-cart-cart-item-price">
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div style="margin-top: 5%">
-      <span class="material-icons" (click)="onDelete(cartElement.id)">
+      <span class="material-icons" (click)="onDelete(cartElement.id, cartElement.description)">
        delete
     </span>
     <div class="pizza-cart-cart-item-price">
@@ -71,7 +71,7 @@
     </div>
   </div>
   <div style="margin-top: 5%">
-      <span class="material-icons" (click)="onDelete(cartElement.id)">
+      <span class="material-icons" (click)="onDelete(cartElement.id, cartElement.description)">
        delete
     </span>
     <div class="pizza-cart-cart-item-price">
@@ -97,11 +97,11 @@
     </div>
   </div>
   <div style="margin-top: 5%">
-      <span class="material-icons" (click)="onDelete(cartElement.id)">
+      <span class="material-icons" (click)="onDelete(cartElement.id, cartElement.description)">
        delete
     </span>
     <div class="pizza-cart-cart-item-price">
-    {{price}}
+      {{price}}
+    </div>
   </div>
-</div>
 </div>

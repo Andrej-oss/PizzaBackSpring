@@ -6,6 +6,7 @@ import {selectAllAvatars, selectUserAvatar, selectUsers} from '../../../logic/st
 import {ThemeObjectService} from '../../../logic/theme-object/theme-object.service';
 import {UserActionsService} from '../../../logic/store/actions/user/user-actions.service';
 import {Avatar} from '../../models/Avatar';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-user-admin-table',
@@ -17,7 +18,7 @@ export class UserAdminTableComponent implements OnInit {
   user: User;
   avatars: Observable<Avatar[]> = this.store$.pipe(select(selectAllAvatars));
   avatar: Observable<Avatar> = this.store$.pipe(select(selectUserAvatar));
-  avatarUrl = '/api/avatar/image/';
+  avatarUrl = APiURL.avatarImage;
   displayedColumns: string[] = ['position', 'image', 'username', 'name', 'lastName', 'email', 'city', 'address',
     'postCode', 'phone', 'role', 'option'];
   black = 'background-color: black';

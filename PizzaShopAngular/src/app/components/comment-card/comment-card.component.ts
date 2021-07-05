@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 import {Avatar} from '../models/Avatar';
 import {select, Store} from '@ngrx/store';
 import {selectAllAvatars} from '../../logic/store/selectors/UserSelect';
+import {APiURL} from "../../config/urlConfig";
 
 @Component({
   selector: 'app-comment-card',
@@ -28,7 +29,7 @@ export class CommentCardComponent implements OnInit {
   isLiked: boolean;
   voiceSum: number;
   voiceId: number;
-  avatarUrl = '/api/avatar/image/';
+  avatarUrl = APiURL.avatarImage;
 
   constructor(private pizzaService: PizzaActionService,
               private commentService: CommentService,
@@ -44,7 +45,6 @@ export class CommentCardComponent implements OnInit {
   }
 
   onDeleteComment(id: number): void {
-    debugger;
     this.commentService.deleteComment(id).subscribe(data => console.log(data));
     this.pizzaService.deleteCommentPizza(id);
     this.themeObjectService.data.value.message = `your comment was deleted`;
@@ -63,8 +63,11 @@ export class CommentCardComponent implements OnInit {
       userId: this.themeObjectService.data.value.userId
     };
     this.voiceService.saveVoice(id, this.voice).subscribe(data => {
-      console.log(data);
     });
+    if(!this.comment.voice){
+      debugger;
+      this.comment = {...this.comment, voice: [this.voice]};
+    }
     this.isLiked = true;
     this.voiceSum += 1;
     this.themeObjectService.data.value.message = `you liked comment from  ${this.comment.author}`;
@@ -74,14 +77,16 @@ export class CommentCardComponent implements OnInit {
   }
 
   voiceSummary(): void {
-
-      this.voiceSum = this.comment.voice.reduce((previousValue, currentValue) => previousValue + currentValue.voice, 0);
+    this.comment.voice ?
+        this.voiceSum = this.comment.voice.reduce((previousValue, currentValue) => previousValue + currentValue.voice, 0)
+        : this.voiceSum = 0;
   }
 
   checkIsUserVoted(): void {
+    if (this.comment && this.comment.voice) {
       const user = this.comment.voice.find(value => value.userId === this.themeObjectService.data.value.userId);
-      console.log(user);
       user && user.userId !== 0 ? this.isLiked = true : this.isLiked = false;
+    }
   }
 
   onDeleteVoice(id: number): void {
@@ -89,7 +94,7 @@ export class CommentCardComponent implements OnInit {
     const voice = this.comment.voice.find(value => {
       return value.userId === this.themeObjectService.data.value.userId;
     });
-    if (voice) {
+    if (voice && this.voiceSum > 0) {
       this.voiceService.deleteVoiceComment(voice.id).subscribe(data => console.log(data));
       this.voiceSum -= 1;
       this.isLiked = false;

@@ -5,6 +5,7 @@ import {UserActionsService} from '../../../logic/store/actions/user/user-actions
 import {select, Store} from '@ngrx/store';
 import {SnacksSelector} from '../../../logic/store/selectors/PizzaSelector';
 import {Snack} from '../../models/Snack';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-snack-choose-sheet',
@@ -13,7 +14,7 @@ import {Snack} from '../../models/Snack';
 })
 export class SnackChooseSheetComponent implements OnInit {
   snacks: Snack[];
-  url = '/api/snack/';
+  url = APiURL.snackImage;
   isPaymentOpen: boolean;
   cart: Cart;
   snackChoose: Snack;

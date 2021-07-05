@@ -6,6 +6,8 @@ import {Drink} from '../../models/Drink';
 import {DrinksSelector} from '../../../logic/store/selectors/PizzaSelector';
 import {Cart} from '../../models/Cart';
 import {UserActionsService} from '../../../logic/store/actions/user/user-actions.service';
+import {APiURL} from "../../../config/urlConfig";
+import {UserService} from "../../../logic/services/userDao/user.service";
 
 @Component({
   selector: 'app-drink-choose-sheet',
@@ -14,12 +16,13 @@ import {UserActionsService} from '../../../logic/store/actions/user/user-actions
 })
 export class DrinkChooseSheetComponent implements OnInit {
   drinks: Drink[];
-  url = '/api/drink/';
+  url = APiURL.drinkImage;
   isPaymentOpen: boolean;
   cart: Cart;
   drinkChoose: Drink;
   constructor(public themeObjectService: ThemeObjectService,
               private userActionsService: UserActionsService,
+              private userService: UserService,
               private store$: Store) { }
 
   ngOnInit(): void {
@@ -36,7 +39,11 @@ export class DrinkChooseSheetComponent implements OnInit {
       volume: drink.volume,
     };
     this.themeObjectService.data.value.message = 'Drink added to cart';
-    this.userActionsService.saveElementInCart(this.cart);
+    if (this.userService.isAuthenticated()) {
+      this.userActionsService.saveElementInCart(this.cart);
+    } else {
+      this.userService.saveCartInLocalStorage(this.cart);
+    }
   }
 
   openPayment(drink: Drink): void{

@@ -16,6 +16,7 @@ import {UserService} from '../../logic/services/userDao/user.service';
 import {Drink} from '../models/Drink';
 import {Dessert} from '../models/Dessert';
 import {Snack} from '../models/Snack';
+import {CartService} from "../../logic/services/cartDao/cart.service";
 
 @Component({
   selector: 'app-header',
@@ -30,31 +31,40 @@ export class HeaderComponent implements OnInit {
   drinks: Observable<Drink[]> =  this.store$.pipe(select(DrinksSelector));
   snacks: Observable<Snack[]> = this.store$.pipe(select(SnacksSelector));
   desserts: Observable<Dessert[]> = this.store$.pipe(select(DessertSelector));
+  cartElementsLS: Cart[];
   constructor(private router: Router,
               public userService: UserService,
               private store$: Store,
+              private cartService: CartService,
               public themeSubjectService: ThemeObjectService) {
   }
 
   ngOnInit(): void {
+    if (!this.userService.isAuthenticated()) {
+      const cartFromLocalStorage = this.cartService.getCartFromLocalStorage();
+      if (cartFromLocalStorage.length) {
+        this.themeSubjectService.data.value.sizeCart = cartFromLocalStorage.length;
+        this.cartElementsLS = cartFromLocalStorage;
+      }
+    }
     this.isCartOpen = false;
     this.isCartOpened = false;
   }
 
   onLogin(): void {
-    this.router.navigateByUrl('/authenticate').then(data => console.log(data));
+    this.router.navigateByUrl('/authenticate');
   }
 
   onRegistration(): void {
-    this.router.navigateByUrl('/registration').then(data => console.log(data));
+    this.router.navigateByUrl('/registration');
   }
 
   onAdmin(): void {
-    this.router.navigateByUrl('/admin').then(data => console.log(data));
+    this.router.navigateByUrl('/admin');
   }
 
   onUserPage(): void {
-    this.router.navigateByUrl('/user_page').then(data => console.log(data));
+    this.router.navigateByUrl('/user_page');
   }
 
   onDark(): void {
@@ -88,7 +98,7 @@ export class HeaderComponent implements OnInit {
 
   onCartPage(): void {
     if (this.themeSubjectService.data.value.sizeCart > 0) {
-      this.router.navigate(['/cart']).then(data => console.log(data));
+      this.router.navigate(['/cart']);
     }
   }
 
@@ -98,7 +108,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onHome(): void{
-    this.router.navigate(['/']).then(data => console.log(data));
+    this.router.navigate(['/']);
   }
 
   isMobile(): boolean{

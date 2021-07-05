@@ -5,6 +5,7 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {SnackChooseSheetComponent} from '../snack-choose-sheet/snack-choose-sheet.component';
 import {Cart} from '../../models/Cart';
 import {UserActionsService} from '../../../logic/store/actions/user/user-actions.service';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-snack-card',
@@ -15,7 +16,7 @@ export class SnackCardComponent implements OnInit {
   @Input()
   snack: Snack;
   cart: Cart;
-  url = '/api/snack/';
+  url = APiURL.snackImage;
   constructor(public themeObjectService: ThemeObjectService,
               private userActionsService: UserActionsService,
               private bottomSheet: MatBottomSheet) { }

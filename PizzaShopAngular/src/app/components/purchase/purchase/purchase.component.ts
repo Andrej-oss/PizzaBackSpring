@@ -102,7 +102,7 @@ export class PurchaseComponent implements OnInit {
         volume: volumeItem
       };
     }
-    console.log(this.cart);
+
     this.themeObjectService.data.value.message = 'Item added to cart';
     this.userActionsService.saveElementInCart(this.cart);
   }

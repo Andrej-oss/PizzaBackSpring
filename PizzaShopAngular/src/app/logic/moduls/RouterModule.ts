@@ -25,7 +25,9 @@ export const routes: Routes = [
   {path: 'registration', component: FormUserRegistrationComponent},
   {path: 'admin', component: AdminPageComponent, canActivate: [AdminGuardService]},
   {path: 'user_page', component: UserPageComponent, canActivate: [UserGuardService]},
-  {path: 'cart', component: PizzaCartPageComponent, canActivate: [UserGuardService]},
+  {path: 'cart', component: PizzaCartPageComponent,
+    // canActivate: [UserGuardService]
+  },
   {path: 'drinks', component: DrinkPageComponent},
   {path: 'snacks', component: SnackPageComponent},
   {path: 'desserts', component: DessertPageComponent},

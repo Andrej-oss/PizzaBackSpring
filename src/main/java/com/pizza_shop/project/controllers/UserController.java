@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-//@CrossOrigin(origins = "http://spring-pizza-shop.com")
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class UserController {
 

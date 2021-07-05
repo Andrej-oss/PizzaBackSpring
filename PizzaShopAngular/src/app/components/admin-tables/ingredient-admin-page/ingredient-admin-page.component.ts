@@ -5,6 +5,7 @@ import {select, Store} from '@ngrx/store';
 import {IngredientsSelector} from '../../../logic/store/selectors/PizzaSelector';
 import {ThemeObjectService} from '../../../logic/theme-object/theme-object.service';
 import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-action.service';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-ingredient-admin-page',
@@ -19,7 +20,7 @@ ingredients$: Observable<Ingredient[]> = this.store$.pipe(select(IngredientsSele
   white = 'background-color: white';
   blackColor = 'color: white';
   whiteColor = 'color: black';
-  url = '/api/ingredient/image/';
+  url = APiURL.ingredientURL;
   isOpenIngredientUpdater: boolean;
   constructor(private store$: Store,
               private pizzaActionService: PizzaActionService,

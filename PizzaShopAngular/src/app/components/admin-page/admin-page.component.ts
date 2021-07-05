@@ -11,6 +11,7 @@ import {Drink} from '../models/Drink';
 import {PizzaActionService} from '../../logic/store/actions/pizza/pizza-action.service';
 import {AllPizzasSelector, DrinksSelector} from '../../logic/store/selectors/PizzaSelector';
 import {Pizza} from '../models/Pizza';
+import {APiURL} from "../../config/urlConfig";
 
 @Component({
   selector: 'app-admin-page',
@@ -36,7 +37,7 @@ export class AdminPageComponent implements OnInit {
   avatar: Observable<Avatar> = this.store$.pipe(select(selectUserAvatar));
   drinks: Drink[];
   pizzas: Pizza[];
-  avatarUrl = '/api/avatar/image/';
+  avatarUrl = APiURL.avatarImage;
   isAvatarOpen: boolean;
   isUpdateInfoOpen: boolean;
   isPromotionsOpen: boolean;

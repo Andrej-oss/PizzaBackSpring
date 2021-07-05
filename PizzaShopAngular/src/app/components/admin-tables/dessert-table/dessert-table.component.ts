@@ -5,6 +5,7 @@ import {select, Store} from '@ngrx/store';
 import {DessertSelector} from '../../../logic/store/selectors/PizzaSelector';
 import {ThemeObjectService} from '../../../logic/theme-object/theme-object.service';
 import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-action.service';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-dessert-table',
@@ -13,7 +14,7 @@ import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-actio
 })
 export class DessertTableComponent implements OnInit {
   desserts: Observable<Dessert[]> = this.store$.pipe(select(DessertSelector));
-  url = '/api/dessert/';
+  url = APiURL.dessertURL;
   displayedColumns: string[] = ['position', 'image', 'name', 'description', 'volume', 'price', 'option'];
   black = 'background-color: black';
   white = 'background-color: white';

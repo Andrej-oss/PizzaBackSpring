@@ -4,6 +4,7 @@ import {Payment} from '../../../components/models/Payment';
 import {Observable} from 'rxjs';
 import {Purchase} from '../../../components/models/Purchase';
 import {Cart} from '../../../components/models/Cart';
+import {APiURL} from "../../../config/urlConfig";
 
 
 
@@ -11,7 +12,7 @@ import {Cart} from '../../../components/models/Cart';
   providedIn: 'root'
 })
 export class PaymentService {
-  baseURL = '/api/stripe/';
+  baseURL = APiURL.paymentURL;
 
   constructor(private httpClient: HttpClient) { }
   buy(payment: Payment): Observable<string>{

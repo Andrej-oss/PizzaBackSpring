@@ -40,7 +40,6 @@ public StripeControl = new FormGroup({
     this.stripeService.elements(this.elementsOptions)
       .subscribe(elements => {
         this.elements = elements;
-        console.log(this.elements);
         if (!this.card) {
           // @ts-ignore
           this.card = this.elements.create('card', {

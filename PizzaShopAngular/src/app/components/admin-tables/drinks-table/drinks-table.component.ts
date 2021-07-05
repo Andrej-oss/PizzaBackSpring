@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Drink} from '../../models/Drink';
 import {ThemeObjectService} from '../../../logic/theme-object/theme-object.service';
 import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-action.service';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-drinks-table',
@@ -16,7 +17,7 @@ export class DrinksTableComponent implements OnInit {
   white = 'background-color: white';
   blackColor = 'color: white';
   whiteColor = 'color: black';
-  url = '/api/drink/';
+  url = APiURL.drinkURL;
   isOpenDrinkUpdate: boolean;
   drink: Drink;
   constructor(public themeObjectService: ThemeObjectService,

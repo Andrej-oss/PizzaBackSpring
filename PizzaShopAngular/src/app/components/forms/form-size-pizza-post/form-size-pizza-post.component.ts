@@ -12,6 +12,7 @@ import {ThemeObjectService} from '../../../logic/theme-object/theme-object.servi
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {AllPizzasSelector} from '../../../logic/store/selectors/PizzaSelector';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-form-size-pizza-post',
@@ -23,7 +24,7 @@ export class FormSizePizzaPostComponent implements OnInit {
   size: Size;
   @Input()
   pizzaName: string;
-  url = '/api/pizza/image/';
+  url = APiURL.pizzaImage;
   sizes = sizes;
   pizzas: Observable<Pizza[]> = this.store$.pipe(select(AllPizzasSelector));
   ingredients: Ingredient[];

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Dessert} from '../../../components/models/Dessert';
+import {APiURL} from "../../../config/urlConfig";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DessertService {
-  private baseUrl = '/api/dessert';
+  private baseUrl = APiURL.dessertURL;
 
   constructor(private httpClient: HttpClient) { }
   saveDessert(formData: FormData, append: void): Observable<Dessert[]>{

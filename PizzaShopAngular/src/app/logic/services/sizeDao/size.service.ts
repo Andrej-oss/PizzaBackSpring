@@ -3,12 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Size} from '../../../components/models/Size';
 import {SizePizza} from '../../../components/models/SizePizza';
+import {APiURL} from "../../../config/urlConfig";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SizeService {
-  private baseUrl = '/api/size';
+  private baseUrl = APiURL.sizeURL;
 
   constructor(private httpClient: HttpClient) { }
 

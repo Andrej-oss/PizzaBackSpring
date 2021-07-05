@@ -5,6 +5,7 @@ import {Snack} from '../../models/Snack';
 import {Observable} from 'rxjs';
 import {SnacksSelector} from '../../../logic/store/selectors/PizzaSelector';
 import {PizzaActionService} from "../../../logic/store/actions/pizza/pizza-action.service";
+import {APiURL} from "../../../config/urlConfig";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class SnacksAdminTableComponent implements OnInit {
   white = 'background-color: white';
   blackColor = 'color: white';
   whiteColor = 'color: black';
-  url = '/api/snack/';
+  url = APiURL.snackURL;
   isOpenSnackUpdate: boolean;
   snack: Snack;
   constructor(private store$: Store,

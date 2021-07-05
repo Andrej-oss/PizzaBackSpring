@@ -6,6 +6,7 @@ import {Comment} from '../../models/Comment';
 import {ThemeObjectService} from '../../../logic/theme-object/theme-object.service';
 import {Voice} from '../../models/Voice';
 import {CommentService} from '../../../logic/services/commentDao/comment.service';
+import {UserService} from "../../../logic/services/userDao/user.service";
 
 @Component({
   selector: 'app-comment-user-admin-table',
@@ -23,6 +24,7 @@ export class CommentUserAdminTableComponent implements OnInit {
   isOpenCommentUpdate: boolean;
   constructor(private store$: Store,
               private commentService: CommentService,
+              private userService: UserService,
               public themeObjectService: ThemeObjectService) { }
 
   ngOnInit(): void {

@@ -44,13 +44,13 @@
 <div class="nav-bar">
   <app-nav-bar></app-nav-bar>
 </div>
-<div *ngIf="isCartOpen && (cartElements | async).length !== 0">
+<div *ngIf="isCartOpen && themeSubjectService.data.value.sizeCart !== 0">
   <div
-    [style]="themeSubjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
-    class="header-content-buttons-cart"
-    (mouseenter)="showCartNow(true)"
-    (mouseleave)="hideCart(false)">
-    <app-pizza-cart-card [cartElements]="cartElements | async"
+          [style]="themeSubjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+          class="header-content-buttons-cart"
+          (mouseenter)="showCartNow(true)"
+          (mouseleave)="hideCart(false)">
+    <app-pizza-cart-card [cartElements]="(cartElements | async).length ? (cartElements | async) : cartElementsLS"
                          [snacks]="snacks | async"
                          [drinks]="drinks | async"
                          [desserts]="desserts | async"

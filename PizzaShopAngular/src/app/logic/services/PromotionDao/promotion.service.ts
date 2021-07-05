@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Promotion} from '../../../components/models/Promotion';
 import {Observable} from 'rxjs';
+import {APiURL} from "../../../config/urlConfig";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PromotionService {
-  private baseUrl = '/api/promotion';
+  private baseUrl = APiURL.promotionURL;
 
   constructor(private httpClient: HttpClient) { }
   savePromotion(promotion: FormData, append: void): Observable<Promotion[]>{

@@ -5,6 +5,7 @@ import {Promotion} from '../../models/Promotion';
 import {PromotionsSelector} from '../../../logic/store/selectors/PizzaSelector';
 import {ThemeObjectService} from '../../../logic/theme-object/theme-object.service';
 import {PizzaActionService} from '../../../logic/store/actions/pizza/pizza-action.service';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-promotions-table',
@@ -17,7 +18,7 @@ export class PromotionsTableComponent implements OnInit {
   black = 'background-color: black';
   white = 'background-color: white';
   displayedColumns: string[] = ['position', 'image', 'name', 'option'];
-  url = '/api/promotion/';
+  url = APiURL.promotionURL;
   promotion: Promotion;
   isOpenPromotionUpdater: boolean;
   promotions: Observable<Promotion[]> = this.store$.pipe(select(PromotionsSelector));

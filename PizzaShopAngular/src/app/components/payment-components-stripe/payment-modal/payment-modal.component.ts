@@ -64,7 +64,6 @@ export class PaymentModalComponent implements OnInit {
           });
         },
         err => {
-          console.log(err);
           this.activeModal.close();
         }
       );
@@ -99,7 +98,6 @@ export class PaymentModalComponent implements OnInit {
         this.activeModal.close();
       },
       err => {
-        console.log(err);
         this.activeModal.close();
       }
     );

@@ -14,6 +14,7 @@ import {
   SnacksSelector
 } from '../../logic/store/selectors/PizzaSelector';
 import {Router} from "@angular/router";
+import {APiURL} from "../../config/urlConfig";
 
 @Component({
   selector: 'app-home-page',
@@ -26,7 +27,7 @@ export class HomePageComponent implements OnInit {
   drinks: Drink[];
   snacks: Snack[];
   desserts: Dessert[];
-  url = '/api/promotion/';
+  url = APiURL.promotionURL;
   constructor(private pizzaActionService: PizzaActionService,
               private store$: Store,
               private router: Router,
@@ -56,19 +57,19 @@ export class HomePageComponent implements OnInit {
   }
 
   onPizzas(): void{
-    this.router.navigate(['pizza']).then(data => console.log(data));
+    this.router.navigate(['pizza']);
   }
 
   onDrinks(): void{
-    this.router.navigate(['drinks']).then(data => console.log(data));
+    this.router.navigate(['drinks']);
   }
 
   onSnacks(): void{
-    this.router.navigate(['snacks']).then(data => console.log(data));
+    this.router.navigate(['snacks']);
   }
 
   onDesserts(): void{
-    this.router.navigate(['desserts']).then(data => console.log(data));
+    this.router.navigate(['desserts']);
   }
 
   onChangeProportoin(): boolean{

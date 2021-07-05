@@ -3,32 +3,54 @@
      [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
   <div *ngFor="let element of cartElements">
     <div *ngIf="element.pizzaId !== 0">
-    <div *ngFor="let pizza of pizzas ">
-      <div *ngFor="let price of pizzasPrise">
-        <div *ngIf="pizza.id === element.pizzaId && element.id === price.id" class="pizza-cart-cart-element">
-          <app-pizza-card-cart-item [pizza]="pizza" [cartElement]="element" [pizzaPrice]="price.price"></app-pizza-card-cart-item>
+      <div *ngFor="let pizza of pizzas ">
+        <div *ngFor="let price of pizzasPrise">
+          <div *ngIf="pizza.id === element.pizzaId && element.id ? element.id === price.id : null"
+               class="pizza-cart-cart-element">
+            <app-pizza-card-cart-item [pizza]="pizza"
+                                      (cartFromLs)="onDeleteCartElement($event)"
+                                      [cartElement]="element"
+                                      [pizzaPrice]="price.price"></app-pizza-card-cart-item>
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <div *ngIf="element.drinkId !== 0">
       <div *ngFor="let drink of drinks ">
         <div *ngIf="drink.id == element.drinkId" class="pizza-cart-cart-element">
-          <app-pizza-card-cart-item [drink]="drink" [cartElement]="element"></app-pizza-card-cart-item>
+          <app-pizza-card-cart-item [drink]="drink"
+                                    (cartFromLs)="onDeleteCartElement($event)"
+                                    [cartElement]="element"></app-pizza-card-cart-item>
         </div>
       </div>
     </div>
     <div *ngIf="element.snackId !== 0">
       <div *ngFor="let snack of snacks ">
         <div *ngIf="snack.id == element.snackId" class="pizza-cart-cart-element">
-          <app-pizza-card-cart-item [snack]="snack" [cartElement]="element"></app-pizza-card-cart-item>
+          <app-pizza-card-cart-item [snack]="snack"
+                                    (cartFromLs)="onDeleteCartElement($event)"
+                                    [cartElement]="element"></app-pizza-card-cart-item>
         </div>
       </div>
     </div>
     <div *ngIf="element.dessertId !== 0">
       <div *ngFor="let dessert of desserts ">
         <div *ngIf="dessert.id == element.dessertId" class="pizza-cart-cart-element">
-          <app-pizza-card-cart-item [dessert]="dessert" [cartElement]="element"></app-pizza-card-cart-item>
+          <app-pizza-card-cart-item [dessert]="dessert"
+                                    (cartFromLs)="onDeleteCartElement($event)"
+                                    [cartElement]="element"></app-pizza-card-cart-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let element of cartElements">
+    <div *ngIf="element.pizzaId !== 0">
+      <div *ngFor="let pizza of pizzas ">
+        <div *ngIf="pizza.id === element.pizzaId " class="pizza-cart-cart-element">
+          <app-pizza-card-cart-item [pizza]="pizza"
+                                    (cartFromLs)="onDeleteCartElement($event)"
+                                    [cartElement]="element"
+                                    [pizzaPrice]="43"></app-pizza-card-cart-item>
         </div>
       </div>
     </div>

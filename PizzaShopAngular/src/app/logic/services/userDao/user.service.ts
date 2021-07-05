@@ -6,6 +6,10 @@ import {AuthUser} from '../../../components/models/AuthUser';
 import {tap} from 'rxjs/operators';
 import {ThemeObjectService} from '../../theme-object/theme-object.service';
 import {Router} from '@angular/router';
+import {Cart} from "../../../components/models/Cart";
+import {APiURL} from "../../../config/urlConfig";
+import {SnackBarComponent} from "../../../components/snack-bar/snack-bar-login/snack-bar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +18,13 @@ export class UserService {
   private token = null;
   private authority = null;
   private userName = null;
-  private baseUrl = '/api/user';
+  private baseUrl = APiURL.userURL;
+  private localStorageCart = APiURL.localStorageKey;
+
 
   constructor(private httpClient: HttpClient,
               private themeObjectService: ThemeObjectService,
+              private snackBar: MatSnackBar,
               private router: Router) { }
   getUserByName(name: string): Observable<User>{
     return this.httpClient.get<User>(this.baseUrl + '/authenticate/' + name);
@@ -88,5 +95,21 @@ export class UserService {
   }
   deleteUser(id: number): Observable<User[]>{
     return  this.httpClient.delete<User[]>(this.baseUrl + `/${id}`);
+  }
+  saveCartInLocalStorage(cart: Cart): void {
+    if (cart.pizzaId || cart.dessertId || cart.drinkId || cart.snackId) {
+      if (localStorage.getItem(`${this.localStorageCart}_${cart.description}`)) {
+        const itemLS = localStorage.getItem(`${this.localStorageCart}_${cart.description}`);
+        const parsePizzaLS = JSON.parse(itemLS);
+        cart.amount = parsePizzaLS.amount + 1;
+        cart.price = parsePizzaLS.price + cart.price;
+        localStorage.setItem(`${this.localStorageCart}_${cart.description}`, JSON.stringify(cart));
+      }
+      localStorage.setItem(`${this.localStorageCart}_${cart.description}`, JSON.stringify(cart));
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        duration: 2000,
+      });
+      this.themeObjectService.data.value.sizeCart++;
+    }
   }
 }

@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {DrinkChooseSheetComponent} from '../drink-choose-sheet/drink-choose-sheet.component';
 import {Cart} from '../../models/Cart';
 import {UserActionsService} from '../../../logic/store/actions/user/user-actions.service';
+import {APiURL} from "../../../config/urlConfig";
 
 @Component({
   selector: 'app-drink-card',
@@ -16,7 +17,7 @@ export class DrinkCardComponent implements OnInit {
   @Input()
   drink: Drink;
   cart: Cart;
-  url = '/api/drink/';
+  url = APiURL.drinkImage;
   constructor(private bottomSheet: MatBottomSheet,
               private userActionsService: UserActionsService,
               public themeObjectService: ThemeObjectService) { }

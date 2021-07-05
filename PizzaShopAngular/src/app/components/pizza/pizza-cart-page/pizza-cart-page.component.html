@@ -1,9 +1,10 @@
-<div *ngIf="(cartElements | async)?.length"
+<div *ngIf="(cartElements | async)?.length || themeObjectService.data.value.sizeCart"
      [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
   <mat-horizontal-stepper
-    [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
-    (animationDone)="onPayment()">
-    <mat-step label="Cart" state="cart" (click)="onPayment()">
+          [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'"
+          (animationDone)="onPayment()">
+    <mat-step label="Cart"
+              state="cart" (click)="onPayment()">
       <div class="pizza-cart-page"
            [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
         <h2>
@@ -13,15 +14,17 @@
                              [drinks]="drinks | async"
                              [snacks]="snacks | async"
                              [desserts]="desserts | async"
-                             [cartElements]="cartElements | async">
+                             [cartElements]="(cartElements | async)">
 
         </app-pizza-cart-card>
         <div>
-          <button mat-button matStepperNext (click)="onPayment()">Next</button>
+          <button mat-button matStepperNext
+                  [disabled]="!isAuth"
+                  (click)="onPayment()">Next</button>
         </div>
       </div>
     </mat-step>
-    <mat-step label="User" state="payment">
+    <mat-step label="User" state="payment" *ngIf="isAuth">
       <div class="pizza-cart-page-payment-content-user"
            [style]="themeObjectService.data.value.isDarkTheme ? 'background-color: black; color: white' : 'background-color: white; color: black'">
         <div class="pizza-cart-page-payment-content-user-name">
@@ -44,9 +47,9 @@
         <button mat-button matStepperNext>Next</button>
       </div>
     </mat-step>
-    <mat-step label="Payment">
+    <mat-step label="Payment" *ngIf="isAuth">
       <p>{{(principal | async)?.name }} {{(principal | async)?.lastName}}
-        , input your name and number your card, data and CVC code.
+        Please, input your name and number your card, data and CVC code.
       </p>
       <div class="pizza-cart-page-payment-payment" *ngIf="themeObjectService.data.value.isOpenPayment">
         <app-payment [price]="themeObjectService.data.value.totalPrice"
@@ -57,7 +60,7 @@
     </mat-step>
   </mat-horizontal-stepper>
 </div>
-<div *ngIf="!(cartElements | async)?.length">
+<div class="pizza-cart-page-empty"  *ngIf="themeObjectService.data.value.sizeCart === 0">
   <h1>
     Your cart is empty. Please add pizza to cart.
   </h1>

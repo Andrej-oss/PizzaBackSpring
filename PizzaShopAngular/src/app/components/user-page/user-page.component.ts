@@ -8,71 +8,73 @@ import {ThemeObjectService} from '../../logic/theme-object/theme-object.service'
 import {UserService} from '../../logic/services/userDao/user.service';
 import {Avatar} from '../models/Avatar';
 import {Purchase} from "../models/Purchase";
+import {APiURL} from "../../config/urlConfig";
 
 
 @Component({
-  selector: 'app-user-page',
-  templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+    selector: 'app-user-page',
+    templateUrl: './user-page.component.html',
+    styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent implements OnInit {
-  userFormData: FormData = new FormData();
-  isCartOpen = false;
-  isUpdateInfoOpen = false;
-  isPurchasesOpen = false;
-  isAvatarOpen: boolean;
-  image: File;
-  avatar: Observable<Avatar> = this.store$.pipe(select(selectUserAvatar));
-  avatarUrl = '/api/avatar/image/';
-  user: User;
+    userFormData: FormData = new FormData();
+    isCartOpen = false;
+    isUpdateInfoOpen = false;
+    isPurchasesOpen = false;
+    isAvatarOpen: boolean;
+    image: File;
+    avatar: Observable<Avatar> = this.store$.pipe(select(selectUserAvatar));
+    avatarUrl = APiURL.avatarImage;
+    user: User;
 
-  constructor(private userService: UserService,
-              private userActionsService: UserActionsService,
-              private store$: Store,
-              private themeObjectService: ThemeObjectService) {
-  }
+    constructor(private userService: UserService,
+                private userActionsService: UserActionsService,
+                private store$: Store,
+                private themeObjectService: ThemeObjectService) {
+    }
 
-  ngOnInit(): void {
-    this.store$.pipe(select(selectPrincipal))
-      .subscribe(data => this.user = data);
-    this.userActionsService.getPrincipal(this.userService.getUserName());
-    this.userActionsService.getPurchasesByUser(this.themeObjectService.data.value.userId);
-    this.userActionsService.getUserAvatar(this.themeObjectService.data.value.userId);
-  }
+    ngOnInit(): void {
+        this.store$.pipe(select(selectPrincipal))
+            .subscribe(data => this.user = data);
+        this.userActionsService.getPrincipal(this.userService.getUserName());
+        this.userActionsService.getPurchasesByUser(this.themeObjectService.data.value.userId);
+        this.userActionsService.getUserAvatar(this.themeObjectService.data.value.userId);
+    }
 
-  onBasket(): void {
-    this.isCartOpen = !this.isCartOpen;
-    this.isUpdateInfoOpen = false;
-    this.isPurchasesOpen = false;
-  }
+    onBasket(): void {
+        this.isCartOpen = !this.isCartOpen;
+        this.isUpdateInfoOpen = false;
+        this.isPurchasesOpen = false;
+    }
 
-  onUserUpdate(): void {
-    this.isUpdateInfoOpen = !this.isUpdateInfoOpen;
-    this.isCartOpen = false;
-    this.isPurchasesOpen = false;
-  }
+    onUserUpdate(): void {
+        this.isUpdateInfoOpen = !this.isUpdateInfoOpen;
+        this.isCartOpen = false;
+        this.isPurchasesOpen = false;
+    }
 
-  onPurchase(): void {
-    this.isPurchasesOpen = !this.isPurchasesOpen;
-    this.isCartOpen = false;
-    this.isUpdateInfoOpen = false;
-  }
+    onPurchase(): void {
+        this.isPurchasesOpen = !this.isPurchasesOpen;
+        this.isCartOpen = false;
+        this.isUpdateInfoOpen = false;
+    }
 
-  onOpenAvatarChange(): void {
-    this.isAvatarOpen = !this.isAvatarOpen;
-  }
+    onOpenAvatarChange(): void {
+        this.isAvatarOpen = !this.isAvatarOpen;
+    }
 
-  uploadFile($event: Event): void {
-     this.image = ($event.target as HTMLInputElement).files[0];
-  }
+    uploadFile($event: Event): void {
+        this.image = ($event.target as HTMLInputElement).files[0];
+    }
 
-  onSaveAvatar(id: number): void{
-    this.userActionsService.saveAvatarUser(id, this.userFormData,
-      this.userFormData.append('file', this.image));
-    this.resetDataForm();
-  }
-  resetDataForm(): void{
-    this.userFormData.delete('file');
-    this.isAvatarOpen = false;
-  }
+    onSaveAvatar(id: number): void {
+        this.userActionsService.saveAvatarUser(id, this.userFormData,
+            this.userFormData.append('file', this.image));
+        this.resetDataForm();
+    }
+
+    resetDataForm(): void {
+        this.userFormData.delete('file');
+        this.isAvatarOpen = false;
+    }
 }

@@ -45,7 +45,6 @@ export class FormSnackComponent implements OnInit {
     this.formData.append('price', snackForm.controls.priceSnack.value);
     this.formData.append('volume', snackForm.controls.volumeSnack.value);
     const path = (snackForm.controls.nameSnack.value).split(' ').map(value => {
-      console.log(value.charAt(0).toUpperCase());
       const strings = value.split('');
       strings.splice(0, 1, value.charAt(0).toUpperCase());
       return strings.join('');
@@ -61,7 +60,6 @@ export class FormSnackComponent implements OnInit {
     this.formData.append('price', snackForm.controls.priceSnack.value);
     this.formData.append('volume', snackForm.controls.volumeSnack.value);
     const path = (snackForm.controls.nameSnack.value).split(' ').map(value => {
-      console.log(value.charAt(0).toUpperCase());
       const strings = value.split('');
       strings.splice(0, 1, value.charAt(0).toUpperCase());
       return strings.join('');
