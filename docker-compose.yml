@@ -15,6 +15,9 @@ services:
       - "8080:8080"
     networks:
       - pizzaShopNetwork
+    mem_limit: 1024MB
+    environment:
+      - "JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
 # without db image
 #  db:
 #    image: mysql
