@@ -7,6 +7,7 @@ import {DrinkChooseSheetComponent} from '../drink-choose-sheet/drink-choose-shee
 import {Cart} from '../../models/Cart';
 import {UserActionsService} from '../../../logic/store/actions/user/user-actions.service';
 import {APiURL} from "../../../config/urlConfig";
+import {UserService} from "../../../logic/services/userDao/user.service";
 
 @Component({
   selector: 'app-drink-card',
@@ -19,6 +20,7 @@ export class DrinkCardComponent implements OnInit {
   cart: Cart;
   url = APiURL.drinkImage;
   constructor(private bottomSheet: MatBottomSheet,
+              private userService: UserService,
               private userActionsService: UserActionsService,
               public themeObjectService: ThemeObjectService) { }
 
@@ -40,6 +42,9 @@ export class DrinkCardComponent implements OnInit {
       volume: drink.volume,
     };
     this.themeObjectService.data.value.message = 'Drink added to cart';
-    this.userActionsService.saveElementInCart(this.cart);
-  }
+    if (this.userService.isAuthenticated()) {
+      this.userActionsService.saveElementInCart(this.cart);
+    } else {
+      this.userService.saveCartInLocalStorage(this.cart);
+    }  }
 }

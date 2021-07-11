@@ -6,6 +6,7 @@ import {SnackChooseSheetComponent} from '../snack-choose-sheet/snack-choose-shee
 import {Cart} from '../../models/Cart';
 import {UserActionsService} from '../../../logic/store/actions/user/user-actions.service';
 import {APiURL} from "../../../config/urlConfig";
+import {UserService} from "../../../logic/services/userDao/user.service";
 
 @Component({
   selector: 'app-snack-card',
@@ -19,6 +20,7 @@ export class SnackCardComponent implements OnInit {
   url = APiURL.snackImage;
   constructor(public themeObjectService: ThemeObjectService,
               private userActionsService: UserActionsService,
+              private userService: UserService,
               private bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
@@ -39,6 +41,10 @@ export class SnackCardComponent implements OnInit {
       volume: +snack.volume.match(/[0-9]/gi).join('') + 0.00,
     };
     this.themeObjectService.data.value.message = 'Snack added to cart';
-    this.userActionsService.saveElementInCart(this.cart);
-  }
+    this.themeObjectService.data.value.message = 'Dessert added to cart';
+    if (this.userService.isAuthenticated()) {
+      this.userActionsService.saveElementInCart(this.cart);
+    } else {
+      this.userService.saveCartInLocalStorage(this.cart);
+    }  }
 }
