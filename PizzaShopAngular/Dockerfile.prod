@@ -7,7 +7,6 @@ FROM node:13.12.0-alpine as builder
 # COPY . .
 # COPY package*.json ./
 RUN mkdir /var/cache/nginx
-COPY ../nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 
 # angular
 # RUN npm i -g npm

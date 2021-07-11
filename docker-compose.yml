@@ -15,14 +15,7 @@ services:
       - "8080:8080"
     networks:
       - pizzaShopNetwork
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 128M
+    mem_limit: 1024
     environment:
       - "JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
 
