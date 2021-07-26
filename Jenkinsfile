@@ -17,12 +17,13 @@ pipeline {
                     steps {
                         // Run Maven on a Unix agent.
                         sh "mvn test"
-                    }
-    }
+             }
+        }
     stage('Deploy') {
                 steps {
                     // Run Maven on a Unix agent.
                     sh "mvn clean heroku:deploy"
                 }
+        }
     }
 }
