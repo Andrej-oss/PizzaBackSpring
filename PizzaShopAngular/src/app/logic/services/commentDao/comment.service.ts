@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Comment} from '../../../components/models/Comment';
-import {strict} from "assert";
 import {APiURL} from "../../../config/urlConfig";
 
 @Injectable({
